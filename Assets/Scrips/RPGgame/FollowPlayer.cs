@@ -8,6 +8,7 @@ public class FollowPlayer : MonoBehaviour
     private Transform player;
     private Rigidbody rb;
     public bool isKnockbacked = false;
+    public bool rangedEnemey;
 
     void Awake()
     {
@@ -28,7 +29,10 @@ public class FollowPlayer : MonoBehaviour
             {
                 Vector3 direction = player.position - transform.position;
                 direction.y = 0f;
-                rb.linearVelocity = direction * moveSpeed;
+                if(!rangedEnemey)
+                {
+                    rb.linearVelocity = direction * moveSpeed;
+                }
 
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
 

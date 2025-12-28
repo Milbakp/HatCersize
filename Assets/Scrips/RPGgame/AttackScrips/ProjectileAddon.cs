@@ -6,6 +6,7 @@ public class ProjectileAddon : MonoBehaviour
     public Rigidbody rb;
     private bool targetHit;
     int damage;
+    public int projectileType;
     void Start()
     {
         targetHit = false;
@@ -19,29 +20,7 @@ public class ProjectileAddon : MonoBehaviour
     {
         
     }
-    // private void OnCollisionEnter(Collision other) {
-    //     if (targetHit)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         targetHit = true;
-    //     }
-    //     rb.isKinematic = true;
-    //     rb.linearVelocity = Vector3.zero;
-    //     rb.angularVelocity = Vector3.zero;
-    //     transform.SetParent(other.transform, true);
-    //     if(other.gameObject.tag == "Enemy")
-    //     {
-    //         other.gameObject.GetComponent<Enemy>().lowerHealth(1);
-    //         if (other.gameObject.GetComponent<Enemy>().health <= 0)
-    //         {
-    //             Destroy(other.gameObject);
-    //            //Instantiate(coinPrefab, hit.transform.gameObject.transform.position, Quaternion.Euler(90f, 0f, 0f));
-    //         }
-    //     }
-    // }
+
     private void OnCollisionEnter(Collision other)
     {
         if (targetHit) return;
@@ -57,7 +36,7 @@ public class ProjectileAddon : MonoBehaviour
              
         }
 
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && projectileType == 0)
         {
             Enemy e = other.gameObject.GetComponent<Enemy>();
             e.lowerHealth(damage);
@@ -66,6 +45,12 @@ public class ProjectileAddon : MonoBehaviour
             {
                 e.Die();
             }
+        }
+
+        if (other.gameObject.CompareTag("PlayerCollision") && projectileType == 1)
+        {
+            PlayerHealth ph = other.gameObject.GetComponent<PlayerHealth>();
+            ph.health -= 1;
         }
     }
 

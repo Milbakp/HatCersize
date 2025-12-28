@@ -24,11 +24,14 @@ public class Attack : MonoBehaviour
     public aoeAttack aoehitBox;
     public Animator anim;
     public List<GameObject> weapons = new List<GameObject>();
+    private AudioSource aud;
+    public List<AudioClip> audioClips = new List<AudioClip>();
     void Start()
     {
         readyToThrow = true;
         weaponType = PlayerPrefs.GetInt("weaponType");
         aoehitBox = FindAnyObjectByType<aoeAttack>();
+        aud = gameObject.GetComponent<AudioSource>();
         // GameObject animGameObject = gameObject.transform.Find("Sword").gameObject;
         // anim = animGameObject.GetComponent<Animator>();
         damage = PlayerPrefs.GetInt("playerAttack");
@@ -78,6 +81,7 @@ public class Attack : MonoBehaviour
         RaycastHit hit;
         Debug.DrawRay(cam.position, cam.forward * attackRange, rayColor, 0f);
         anim.Play("SwordSwing");
+        aud.PlayOneShot(audioClips[1]);
         if (Physics.Raycast(cam.position,cam.forward, out hit, attackRange) && hit.transform.gameObject.tag == "Enemy")
         {
             hit.transform.gameObject.GetComponent<Enemy>().lowerHealth(damage);
@@ -100,6 +104,7 @@ public class Attack : MonoBehaviour
 
         totalThrows--;
         anim.Play("WandSwing");
+        aud.PlayOneShot(audioClips[2]);
         Invoke(nameof(ReserThrow), throwCoolDown);
     }
 
@@ -116,6 +121,7 @@ public class Attack : MonoBehaviour
             return;
         }
         anim.Play("HammerSwing");
+        aud.PlayOneShot(audioClips[3]);
         aoehitBox.aoeDamage(damage);
     }
 

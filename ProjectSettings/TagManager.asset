@@ -12,6 +12,8 @@ TagManager:
   - Interactable
   - BackButton
   - Environment
+  - Tile
+  - Map
   layers:
   - Default
   - TransparentFX

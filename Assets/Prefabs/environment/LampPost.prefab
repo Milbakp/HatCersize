@@ -185,6 +185,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LampPost
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
+      propertyPath: m_TagString
+      value: Environment
+      objectReference: {fileID: 0}
     - target: {fileID: 6317578925029434746, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -199,6 +203,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8486820451073275179}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3442867062427162627}
   m_SourcePrefab: {fileID: 100100000, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
 --- !u!4 &4726402673095590195 stripped
 Transform:
@@ -231,3 +238,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 13.385008, z: 2}
   m_Center: {x: 0, y: 6.623247, z: 0}
+--- !u!54 &3442867062427162627
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394290478090918793}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

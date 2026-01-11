@@ -9,12 +9,14 @@ public class EnemyAttack : MonoBehaviour
     public Animator animator;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Special special;
+    public AudioSource attackSound;
     void Awake()
     {
         playerHealth = FindAnyObjectByType<PlayerHealth>();
         special = FindAnyObjectByType<Special>();
         GameObject animGameObject = gameObject.transform.Find("Bat").gameObject;
         animator = animGameObject.GetComponent<Animator>();
+        attackSound = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -44,6 +46,7 @@ public class EnemyAttack : MonoBehaviour
     IEnumerator CoolDownRoutine()
     {
         animator.Play("BatAttack");
+        attackSound.Play();
         if(!special.getShieldStatus())
         {
             playerHealth.health -= 1;

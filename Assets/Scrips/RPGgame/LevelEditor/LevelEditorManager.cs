@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
@@ -11,29 +12,39 @@ public class LevelEditorManager : MonoBehaviour
     private string savePath;
     public GameObject previewObject;
     public Camera camera;
-    public GameObject Map;
+    public int MapType = 0;
+    public List<GameObject> Maps = new List<GameObject>();
+    public List<Button> previewButtons = new List<Button>();
     void Start()
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
         setPreview();
+        foreach (Button btn in previewButtons)
+        {
+            int index = previewButtons.IndexOf(btn);
+            btn.onClick.AddListener(() => {
+                currentObject = index;
+                setPreview();
+            });
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled != true)
-        {
-            placeObject();
-        }
-        else if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled == true)
-        {
-            Debug.Log("Tile is taken");
-        }
-        if (Input.GetKeyDown(KeyCode.D)  && tileComponent.tileIsFilled == true)
-        {
-            destroyObject();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
+        // if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled != true)
+        // {
+        //     placeObject();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled == true)
+        // {
+        //     Debug.Log("Tile is taken");
+        // }
+        // if (Input.GetKeyDown(KeyCode.D)  && tileComponent.tileIsFilled == true)
+        // {
+        //     destroyObject();
+        // }
+        if (Input.GetKeyDown(KeyCode.S) && Input.GetKey(KeyCode.LeftControl))
         {
             ExportCurrentScene();
         }
@@ -129,21 +140,34 @@ public class LevelEditorManager : MonoBehaviour
             
             myLevel.tiles.Add(td);
         }
-        myLevel.MapSize = Map;
+        OnMap om = Maps[MapType].GetComponent<OnMap>();
+        myLevel.MapSize = om.MapSize;
 
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {
         collisionDetector cd = previewObject.GetComponent<collisionDetector>();
-        OnMap om = Map.GetComponent<OnMap>();
-        if (cd.isColliding || !om.isOnMap) {
-            Debug.Log("Cannot place object here!");
-            return;
-        }
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = camera.transform.position.y;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         worldPosition.y = 0; 
+
+        //OnMap om = Map.GetComponent<OnMap>();
+        if(previewObject.CompareTag("Tile"))
+        {
+            if (cd.isOnMap)
+            {
+                Debug.Log("Can not place Tile");
+                return;
+            } 
+            Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+            Debug.Log("Placing Tile");
+            return;
+        }
+        if (cd.isColliding || !cd.isOnMap ) {
+            Debug.Log("Cannot place object here!");
+            return;
+        }
         Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
     }
 

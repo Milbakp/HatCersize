@@ -19,6 +19,8 @@ public class RPGLevelManager : MonoBehaviour
     public int numOfEnemies;
     public GameObject Door;
     public bool levelCompleted;
+    public AudioSource aud;
+    public AudioClip doorOpenSound;
     void Start()
     {
         //levelGame.SetActive(true);
@@ -44,8 +46,10 @@ public class RPGLevelManager : MonoBehaviour
             Time.timeScale = 0f;
             gameOverScreen.SetActive(true);
         }
-        if (numOfEnemies <= 0)
+        if (numOfEnemies == 0)
         {
+            numOfEnemies--;
+            aud.PlayOneShot(doorOpenSound);
             Door.SetActive(false);
         }
         // Pause/Resume game on Escape key press

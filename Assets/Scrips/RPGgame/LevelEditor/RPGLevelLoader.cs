@@ -5,6 +5,7 @@ using UnityEngine;
 public class RPGLevelLoader : MonoBehaviour
 {
     public List<GameObject> Objects = new List<GameObject>();
+    public List<GameObject> Maps = new List<GameObject>();
     public GameObject tile;
     private string savePath;
     void Start()
@@ -52,6 +53,6 @@ public class RPGLevelLoader : MonoBehaviour
             else if (td.tileID == 3)
                 Instantiate(Objects[1], new Vector3(td.x, 0, td.z), Quaternion.identity);
         }
-        Instantiate(newLevel.MapSize, new Vector3(newLevel.MapSize.transform.position.x, 0, newLevel.MapSize.transform.position.z), Quaternion.identity);
+        Instantiate(Maps[newLevel.MapSize], new Vector3(0, 0, 0), Quaternion.identity);
     }
 }

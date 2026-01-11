@@ -6028,6 +6028,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &1335475393 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5013141698991493420, guid: 55842730aad3730409e84c557e7f2e4e, type: 3}
+  m_PrefabInstance: {fileID: 1335475389}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1341705268
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,6 +6408,8 @@ MonoBehaviour:
   numOfEnemies: 3
   Door: {fileID: 2114215931374388010}
   levelCompleted: 0
+  aud: {fileID: 1335475393}
+  doorOpenSound: {fileID: 8300000, guid: ee71ab43e522e784cac01c7b1a075f5e, type: 3}
 --- !u!1 &1522723465
 GameObject:
   m_ObjectHideFlags: 0

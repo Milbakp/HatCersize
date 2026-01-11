@@ -22,5 +22,5 @@ public class aboveObjects
 public class LevelData
 {
     public List<TileData> tiles = new List<TileData>();
-    public GameObject MapSize;
+    public int MapSize;
 }

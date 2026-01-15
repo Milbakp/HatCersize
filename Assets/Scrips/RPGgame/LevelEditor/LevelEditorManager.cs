@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
@@ -15,6 +16,13 @@ public class LevelEditorManager : MonoBehaviour
     public int MapType = 0;
     public List<GameObject> Maps = new List<GameObject>();
     public List<Button> previewButtons = new List<Button>();
+    public TMP_Text editBttonText;
+    public enum editState
+    {
+        Setting,
+        Editting
+    }
+    editState currentEditState;
     void Start()
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -27,6 +35,8 @@ public class LevelEditorManager : MonoBehaviour
                 setPreview();
             });
         }
+        currentEditState = editState.Setting;
+        editBttonText.SetText("Edit");
     }
 
     // Update is called once per frame
@@ -48,7 +58,7 @@ public class LevelEditorManager : MonoBehaviour
         {
             ExportCurrentScene();
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting)
         {
             spawnOnMousePosition();
         }
@@ -56,7 +66,16 @@ public class LevelEditorManager : MonoBehaviour
         {
             setPreview();
         }
-        preview();
+        if(currentEditState == editState.Setting)
+        {
+            preview();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            currentEditState = editState.Editting;
+        }
+        
     }
     public void placeObject()
     {
@@ -152,6 +171,7 @@ public class LevelEditorManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         worldPosition.y = 0; 
 
+        GameObject tmp;
         //OnMap om = Map.GetComponent<OnMap>();
         if(previewObject.CompareTag("Tile"))
         {
@@ -160,7 +180,8 @@ public class LevelEditorManager : MonoBehaviour
                 Debug.Log("Can not place Tile");
                 return;
             } 
-            Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+            tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+            tmp.AddComponent<EditObject>();
             Debug.Log("Placing Tile");
             return;
         }
@@ -168,7 +189,8 @@ public class LevelEditorManager : MonoBehaviour
             Debug.Log("Cannot place object here!");
             return;
         }
-        Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+        tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+        tmp.AddComponent<EditObject>();
     }
 
     public void setPreview()
@@ -187,6 +209,23 @@ public class LevelEditorManager : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         worldPosition.y = 0; 
         previewObject.transform.position = worldPosition;
+    }
+
+    //Buton Functions are below this line
+    public void SetMode()
+    {
+        if(currentEditState == editState.Setting)
+        {
+            currentEditState = editState.Editting;
+            editBttonText.SetText("Set");
+            previewObject.SetActive(false);
+        }
+        else
+        {
+            currentEditState = editState.Setting;
+            editBttonText.SetText("Edit");
+            previewObject.SetActive(true);
+        }
     }
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
 using TMPro;
+
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
@@ -23,6 +24,7 @@ public class LevelEditorManager : MonoBehaviour
         Editting
     }
     editState currentEditState;
+    public bool isEditingObject = false;
     void Start()
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -61,10 +63,6 @@ public class LevelEditorManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting)
         {
             spawnOnMousePosition();
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            setPreview();
         }
         if(currentEditState == editState.Setting)
         {
@@ -125,6 +123,11 @@ public class LevelEditorManager : MonoBehaviour
     }
     public void ExportCurrentScene()
     {
+        if (!AllTilesConnected())
+        {
+            Debug.Log("Cannot export level, not all tiles are connected");
+            return;
+        }
         LevelData myLevel = new LevelData();
 
         // Imagine you have a bunch of tiles with a "Tile" tag
@@ -181,8 +184,10 @@ public class LevelEditorManager : MonoBehaviour
                 return;
             } 
             tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+            tmp.AddComponent<collisionDetector>();
             tmp.AddComponent<EditObject>();
             Debug.Log("Placing Tile");
+            Tiles.Add(tmp);
             return;
         }
         if (cd.isColliding || !cd.isOnMap ) {
@@ -190,6 +195,7 @@ public class LevelEditorManager : MonoBehaviour
             return;
         }
         tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+        tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
     }
 
@@ -199,6 +205,10 @@ public class LevelEditorManager : MonoBehaviour
         previewObject = Instantiate(Objects[currentObject], previewObject.transform.position, Quaternion.identity);
         Destroy(tmp);
         previewObject.AddComponent<collisionDetector>();
+        if(previewObject.CompareTag("Tile"))
+        {
+            previewObject.transform.Find("TileDetector").gameObject.SetActive(false);
+        }
     }
 
     private void preview()
@@ -211,7 +221,22 @@ public class LevelEditorManager : MonoBehaviour
         previewObject.transform.position = worldPosition;
     }
 
-    //Buton Functions are below this line
+    private bool AllTilesConnected()
+    {
+        foreach (GameObject t in Tiles)
+        {
+            GameObject tmp = t.transform.Find("TileDetector").gameObject;
+            DetectTileConnections dtc = tmp.GetComponentInChildren<DetectTileConnections>();
+            if (!dtc.isConnected)
+            {
+                Debug.Log("Not all tiles are connected");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //Button Functions are below this line
     public void SetMode()
     {
         if(currentEditState == editState.Setting)
@@ -226,6 +251,10 @@ public class LevelEditorManager : MonoBehaviour
             editBttonText.SetText("Edit");
             previewObject.SetActive(true);
         }
+    }
+    public editState getMode()
+    {
+        return currentEditState;
     }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using UnityEngine;
 
@@ -18,16 +19,20 @@ public class Tile : MonoBehaviour
     private void OnMouseDown() {
         levelEditorManager.setCurrentTile(tileID);
     }
-    // private void OnCollisionEnter(Collision other) {
-    //     if(other.gameObject.CompareTag("Tile")||other.gameObject.CompareTag("Map"))
-    //     {
-    //         connectedToMap = true;
-    //     }
-    // }
-    // private void OnCollisionExit(Collision other) {
-    //     if(other.gameObject.CompareTag("Tile")||other.gameObject.CompareTag("Map"))
-    //     {
-    //         connectedToMap = false;
-    //     }
-    // }
+    public void Update()
+    {
+        transform.position = new Vector3(RoundToNearestMultiple(transform.position.x, 5.0f
+        ), transform.position.y, RoundToNearestMultiple(transform.position.z, 5.0f) );
+    }
+
+    public static float RoundToNearestMultiple(float value, float multiple)
+    {
+        if (multiple == 0)
+        {
+            return value;
+        }
+
+        // Divide the number by the multiple, round it, and multiply back by the multiple
+        return (float)Math.Round(value / multiple) * multiple;
+    }
 }

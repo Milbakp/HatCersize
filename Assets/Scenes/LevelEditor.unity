@@ -825,7 +825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &318761763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1072,7 +1072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &537495745
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1385,11 +1385,9 @@ MonoBehaviour:
   MapType: 0
   Maps:
   - {fileID: 6751342374541241635, guid: f8d5b6ee40223f34a84ca8b6d2cdf8f8, type: 3}
-  previewButtons:
-  - {fileID: 1721051307}
-  - {fileID: 318761764}
-  - {fileID: 537495746}
+  previewButtons: []
   editBttonText: {fileID: 1125596225}
+  registry: {fileID: 11400000, guid: 92b7f270b74d9f24b8088ad33ab02613, type: 2}
   isEditingObject: 0
 --- !u!4 &900088664
 Transform:
@@ -1557,6 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 961739752}
+  cameraSpeed: 20
 --- !u!1 &1083289133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,7 +2226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1721051306
 RectTransform:
   m_ObjectHideFlags: 0

@@ -275,6 +275,7 @@ MonoBehaviour:
   Maps:
   - {fileID: 6751342374541241635, guid: f8d5b6ee40223f34a84ca8b6d2cdf8f8, type: 3}
   tile: {fileID: 9112222537811027325, guid: 7138b036579af9043b077fe9168833a1, type: 3}
+  registry: {fileID: 11400000, guid: 92b7f270b74d9f24b8088ad33ab02613, type: 2}
 --- !u!4 &289177322
 Transform:
   m_ObjectHideFlags: 0
@@ -302,6 +303,7 @@ GameObject:
   - component: {fileID: 961739752}
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
+  - component: {fileID: 961739754}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -427,6 +429,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &961739754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961739749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1ffd09c76a03240a4fe5d27c00d2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 961739752}
+  cameraSpeed: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

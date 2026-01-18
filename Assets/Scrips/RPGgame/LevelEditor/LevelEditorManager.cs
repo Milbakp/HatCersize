@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
 using TMPro;
+using static TileRegistry;
+using UnityEngine.EventSystems;
 
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
     public int currentTile;
     private Tile tileComponent;
-    public List<GameObject> Objects = new List<GameObject>();
+    //public List<GameObject> Objects = new List<GameObject>();
     public int currentObject;
     private string savePath;
     public GameObject previewObject;
@@ -18,6 +20,7 @@ public class LevelEditorManager : MonoBehaviour
     public List<GameObject> Maps = new List<GameObject>();
     public List<Button> previewButtons = new List<Button>();
     public TMP_Text editBttonText;
+    public TileRegistry registry;
     public enum editState
     {
         Setting,
@@ -29,6 +32,7 @@ public class LevelEditorManager : MonoBehaviour
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
         setPreview();
+        CreatePreviewButtons();
         foreach (Button btn in previewButtons)
         {
             int index = previewButtons.IndexOf(btn);
@@ -62,7 +66,10 @@ public class LevelEditorManager : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting)
         {
-            spawnOnMousePosition();
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                spawnOnMousePosition();
+            }
         }
         if(currentEditState == editState.Setting)
         {
@@ -77,7 +84,7 @@ public class LevelEditorManager : MonoBehaviour
     }
     public void placeObject()
     {
-        tileComponent.currentObject = Instantiate(Objects[currentObject], Tiles[currentTile].transform.position, Quaternion.identity);
+        //tileComponent.currentObject = Instantiate(Objects[currentObject], Tiles[currentTile].transform.position, Quaternion.identity);
         tileComponent.tileIsFilled = true;
     }
 
@@ -130,35 +137,15 @@ public class LevelEditorManager : MonoBehaviour
         }
         LevelData myLevel = new LevelData();
 
-        // Imagine you have a bunch of tiles with a "Tile" tag
-        GameObject[] tilesInScene = GameObject.FindGameObjectsWithTag("Tile");
-        GameObject[] EnemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] EnvInScene = GameObject.FindGameObjectsWithTag("Environment");
+        // Finds everything with the LevelObjectInfo script, regardless of Tag
+        LevelObjectInfo[] allObjects = FindObjectsOfType<LevelObjectInfo>();
 
-        foreach (GameObject t in tilesInScene)
+        foreach (LevelObjectInfo info in allObjects)
         {
             TileData td = new TileData();
-            td.x = (int)t.transform.position.x;
-            td.z = (int)t.transform.position.z;
-            td.tileID = 1; // You'd get this from a script on the tile
-            
-            myLevel.tiles.Add(td);
-        }
-        foreach (GameObject t in EnemiesInScene)
-        {
-            TileData td = new TileData();
-            td.x = (int)t.transform.position.x;
-            td.z = (int)t.transform.position.z;
-            td.tileID = 2; // You'd get this from a script on the tile
-            
-            myLevel.tiles.Add(td);
-        }
-        foreach (GameObject t in EnvInScene)
-        {
-            TileData td = new TileData();
-            td.x = (int)t.transform.position.x;
-            td.z = (int)t.transform.position.z;
-            td.tileID = 3; // You'd get this from a script on the tile
+            td.x = (int)info.transform.position.x;
+            td.z = (int)info.transform.position.z;
+            td.tileID = info.tileID;
             
             myLevel.tiles.Add(td);
         }
@@ -175,6 +162,7 @@ public class LevelEditorManager : MonoBehaviour
         worldPosition.y = 0; 
 
         GameObject tmp;
+        GameObject prefab = registry.GetPrefab(currentObject + 1);
         //OnMap om = Map.GetComponent<OnMap>();
         if(previewObject.CompareTag("Tile"))
         {
@@ -183,7 +171,7 @@ public class LevelEditorManager : MonoBehaviour
                 Debug.Log("Can not place Tile");
                 return;
             } 
-            tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+            tmp = Instantiate(prefab, worldPosition, Quaternion.identity);
             tmp.AddComponent<collisionDetector>();
             tmp.AddComponent<EditObject>();
             Debug.Log("Placing Tile");
@@ -194,7 +182,7 @@ public class LevelEditorManager : MonoBehaviour
             Debug.Log("Cannot place object here!");
             return;
         }
-        tmp = Instantiate(Objects[currentObject], worldPosition, Quaternion.identity);
+        tmp = Instantiate(prefab, worldPosition, Quaternion.identity);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
     }
@@ -202,9 +190,15 @@ public class LevelEditorManager : MonoBehaviour
     public void setPreview()
     {
         GameObject tmp = previewObject;
-        previewObject = Instantiate(Objects[currentObject], previewObject.transform.position, Quaternion.identity);
+        GameObject prefab = registry.GetPrefab(currentObject + 1);
+        previewObject = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
         Destroy(tmp);
         previewObject.AddComponent<collisionDetector>();
+        LevelObjectInfo info = previewObject.GetComponent<LevelObjectInfo>();
+        if (info != null)
+        {
+            Destroy(info); // Removes LevelObjectInfor from the preview object so it doesn't get saved.
+        }
         if(previewObject.CompareTag("Tile"))
         {
             previewObject.transform.Find("TileDetector").gameObject.SetActive(false);
@@ -255,6 +249,37 @@ public class LevelEditorManager : MonoBehaviour
     public editState getMode()
     {
         return currentEditState;
+    }
+
+    public void CreatePreviewButtons()
+    {
+        // Find the content parent once to save performance
+        Transform contentParent = GameObject.Find("Content").transform;
+
+        foreach(TileRegistry.TileEntry te in registry.entries)
+        {
+            // 1. Create the Button Root
+            GameObject btnObj = new GameObject(te.prefab.name + "_Button");
+            btnObj.transform.SetParent(contentParent, false);
+            
+            // 2. Add UI Visuals (Buttons need an Image to be clickable!)
+            btnObj.AddComponent<CanvasRenderer>();
+            btnObj.AddComponent<Image>(); 
+            Button btn = btnObj.AddComponent<Button>();
+
+            // 3. Create a Child Object for the Text
+            GameObject textObj = new GameObject("Text");
+            textObj.transform.SetParent(btnObj.transform, false);
+            
+            // Use TextMeshProUGUI, NOT TMP_Text
+            TextMeshProUGUI btnText = textObj.AddComponent<TextMeshProUGUI>();
+            btnText.text = te.prefab.name;
+            btnText.fontSize = 24;
+            btnText.alignment = TextAlignmentOptions.Center;
+            btnText.color = Color.black;
+
+            previewButtons.Add(btn);
+        }
     }
 
 }

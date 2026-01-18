@@ -8,6 +8,7 @@ public class RPGLevelLoader : MonoBehaviour
     public List<GameObject> Maps = new List<GameObject>();
     public GameObject tile;
     private string savePath;
+    public TileRegistry registry;
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -46,12 +47,11 @@ public class RPGLevelLoader : MonoBehaviour
         }
         foreach(TileData td in newLevel.tiles)
         {
-            if(td.tileID == 1)
-                Instantiate(tile, new Vector3(td.x, 0, td.z), Quaternion.identity);
-            else if (td.tileID == 2)
-                Instantiate(Objects[0], new Vector3(td.x, 0, td.z), Quaternion.identity);
-            else if (td.tileID == 3)
-                Instantiate(Objects[1], new Vector3(td.x, 0, td.z), Quaternion.identity);
+            GameObject prefab = registry.GetPrefab(td.tileID);
+            if (prefab != null)
+            {
+                Instantiate(prefab, new Vector3(td.x, 0, td.z), Quaternion.identity);
+            }
         }
         Instantiate(Maps[newLevel.MapSize], new Vector3(0, 0, 0), Quaternion.identity);
     }

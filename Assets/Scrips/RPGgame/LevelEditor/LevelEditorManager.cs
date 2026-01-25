@@ -28,6 +28,8 @@ public class LevelEditorManager : MonoBehaviour
     }
     editState currentEditState;
     public bool isEditingObject = false;
+    //public Bounds TileBounds;
+    public List<Collider> tileColliders = new List<Collider>();
     void Start()
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -176,9 +178,10 @@ public class LevelEditorManager : MonoBehaviour
             tmp.AddComponent<EditObject>();
             Debug.Log("Placing Tile");
             Tiles.Add(tmp);
+            //updateTileBounds();
             return;
         }
-        if (cd.isColliding || !cd.isOnMap ) {
+        if (cd.isColliding || !cd.isOnMap) {
             Debug.Log("Cannot place object here!");
             return;
         }
@@ -215,6 +218,7 @@ public class LevelEditorManager : MonoBehaviour
         previewObject.transform.position = worldPosition;
     }
 
+    // Tile logic functions
     private bool AllTilesConnected()
     {
         foreach (GameObject t in Tiles)
@@ -229,6 +233,26 @@ public class LevelEditorManager : MonoBehaviour
         }
         return true;
     }
+    // This might be inefficint as it clears and repopulates the list every time, fix this later
+    // public void updateTileBounds()
+    // {
+    //     tileColliders.Clear();
+    //     foreach (GameObject t in Tiles)
+    //     {
+    //         Collider col = t.GetComponent<Collider>();
+    //         tileColliders.Add(col);
+    //     }
+    //     if (tileColliders.Count == 0)
+    //     {
+    //         TileBounds = new Bounds(Vector3.zero, Vector3.zero);
+    //         return;
+    //     }
+    //     TileBounds = tileColliders[0].bounds;
+    //     for (int i = 1; i < tileColliders.Count; i++)
+    //     {
+    //         TileBounds.Encapsulate(tileColliders[i].bounds);
+    //     }
+    // }
 
     //Button Functions are below this line
     public void SetMode()

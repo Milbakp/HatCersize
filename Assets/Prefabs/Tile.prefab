@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 2451870898632467916}
   - component: {fileID: 6657635170717221918}
   - component: {fileID: 2285537317845712222}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tile
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7748538544692006871}

@@ -211,7 +211,7 @@ PrefabInstance:
       addedObject: {fileID: -8226759189956830549}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7651997809681725944}
+      addedObject: {fileID: -2864496686406892847}
   m_SourcePrefab: {fileID: 100100000, guid: 19ee47e9c263f6f46b5a5952e59471ec, type: 3}
 --- !u!4 &4726402673095590195 stripped
 Transform:
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileID: 3
---- !u!114 &7651997809681725944
+--- !u!114 &-2864496686406892847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,8 +293,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5394290478090918793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c8feb14bddb1cb41bb2e117516e2618, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isColliding: 0
-  isOnMap: 0
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

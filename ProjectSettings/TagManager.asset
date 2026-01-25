@@ -15,6 +15,9 @@ TagManager:
   - Tile
   - Map
   - TileDector
+  - StartPosition
+  - EndPosition
+  - CameraPosition
   layers:
   - Default
   - TransparentFX
@@ -23,7 +26,7 @@ TagManager:
   - Water
   - UI
   - TileDetectorLayer
-  - 
+  - Walking
   - 
   - 
   - whatIsGround

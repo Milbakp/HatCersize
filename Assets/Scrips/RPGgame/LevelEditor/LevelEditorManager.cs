@@ -16,8 +16,6 @@ public class LevelEditorManager : MonoBehaviour
     private string savePath;
     public GameObject previewObject;
     public Camera camera;
-    public int MapType = 0;
-    public List<GameObject> Maps = new List<GameObject>();
     public List<Button> previewButtons = new List<Button>();
     public TMP_Text editBttonText;
     public TileRegistry registry;
@@ -28,10 +26,12 @@ public class LevelEditorManager : MonoBehaviour
     }
     editState currentEditState;
     public bool isEditingObject = false;
+    public NavMeshManager navMeshManager;
     void Start()
     {     
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
         setPreview();
+        // Setting up the object preview buttons
         CreatePreviewButtons();
         foreach (Button btn in previewButtons)
         {
@@ -135,6 +135,12 @@ public class LevelEditorManager : MonoBehaviour
             Debug.Log("Cannot export level, not all tiles are connected");
             return;
         }
+        navMeshManager.createNavMesh();
+        if (navMeshManager.IsPathAvailable() == false)
+        {
+            Debug.Log("Cannot export level");
+            return;
+        }
         LevelData myLevel = new LevelData();
 
         // Finds everything with the LevelObjectInfo script, regardless of Tag
@@ -149,9 +155,8 @@ public class LevelEditorManager : MonoBehaviour
             
             myLevel.tiles.Add(td);
         }
-        OnMap om = Maps[MapType].GetComponent<OnMap>();
-        myLevel.MapSize = om.MapSize;
-
+        Vector3 playerStartPos = GameObject.FindWithTag("StartPosition").transform.position;
+        myLevel.playerStartPosition = playerStartPos;
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {

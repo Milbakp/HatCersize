@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class RPGLevelLoader : MonoBehaviour
 {
-    public List<GameObject> Objects = new List<GameObject>();
-    public List<GameObject> Maps = new List<GameObject>();
     public GameObject tile;
     private string savePath;
     public TileRegistry registry;
+    public GameObject player;
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -53,6 +52,6 @@ public class RPGLevelLoader : MonoBehaviour
                 Instantiate(prefab, new Vector3(td.x, 0, td.z), Quaternion.identity);
             }
         }
-        Instantiate(Maps[newLevel.MapSize], new Vector3(0, 0, 0), Quaternion.identity);
+        player.transform.position = newLevel.playerStartPosition;
     }
 }

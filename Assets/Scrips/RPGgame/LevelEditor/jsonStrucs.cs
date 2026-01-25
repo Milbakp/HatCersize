@@ -8,7 +8,7 @@ public class TileData
     public int tileHeight = 5;
     public int x;
     public int z;
-    public int tileID; // e.g., 1 = Grass, 2 = Wall
+    public int tileID;
 }
 [System.Serializable]
 public class aboveObjects
@@ -22,5 +22,5 @@ public class aboveObjects
 public class LevelData
 {
     public List<TileData> tiles = new List<TileData>();
-    public int MapSize;
+    public Vector3 playerStartPosition;
 }

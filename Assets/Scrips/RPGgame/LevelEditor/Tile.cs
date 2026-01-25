@@ -9,6 +9,7 @@ public class Tile : MonoBehaviour
     public GameObject currentObject;
     [SerializeField] LevelEditorManager levelEditorManager;
     public bool connectedToMap;
+    private float tileLockWidth = 10.0f;
 
     public void Start()
     {
@@ -21,8 +22,8 @@ public class Tile : MonoBehaviour
     }
     public void Update()
     {
-        transform.position = new Vector3(RoundToNearestMultiple(transform.position.x, 5.0f
-        ), transform.position.y, RoundToNearestMultiple(transform.position.z, 5.0f) );
+        transform.position = new Vector3(RoundToNearestMultiple(transform.position.x, tileLockWidth
+        ), transform.position.y, RoundToNearestMultiple(transform.position.z, tileLockWidth) );
     }
 
     public static float RoundToNearestMultiple(float value, float multiple)

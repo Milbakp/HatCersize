@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class LevelEditorManager : MonoBehaviour
 {
@@ -157,18 +158,22 @@ public class LevelEditorManager : MonoBehaviour
         }
         Vector3 playerStartPos = GameObject.FindWithTag("StartPosition").transform.position;
         myLevel.playerStartPosition = playerStartPos;
+
+        Vector3 destinationPos = GameObject.FindWithTag("EndPosition").transform.position;
+        myLevel.destinationPosition = destinationPos;
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {
         collisionDetector cd = previewObject.GetComponent<collisionDetector>();
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = camera.transform.position.y;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPosition.y = 0; 
+        //Vector3 mousePos = Input.mousePosition;
+        //mousePos.z = camera.transform.position.y;
+        //Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+
+        //previewObject.transform.position = new Vector3(previewObject.transform.position.x, previewObject.transform.position.y, previewObject.transform.position.z);
 
         GameObject tmp;
         GameObject prefab = registry.GetPrefab(currentObject + 1);
-        //OnMap om = Map.GetComponent<OnMap>();
+
         if(previewObject.CompareTag("Tile"))
         {
             if (cd.isOnMap)
@@ -176,7 +181,7 @@ public class LevelEditorManager : MonoBehaviour
                 Debug.Log("Can not place Tile");
                 return;
             } 
-            tmp = Instantiate(prefab, worldPosition, Quaternion.identity);
+            tmp = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
             tmp.AddComponent<collisionDetector>();
             tmp.AddComponent<EditObject>();
             Debug.Log("Placing Tile");
@@ -187,7 +192,7 @@ public class LevelEditorManager : MonoBehaviour
             Debug.Log("Cannot place object here!");
             return;
         }
-        tmp = Instantiate(prefab, worldPosition, Quaternion.identity);
+        tmp = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
     }
@@ -208,6 +213,8 @@ public class LevelEditorManager : MonoBehaviour
         {
             previewObject.transform.Find("TileDetector").gameObject.SetActive(false);
         }
+        previewObject.transform.position = new Vector3 (previewObject.transform.position.x, 0, previewObject.transform.position.z);
+        previewObject.transform.position = new Vector3(previewObject.transform.position.x, LiftAboveZero(previewObject), previewObject.transform.position.z);
     }
 
     private void preview()
@@ -216,8 +223,8 @@ public class LevelEditorManager : MonoBehaviour
         // Sets distance of the object relative to the camera so the object appears under the mouse cursor
         mousePos.z = camera.transform.position.y;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPosition.y = 0; 
-        previewObject.transform.position = worldPosition;
+        //worldPosition.y = 0; 
+        previewObject.transform.position =  new Vector3 (worldPosition.x, previewObject.transform.position.y, worldPosition.z);
     }
 
     private bool AllTilesConnected()
@@ -233,6 +240,45 @@ public class LevelEditorManager : MonoBehaviour
             }
         }
         return true;
+    }
+    // Returns distance needed to lift object above y = 0
+    public float LiftAboveZero(GameObject liftGameObject)
+    {
+        // 1. Get the Bounds of the object (includes all children)
+        Bounds combinedBounds = GetTargetBounds(liftGameObject);
+
+        // 2. Calculate how far the bottom of the bounds is from y = 0
+        float bottomY = combinedBounds.min.y;
+
+        if (bottomY < 0)
+        {
+            // 3. Lift the object by the difference
+            float distanceToLift = Mathf.Abs(bottomY);
+            //transform.position += new Vector3(0, distanceToLift, 0);
+            Debug.Log($"{gameObject.name} lifted by {distanceToLift} units.");
+            return distanceToLift;
+        }
+        else
+        {
+            Debug.Log($"{gameObject.name} is already above zero.");
+        }
+        return 0.0f;
+    }
+    private Bounds GetTargetBounds(GameObject obj)
+    {
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        
+        if (renderers.Length == 0) return new Bounds(obj.transform.position, Vector3.zero);
+
+        // Initialize bounds with the first renderer
+        Bounds b = renderers[0].bounds;
+
+        // Encapsulate all other renderers (for objects with multiple parts)
+        for (int i = 1; i < renderers.Length; i++)
+        {
+            b.Encapsulate(renderers[i].bounds);
+        }
+        return b;
     }
 
     //Button Functions are below this line
@@ -285,6 +331,11 @@ public class LevelEditorManager : MonoBehaviour
 
             previewButtons.Add(btn);
         }
+    }
+
+    public void PlayTestLevel()
+    {
+        SceneManager.LoadScene("TestLoadLevel");
     }
 
 }

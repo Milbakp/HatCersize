@@ -14,8 +14,6 @@ public class RPGLevelManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject levelCompletedScreen;
     public GameObject pauseScreen;
-    public GameObject levelGame;
-    public PlayerCamera playerCamera;
     public int numOfEnemies;
     public GameObject Door;
     public bool levelCompleted;
@@ -23,7 +21,6 @@ public class RPGLevelManager : MonoBehaviour
     public AudioClip doorOpenSound;
     void Start()
     {
-        //levelGame.SetActive(true);
         Time.timeScale = 1f;
         gameOverScreen.SetActive(false);
         levelCompletedScreen.SetActive(false);

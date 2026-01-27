@@ -59,8 +59,9 @@ public class EditObject : MonoBehaviour
         // Sets distance of the object relative to the camera so the object appears under the mouse cursor
         mousePos.z = camera.transform.position.y;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPosition.y = 0; 
-        transform.position = worldPosition;
+        //worldPosition.y = 0; 
+        //transform.position = worldPosition;
+        transform.position =  new Vector3 (worldPosition.x, transform.position.y, worldPosition.z);
     }
 
     private bool isCollision()

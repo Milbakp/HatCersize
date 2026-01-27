@@ -7,6 +7,7 @@ public class TileData
     public int tileWidth = 5;
     public int tileHeight = 5;
     public int x;
+    public int y = 5;
     public int z;
     public int tileID;
 }
@@ -23,4 +24,5 @@ public class LevelData
 {
     public List<TileData> tiles = new List<TileData>();
     public Vector3 playerStartPosition;
+    public Vector3 destinationPosition;
 }

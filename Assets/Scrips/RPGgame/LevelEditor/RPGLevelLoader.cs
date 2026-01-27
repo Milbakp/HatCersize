@@ -8,6 +8,7 @@ public class RPGLevelLoader : MonoBehaviour
     private string savePath;
     public TileRegistry registry;
     public GameObject player;
+    public GameObject destination;
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -49,9 +50,15 @@ public class RPGLevelLoader : MonoBehaviour
             GameObject prefab = registry.GetPrefab(td.tileID);
             if (prefab != null)
             {
+                // Temporary fix for enemy spawn height
+                if (prefab.CompareTag("Enemy")){
+                    Instantiate(prefab, new Vector3(td.x, 3, td.z), Quaternion.identity);
+                    continue;
+                }
                 Instantiate(prefab, new Vector3(td.x, 0, td.z), Quaternion.identity);
             }
         }
         player.transform.position = newLevel.playerStartPosition;
+        destination.transform.position = newLevel.destinationPosition;
     }
 }

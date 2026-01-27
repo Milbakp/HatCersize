@@ -46,6 +46,12 @@ public class MenuButtons : MonoBehaviour
         PlayerPrefs.SetInt("specialType", 1);
     }
 
+    public void LevelEditorButton()
+    {
+        SceneManager.LoadScene("LevelEditor");
+        Debug.Log("LevelEditorButton");
+    }
+
     public void QuitButton()
     {
         BLEManager.Instance?.bleConnect?.Disconnect();

@@ -14,14 +14,26 @@ public class collisionDetector : MonoBehaviour
         isOnMap = false;
         rb.constraints = RigidbodyConstraints.FreezeAll; // Freezing all movemnt when in editor.
     }
-    void OnTriggerEnter(Collider other) {
+    // void OnTriggerEnter(Collider other) {
+    //     if (other.gameObject.CompareTag("Map") || other.gameObject.CompareTag("Tile"))
+    //     {
+    //         isOnMap = true;
+    //         return;
+    //     }
+    //     Debug.Log("Collision");
+    //     isColliding = true;
+    // }
+
+    void OnTriggerStay(Collider other) {
         if (other.gameObject.CompareTag("Map") || other.gameObject.CompareTag("Tile"))
         {
             isOnMap = true;
             return;
         }
-        Debug.Log("Collision");
+        //Debug.Log(other.gameObject.name);
         isColliding = true;
+
+        
     }
 
     void OnTriggerExit(Collider other) {

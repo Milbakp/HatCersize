@@ -27,7 +27,7 @@ TagManager:
   - UI
   - TileDetectorLayer
   - Walking
-  - 
+  - PlayerWalking
   - 
   - whatIsGround
   - 

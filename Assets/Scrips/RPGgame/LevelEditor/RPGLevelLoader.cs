@@ -9,6 +9,7 @@ public class RPGLevelLoader : MonoBehaviour
     public TileRegistry registry;
     public GameObject player;
     public GameObject destination;
+    public RPGLevelManager levelManager;
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -50,15 +51,16 @@ public class RPGLevelLoader : MonoBehaviour
             GameObject prefab = registry.GetPrefab(td.tileID);
             if (prefab != null)
             {
-                // Temporary fix for enemy spawn height
-                if (prefab.CompareTag("Enemy")){
-                    Instantiate(prefab, new Vector3(td.x, 3, td.z), Quaternion.identity);
-                    continue;
-                }
-                Instantiate(prefab, new Vector3(td.x, 0, td.z), Quaternion.identity);
+                Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.identity);
             }
         }
-        player.transform.position = newLevel.playerStartPosition;
+        player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
         destination.transform.position = newLevel.destinationPosition;
+
+        // Getting initial enemy count
+        GameObject[]enemiesArray = GameObject.FindGameObjectsWithTag("Enemy");
+        int numOfEnemies = enemiesArray.Length;
+        Debug.LogError("Number of Enemies at Start: " + numOfEnemies);
+        levelManager.numOfEnemies = numOfEnemies;
     }
 }

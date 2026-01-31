@@ -150,8 +150,9 @@ public class LevelEditorManager : MonoBehaviour
         foreach (LevelObjectInfo info in allObjects)
         {
             TileData td = new TileData();
-            td.x = (int)info.transform.position.x;
-            td.z = (int)info.transform.position.z;
+            td.x = info.transform.position.x;
+            td.y = info.transform.position.y;
+            td.z = info.transform.position.z;
             td.tileID = info.tileID;
             
             myLevel.tiles.Add(td);

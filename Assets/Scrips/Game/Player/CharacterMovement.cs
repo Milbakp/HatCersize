@@ -83,7 +83,7 @@ public class CharacterMovement : MonoBehaviour
             float turnDirection = turnState * turnSpeed * Time.deltaTime;
             transform.Rotate(0, turnDirection, 0); // Rotate around the y-axis
         }
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0.36f, gameObject.transform.position.z);
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
     
     private void CharacterPlaySound()

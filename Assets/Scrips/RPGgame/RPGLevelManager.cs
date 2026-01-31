@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RPGLevelManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class RPGLevelManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject levelCompletedScreen;
     public GameObject pauseScreen;
+    // Enemy related things
     public int numOfEnemies;
     public GameObject Door;
     public bool levelCompleted;

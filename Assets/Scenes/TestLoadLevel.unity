@@ -604,7 +604,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: tryAgainButton
         m_Mode: 1
@@ -1052,6 +1052,7 @@ MonoBehaviour:
   registry: {fileID: 11400000, guid: 92b7f270b74d9f24b8088ad33ab02613, type: 2}
   player: {fileID: 834704482}
   destination: {fileID: 1228908605}
+  levelManager: {fileID: 1404845934}
 --- !u!4 &289177322
 Transform:
   m_ObjectHideFlags: 0
@@ -1758,7 +1759,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: tryAgainButton
         m_Mode: 1
@@ -1891,7 +1892,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: returnToMenu
         m_Mode: 1
@@ -2296,7 +2297,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1404845934}
         m_TargetAssemblyTypeName: RPGLevelManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -3419,7 +3420,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: tryAgainButton
         m_Mode: 1
@@ -4226,7 +4227,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: returnToLevelSelect
         m_Mode: 1
@@ -5230,7 +5231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8743619353784790130, guid: 55842730aad3730409e84c557e7f2e4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.36
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: 8743619353784790130, guid: 55842730aad3730409e84c557e7f2e4e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5910,7 +5911,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
         m_MethodName: returnToLevelSelect
         m_Mode: 1

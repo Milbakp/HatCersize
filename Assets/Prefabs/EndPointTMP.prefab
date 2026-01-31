@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5539243637584063493}
   - component: {fileID: 5219049958255322691}
   - component: {fileID: 4359428452545754330}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 7456898799169669081}
   - component: {fileID: 8454848544011572546}
   - component: {fileID: 8717235156691270540}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EndPointTMP
   m_TagString: EndPosition
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3106105011403313207}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shields
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5593099768784188870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraPos
   m_TagString: CameraPosition
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7265323474340550115}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1057475961614575916}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RangeAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 7100383162702480570}
   - component: {fileID: 4109071243581375030}
   - component: {fileID: 5013141698991493420}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 4073081294906401352}
   - component: {fileID: 5879538043100202684}
   - component: {fileID: 9007714985971389828}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: InteractRange
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 1541647449343677801}
   - component: {fileID: 6571752616475603060}
   - component: {fileID: 2151858825231749628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerObject
   m_TagString: PlayerCollision
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 160
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 5207842674356419900}
   - component: {fileID: 2305870403398686100}
   - component: {fileID: 5999548013732819432}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: aoeAttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,6 +670,10 @@ PrefabInstance:
     - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_Name
       value: Shield (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4265518209396838482, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_LocalScale.x
@@ -767,6 +771,10 @@ PrefabInstance:
     - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_Name
       value: Shield (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4265518209396838482, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_LocalScale.x
@@ -921,9 +929,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: -905690159841262435, guid: 8080436bd1f4eb5438d3734c0158a05c, type: 3}
+    - target: {fileID: -3870958079030949770, guid: 7bb626b9ca678e34cbb239aaca2c6e1d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7bb626b9ca678e34cbb239aaca2c6e1d, type: 3}
       propertyPath: m_Name
       value: Wand
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7bb626b9ca678e34cbb239aaca2c6e1d, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6855216976715210225, guid: 7bb626b9ca678e34cbb239aaca2c6e1d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1022,8 +1038,16 @@ PrefabInstance:
       value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: 2975012047544780077, guid: bb1c34ef591a1c74bbd8cfc93fdc7992, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2975012047544780077, guid: bb1c34ef591a1c74bbd8cfc93fdc7992, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4643329973596160044, guid: bb1c34ef591a1c74bbd8cfc93fdc7992, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1051,6 +1075,10 @@ PrefabInstance:
     - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_Name
       value: Shield (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4265518209396838482, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_LocalScale.x
@@ -1148,6 +1176,10 @@ PrefabInstance:
     - target: {fileID: 6001082165439119453, guid: dd2b765a61000004fb6d83a68e499ca1, type: 3}
       propertyPath: m_Name
       value: Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001082165439119453, guid: dd2b765a61000004fb6d83a68e499ca1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6342177423401818855, guid: dd2b765a61000004fb6d83a68e499ca1, type: 3}
       propertyPath: m_LocalScale.x
@@ -1256,6 +1288,10 @@ PrefabInstance:
     - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493098528232655592, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4265518209396838482, guid: 749181ae575738d438caaeebbc4bfbb2, type: 3}
       propertyPath: m_LocalScale.x

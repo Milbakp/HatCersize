@@ -6,9 +6,9 @@ public class TileData
 {
     public int tileWidth = 5;
     public int tileHeight = 5;
-    public int x;
-    public int y = 5;
-    public int z;
+    public float x;
+    public float y;
+    public float z;
     public int tileID;
 }
 [System.Serializable]

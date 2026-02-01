@@ -6,6 +6,7 @@ using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography;
 
 public class LevelEditorManager : MonoBehaviour
 {
@@ -49,18 +50,6 @@ public class LevelEditorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled != true)
-        // {
-        //     placeObject();
-        // }
-        // else if (Input.GetKeyDown(KeyCode.Space)  && tileComponent.tileIsFilled == true)
-        // {
-        //     Debug.Log("Tile is taken");
-        // }
-        // if (Input.GetKeyDown(KeyCode.D)  && tileComponent.tileIsFilled == true)
-        // {
-        //     destroyObject();
-        // }
         if (Input.GetKeyDown(KeyCode.S) && Input.GetKey(KeyCode.LeftControl))
         {
             ExportCurrentScene();
@@ -77,10 +66,15 @@ public class LevelEditorManager : MonoBehaviour
             preview();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     currentEditState = editState.Editting;
+        // }
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            currentEditState = editState.Editting;
+            previewObject.transform.Rotate(0, 90, 0);
         }
+
         
     }
     public void placeObject()
@@ -153,6 +147,7 @@ public class LevelEditorManager : MonoBehaviour
             td.x = info.transform.position.x;
             td.y = info.transform.position.y;
             td.z = info.transform.position.z;
+            td.rotationY = info.transform.rotation.eulerAngles.y;
             td.tileID = info.tileID;
             
             myLevel.tiles.Add(td);
@@ -193,7 +188,7 @@ public class LevelEditorManager : MonoBehaviour
             Debug.Log("Cannot place object here!");
             return;
         }
-        tmp = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
+        tmp = Instantiate(prefab, previewObject.transform.position, previewObject.transform.rotation);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
     }

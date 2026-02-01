@@ -9,6 +9,7 @@ public class TileData
     public float x;
     public float y;
     public float z;
+    public float rotationY;
     public int tileID;
 }
 [System.Serializable]

@@ -35,6 +35,11 @@ public class EditObject : MonoBehaviour
             transform.position = originalPosition;
             levelEditorManager.isEditingObject = false;
         }
+        if (Input.GetKeyDown(KeyCode.X) && isEditing)
+        {
+            levelEditorManager.isEditingObject = false;
+            Destroy(gameObject);
+        }
     }
     private void OnMouseDown() {
         if(levelEditorManager.getMode() != LevelEditorManager.editState.Editting)

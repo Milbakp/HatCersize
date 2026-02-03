@@ -59,4 +59,8 @@ public class MenuButtons : MonoBehaviour
         Application.Quit();
         Debug.Log("QuitButton");
     }
+    public void PlayTestLevel()
+    {
+        SceneManager.LoadScene("TestLoadLevel");
+    }
 }

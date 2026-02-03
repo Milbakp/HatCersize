@@ -24,6 +24,10 @@ public class aboveObjects
 public class LevelData
 {
     public List<TileData> tiles = new List<TileData>();
+    // Player info
     public Vector3 playerStartPosition;
+    public float playerRotationY;
+    // Endpoint info
     public Vector3 destinationPosition;
+    public float destinationRotationY;
 }

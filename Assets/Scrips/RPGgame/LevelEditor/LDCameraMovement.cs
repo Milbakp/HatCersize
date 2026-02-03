@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LDCameraMovement : MonoBehaviour
 {
     public Camera camera;
-    public float cameraSpeed = 20f;
+    public float cameraSpeed = 30f;
+    
     void Start()
     {
         
@@ -12,6 +14,10 @@ public class LDCameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) {
+        // The mouse is over a UI element
+            return;
+        }
         // Move camera with WASD keys
         if(Input.GetKey(KeyCode.A))
         {
@@ -33,11 +39,11 @@ public class LDCameraMovement : MonoBehaviour
         float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
         if(scrollDelta > 0)
         {
-            camera.transform.position += new Vector3(0, -1, 0) * Time.deltaTime * 100;
+            camera.transform.position += new Vector3(0, -1, 0) * Time.deltaTime * 200;
         }
         if(scrollDelta < 0)
         {
-            camera.transform.position += new Vector3(0, 1, 0) * Time.deltaTime * 100;
+            camera.transform.position += new Vector3(0, 1, 0) * Time.deltaTime * 200;
         }
     }
 }

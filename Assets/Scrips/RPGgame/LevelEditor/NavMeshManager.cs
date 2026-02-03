@@ -30,8 +30,23 @@ public class NavMeshManager : MonoBehaviour
     }
     public bool setStartAndEnd()
     {
-        startPoint = GameObject.FindWithTag("StartPosition");
-        endPoint = GameObject.FindWithTag("EndPosition");
+        // This duplicates the process in LevelEditor Manager, Probably a cleaner way to do this. but it's fine for now.
+        LevelObjectInfo[] allObjects = FindObjectsOfType<LevelObjectInfo>();
+        foreach (LevelObjectInfo info in allObjects)
+        {
+            if (info.CompareTag("StartPosition"))
+            {
+                startPoint = info.transform.gameObject;
+                continue;
+            }
+            else if (info.CompareTag("EndPosition"))
+            {
+                endPoint = info.transform.gameObject;
+                continue;
+            }
+        }
+        // startPoint = GameObject.FindWithTag("StartPosition");
+        // endPoint = GameObject.FindWithTag("EndPosition");
         return startPoint != null && endPoint != null;
     }
 
@@ -46,8 +61,6 @@ public class NavMeshManager : MonoBehaviour
         
         // Calculate the path from A to B
         // The 'true' parameter allows for partial paths (if B is unreachable but a nearby point is)
-        Debug.Log(startPoint.transform.position);
-        Debug.Log(endPoint.transform.position);
         UnityEngine.AI.NavMesh.CalculatePath(startPoint.transform.position, endPoint.transform.position, UnityEngine.AI.NavMesh.AllAreas, path);
 
         // Check if the path status is "PathComplete"

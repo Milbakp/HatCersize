@@ -6,7 +6,6 @@ using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using System.Security.Cryptography;
 
 public class LevelEditorManager : MonoBehaviour
 {
@@ -21,6 +20,7 @@ public class LevelEditorManager : MonoBehaviour
     public List<Button> previewButtons = new List<Button>();
     public TMP_Text editBttonText;
     public TileRegistry registry;
+    public TMP_Text errorMessages;
     public enum editState
     {
         Setting,
@@ -125,17 +125,28 @@ public class LevelEditorManager : MonoBehaviour
     }
     public void ExportCurrentScene()
     {
+        GameObject[] startPoints = GameObject.FindGameObjectsWithTag("StartPosition");
+        GameObject[] endPoints = GameObject.FindGameObjectsWithTag("EndPosition");
+        if(!(startPoints.Length >=1) || !(endPoints.Length >= 1))
+        {
+            displayErrorMessage("Cannot export level, start point or end point not yet set.");
+            Debug.Log("Cannot export level, start point or end point not yet set.");
+            return;
+        }
         if (!AllTilesConnected())
         {
+            displayErrorMessage("Cannot export level, start point or end point not yet set.");
             Debug.Log("Cannot export level, not all tiles are connected");
             return;
         }
         navMeshManager.createNavMesh();
         if (navMeshManager.IsPathAvailable() == false)
         {
-            Debug.Log("Cannot export level");
+            displayErrorMessage("Cannot export level, Path doesn't exist");
+            Debug.Log("Cannot export level, Path doesn't exist");
             return;
         }
+
         LevelData myLevel = new LevelData();
 
         // Finds everything with the LevelObjectInfo script, regardless of Tag
@@ -143,6 +154,21 @@ public class LevelEditorManager : MonoBehaviour
 
         foreach (LevelObjectInfo info in allObjects)
         {
+            // Ignore the start postion and endposition objects
+            if (info.CompareTag("StartPosition"))
+            {
+                GameObject playerStart = info.transform.gameObject;
+                myLevel.playerStartPosition = playerStart.transform.position;
+                myLevel.playerRotationY = playerStart.transform.rotation.eulerAngles.y;
+                continue;
+            }
+            else if (info.CompareTag("EndPosition"))
+            {
+                GameObject destination = info.transform.gameObject;
+                myLevel.destinationPosition = destination.transform.position;
+                myLevel.destinationRotationY = destination.transform.rotation.eulerAngles.y; 
+                continue;
+            }
             TileData td = new TileData();
             td.x = info.transform.position.x;
             td.y = info.transform.position.y;
@@ -151,15 +177,41 @@ public class LevelEditorManager : MonoBehaviour
             td.tileID = info.tileID;
             
             myLevel.tiles.Add(td);
+            displayErrorMessage("Level Saved");
         }
-        Vector3 playerStartPos = GameObject.FindWithTag("StartPosition").transform.position;
-        myLevel.playerStartPosition = playerStartPos;
 
-        Vector3 destinationPos = GameObject.FindWithTag("EndPosition").transform.position;
-        myLevel.destinationPosition = destinationPos;
+        // GameObject playerStart = GameObject.FindWithTag("StartPosition");
+        // myLevel.playerStartPosition = playerStart.transform.position;
+        // myLevel.playerRotationY = playerStart.transform.rotation.eulerAngles.y;
+
+        // GameObject destination = GameObject.FindWithTag("EndPosition");
+        // myLevel.destinationPosition = destination.transform.position;
+        // myLevel.destinationRotationY = destination.transform.rotation.eulerAngles.y; 
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {
+        // makes sure you don't place more than one start and end point.
+        if(previewObject.CompareTag("StartPosition"))
+        {
+            GameObject[] startPoints = GameObject.FindGameObjectsWithTag("StartPosition");
+            if(startPoints.Length >= 2)
+            {
+                displayErrorMessage("Start point already exist");
+                Debug.Log("Start point already exist");
+                return;
+            }
+        }
+        if (previewObject.CompareTag("EndPosition"))
+        {
+            GameObject[] endPoints = GameObject.FindGameObjectsWithTag("EndPosition");
+            if(endPoints.Length >= 2)
+            {
+                displayErrorMessage("End point already exist");
+                Debug.Log("End point already exist");
+                return;
+            }
+        }
+        
         collisionDetector cd = previewObject.GetComponent<collisionDetector>();
         //Vector3 mousePos = Input.mousePosition;
         //mousePos.z = camera.transform.position.y;
@@ -174,6 +226,7 @@ public class LevelEditorManager : MonoBehaviour
         {
             if (cd.isOnMap)
             {
+                displayErrorMessage("Can not place Tile");
                 Debug.Log("Can not place Tile");
                 return;
             } 
@@ -185,6 +238,7 @@ public class LevelEditorManager : MonoBehaviour
             return;
         }
         if (cd.isColliding || !cd.isOnMap ) {
+            displayErrorMessage("Cannot place object here!");
             Debug.Log("Cannot place object here!");
             return;
         }
@@ -205,6 +259,8 @@ public class LevelEditorManager : MonoBehaviour
         {
             Destroy(info); // Removes LevelObjectInfor from the preview object so it doesn't get saved.
         }
+        // Makes sure the preview object does not effect the path finding.
+        previewObject.layer = LayerMask.NameToLayer("UI");
         if(previewObject.CompareTag("Tile"))
         {
             previewObject.transform.Find("TileDetector").gameObject.SetActive(false);
@@ -231,6 +287,7 @@ public class LevelEditorManager : MonoBehaviour
             DetectTileConnections dtc = tmp.GetComponentInChildren<DetectTileConnections>();
             if (!dtc.isConnected)
             {
+                displayErrorMessage("Not all tiles are connected");
                 Debug.Log("Not all tiles are connected");
                 return false;
             }
@@ -333,5 +390,24 @@ public class LevelEditorManager : MonoBehaviour
     {
         SceneManager.LoadScene("TestLoadLevel");
     }
-
+    // Functions for displaying error messages related to the level editor
+    private Coroutine messageRoutine;
+    public void displayErrorMessage(string message)
+    {
+        if (messageRoutine != null)
+        {
+            StopCoroutine(messageRoutine);
+        }
+        
+        errorMessages.SetText(message);
+        messageRoutine = StartCoroutine(errorMessageTime());
+        // errorMessages.SetText("");
+        //messageRoutine = null;
+    }
+    
+    private System.Collections.IEnumerator errorMessageTime()
+    {
+        yield return new WaitForSeconds(5);
+        errorMessages.SetText("");
+    }
 }

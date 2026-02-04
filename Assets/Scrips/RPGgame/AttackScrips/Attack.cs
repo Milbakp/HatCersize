@@ -50,10 +50,10 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
-        {
-            longRangeAttack();
-        }
+        // if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
+        // {
+        //     longRangeAttack();
+        // }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             weaponType = 1;

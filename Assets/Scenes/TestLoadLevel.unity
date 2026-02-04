@@ -1053,6 +1053,7 @@ MonoBehaviour:
   player: {fileID: 834704482}
   destination: {fileID: 1228908605}
   levelManager: {fileID: 1404845934}
+  controller: {fileID: 1538217473}
 --- !u!4 &289177322
 Transform:
   m_ObjectHideFlags: 0
@@ -5284,6 +5285,11 @@ MonoBehaviour:
 --- !u!82 &1538217469 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 5013141698991493420, guid: 55842730aad3730409e84c557e7f2e4e, type: 3}
+  m_PrefabInstance: {fileID: 1538217467}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &1538217473 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 8931433839962897992, guid: 55842730aad3730409e84c557e7f2e4e, type: 3}
   m_PrefabInstance: {fileID: 1538217467}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1559623025

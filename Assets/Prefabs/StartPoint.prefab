@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ed71be375d1e14bb7ca78e89e2e39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileID: 7
+  tileID: 9
 --- !u!65 &-3994260862096364139
 BoxCollider:
   m_ObjectHideFlags: 0

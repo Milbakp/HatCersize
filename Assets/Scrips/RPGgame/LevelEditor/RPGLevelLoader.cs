@@ -10,6 +10,7 @@ public class RPGLevelLoader : MonoBehaviour
     public GameObject player;
     public GameObject destination;
     public RPGLevelManager levelManager;
+    public CharacterController controller;
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -54,8 +55,12 @@ public class RPGLevelLoader : MonoBehaviour
                 Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
             }
         }
+
+        controller.enabled = false; 
         player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
         player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
+        controller.enabled = true;
+        
         destination.transform.position = newLevel.destinationPosition;
         destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
 

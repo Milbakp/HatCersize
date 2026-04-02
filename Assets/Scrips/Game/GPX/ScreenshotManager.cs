@@ -41,11 +41,14 @@ public class ScreenshotManager : MonoBehaviour
 #endif
     }
 
-    public void InitializeScreenshotFolder()
+    public async void InitializeScreenshotFolder()
     {
 #if ENABLE_WINMD_SUPPORT
-        defaultDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FitMazeScreenshots");
-        // Luqman : Gonna have to come back to thia
+        // Previously was set to the documents folder but it was not working and had access issues, so now set it to pictures folder
+        var picturesFolder = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+        defaultDirectory = Path.Combine(picturesFolder.SaveFolder.Path, "HatCersizeScreenshots");
+        //defaultDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FitMazeScreenshots");
+        Debug.LogError($"Default directory set to: {defaultDirectory}");
         if (!Directory.Exists(defaultDirectory))
         {
             Directory.CreateDirectory(defaultDirectory);

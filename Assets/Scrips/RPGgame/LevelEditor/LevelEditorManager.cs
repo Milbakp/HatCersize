@@ -6,13 +6,20 @@ using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+//using UnityEditor;
+#if ENABLE_WINMD_SUPPORT
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using System;
+using System.Threading.Tasks; // Added for Task support
+#endif
 
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
     public int currentTile;
     private Tile tileComponent;
-    //public List<GameObject> Objects = new List<GameObject>();
+
     public int currentObject;
     private string savePath;
     public GameObject previewObject;
@@ -31,7 +38,7 @@ public class LevelEditorManager : MonoBehaviour
     public NavMeshManager navMeshManager;
     void Start()
     {     
-        savePath = Path.Combine(Application.persistentDataPath, "level.json");
+        //savePath = Path.Combine(Application.persistentDataPath, "level.json");
         setPreview();
         // Setting up the object preview buttons
         CreatePreviewButtons();
@@ -95,34 +102,53 @@ public class LevelEditorManager : MonoBehaviour
         tileComponent = Tiles[currentTile].GetComponent<Tile>();
     }
     // Json file funcs
-    public void SaveLevel(LevelData data)
+    public async void SaveLevel(LevelData data)
     {
-        // 1. Convert the object to a JSON string
-        string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-printed
+        #if ENABLE_WINMD_SUPPORT
+        UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
+        {
+            try 
+            {
+                FileSavePicker savePicker = new FileSavePicker();
+                savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                
+                // Ensure the extension matches exactly
+                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
+                savePicker.SuggestedFileName = "NewLevel";
 
-        // 2. Write that string to a file
-        File.WriteAllText(savePath, json);
+                // This line requires the 'async' keyword in the method signature
+                StorageFile file = await savePicker.PickSaveFileAsync();
 
-        Debug.Log("Level saved to: " + savePath);
+                if (file != null)
+                {
+                    string json = JsonUtility.ToJson(data, true);
+                    await FileIO.WriteTextAsync(file, json);
+                    Debug.Log("Saved successfully: " + file.Path);
+                }
+                else
+                {
+                    Debug.Log("User cancelled the picker.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // This will tell you the EXACT error (e.g., Access Denied or Threading error)
+                Debug.LogError("UWP Picker Exception: " + ex.Message);
+            }
+        }, true);
+    #else
+        Debug.LogError("This function only works on UWP builds!");
+        // string path = EditorUtility.SaveFilePanel("Save Level", "", "NewLevel.json", "json");
+        // // 1. Convert the object to a JSON string
+        // string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-printed
+
+        // // 2. Write that string to a file
+        // File.WriteAllText(path, json);
+
+        // Debug.Log("Level saved to: " + path);
+    #endif
     }
 
-    public LevelData LoadLevel()
-    {
-        if (File.Exists(savePath))
-        {
-            // 1. Read the text from the file
-            string json = File.ReadAllText(savePath);
-
-            // 2. Convert the text back into a LevelData object
-            LevelData data = JsonUtility.FromJson<LevelData>(json);
-            return data;
-        }
-        else
-        {
-            Debug.LogError("Save file not found!");
-            return null;
-        }
-    }
     public void ExportCurrentScene()
     {
         GameObject[] startPoints = GameObject.FindGameObjectsWithTag("StartPosition");
@@ -180,13 +206,6 @@ public class LevelEditorManager : MonoBehaviour
             displayErrorMessage("Level Saved");
         }
 
-        // GameObject playerStart = GameObject.FindWithTag("StartPosition");
-        // myLevel.playerStartPosition = playerStart.transform.position;
-        // myLevel.playerRotationY = playerStart.transform.rotation.eulerAngles.y;
-
-        // GameObject destination = GameObject.FindWithTag("EndPosition");
-        // myLevel.destinationPosition = destination.transform.position;
-        // myLevel.destinationRotationY = destination.transform.rotation.eulerAngles.y; 
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {

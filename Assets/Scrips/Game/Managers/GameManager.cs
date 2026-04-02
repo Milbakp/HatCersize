@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; } = GameState.Menu;
     public string CurrentLevelName { get; private set; }
     public string CurrentCustomLevelPath { get; set; }
+    public LevelData LevelToLoad { get; set; }
 
     private void Awake()
     {

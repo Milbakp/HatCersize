@@ -848,9 +848,9 @@ PlayerSettings:
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 004b8b74d172dd01
+  metroCertificateSubject: Luqman
+  metroCertificateIssuer: Luqman
+  metroCertificateNotAfter: 804403e68ce0dd01
   metroApplicationDescription: FitRPG
   wsaImages: {}
   metroTileShortName: FitRPG
@@ -873,6 +873,7 @@ PlayerSettings:
       SystemManagement: True
       InternetClientServer: True
       RemovableStorage: True
+      PicturesLibrary: True
       InternetClient: True
   metroTargetDeviceFamilies: {}
   metroFTAName: 

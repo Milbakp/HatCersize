@@ -63,6 +63,11 @@ public class RPGLevelManager : MonoBehaviour
                 ResumeGame();
             }
         }
+        // Testing Screenshot with P key
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ScreenshotManager.Instance.StartCoroutine(ScreenshotManager.Instance.TakeScreenshotWithExif());
+        }
     }
 
     public void PauseGame()

@@ -36,6 +36,9 @@ public class LevelEditorManager : MonoBehaviour
     editState currentEditState;
     public bool isEditingObject = false;
     public NavMeshManager navMeshManager;
+    public GameObject playerLocationIndicator;
+    public GameObject destinationIndicator;
+    public GameManager gameManager;
     void Start()
     {     
         //savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -52,6 +55,7 @@ public class LevelEditorManager : MonoBehaviour
         }
         currentEditState = editState.Setting;
         editBttonText.SetText("Edit");
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
@@ -148,6 +152,80 @@ public class LevelEditorManager : MonoBehaviour
         // Debug.Log("Level saved to: " + path);
     #endif
     }
+    #region Loading Level to Edit
+    public async void playerMadeLevel(){
+        #if ENABLE_WINMD_SUPPORT
+        UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
+        {
+        try{
+            // 1. Initialize the Picker
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+
+            // 2. Filter for the file types you want to show
+            openPicker.FileTypeFilter.Add(".json");
+
+            // 3. Open the picker and wait for the user to select a file
+            StorageFile file = await openPicker.PickSingleFileAsync();
+        
+            if (file != null)
+            {
+                // 4. Read the file content
+                string json = await FileIO.ReadTextAsync(file);
+
+                // 5. Convert JSON back into your LevelData object
+                LevelData data = JsonUtility.FromJson<LevelData>(json);
+
+                Debug.Log("Level loaded successfully: " + file.Name);
+                
+                // Pass 'data' to your level loader manager here
+                // LoadMyLevel(data);
+                //gameManager.LevelToLoad = data; // Store the loaded level data in GameManager
+                constructLevel(data); // Construct the level in the editor using the loaded data
+            }
+            else
+            {
+                Debug.Log("Load operation cancelled.");
+            }
+        }
+        catch (Exception ex)
+            {
+                // This will tell you the EXACT error (e.g., Access Denied or Threading error)
+                Debug.LogError("UWP Picker Exception: " + ex.Message);
+            }
+        }, true);
+    #else
+        Debug.LogError("This function only works on UWP builds!");
+    #endif
+    }
+    public void constructLevel(LevelData data)
+    {
+        LevelData newLevel = data;
+        if (newLevel == null)
+        {
+            Debug.LogError("Could not load level");
+            return;
+        }
+        foreach(TileData td in newLevel.tiles)
+        {
+            GameObject prefab = registry.GetPrefab(td.tileID);
+            if (prefab != null)
+            {
+                Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
+            }
+        }
+
+        GameObject player = Instantiate(playerLocationIndicator);
+        player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
+        player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
+        
+        GameObject destination = Instantiate(destinationIndicator);
+        destination.transform.position = newLevel.destinationPosition;
+        destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
+
+    }
+    #endregion
 
     public void ExportCurrentScene()
     {

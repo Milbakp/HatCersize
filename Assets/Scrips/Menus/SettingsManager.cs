@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+
 public class SettingsManager : MonoBehaviour
 {
     #region Screenshot directory fields
@@ -80,7 +81,7 @@ public class SettingsManager : MonoBehaviour
             return;
         }
 
-        defaultDirectory = GetDefaultDirectory();
+        GetDefaultDirectory();
 
         // Initialize screenshot folder
         string savedDirectory = PlayerPrefs.GetString(DIRECTORY_KEY, defaultDirectory);
@@ -128,15 +129,19 @@ public class SettingsManager : MonoBehaviour
     }
 
     #region Screenshot directory methods
-    private string GetDefaultDirectory()
+    private async void GetDefaultDirectory()
     {
-        string resultPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FitMazeScreenshots");
-        if (!Directory.Exists(resultPath))
-        {
-            Directory.CreateDirectory(resultPath);
-        }
-        Debug.Log($"Default directory set to: {resultPath}");
-        return resultPath;
+        #if ENABLE_WINMD_SUPPORT
+            var picturesFolder = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+            string resultPath = Path.Combine(picturesFolder.SaveFolder.Path, "HatCersizeScreenshots");
+            //string resultPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FitMazeScreenshots");
+            if (!Directory.Exists(resultPath))
+            {
+                Directory.CreateDirectory(resultPath);
+            }
+            Debug.Log($"Default directory set to: {resultPath}");
+            defaultDirectory = resultPath;
+        #endif
     }
 
     public void ChangeDirectory()
@@ -200,7 +205,7 @@ public class SettingsManager : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Failed to set directory '{directory}': {ex.Message}");
-            string fallbackPath = GetDefaultDirectory();
+            string fallbackPath = defaultDirectory;//GetDefaultDirectory();
             screenshotManager.SetScreenshotFolder(fallbackPath, null);
         }
     }

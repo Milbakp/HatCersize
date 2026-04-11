@@ -1806,6 +1806,7 @@ MonoBehaviour:
   navMeshManager: {fileID: 1368158092}
   playerLocationIndicator: {fileID: 2410023261058353128, guid: fa09277de66fe6e4d968b2fb521a0e6d, type: 3}
   destinationIndicator: {fileID: 2195286003035930880, guid: 4286a3212f8e7a242a96a414edfdd95d, type: 3}
+  gameManager: {fileID: 0}
 --- !u!4 &900088664
 Transform:
   m_ObjectHideFlags: 0

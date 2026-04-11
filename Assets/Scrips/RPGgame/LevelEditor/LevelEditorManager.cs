@@ -39,6 +39,8 @@ public class LevelEditorManager : MonoBehaviour
     public GameObject playerLocationIndicator;
     public GameObject destinationIndicator;
     public GameManager gameManager;
+    private LevelData leveldata;
+    private bool loadingLevel = false;
     void Start()
     {     
         //savePath = Path.Combine(Application.persistentDataPath, "level.json");
@@ -84,6 +86,11 @@ public class LevelEditorManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             previewObject.transform.Rotate(0, 90, 0);
+        }
+        if (loadingLevel)
+        {
+            loadingLevel = false;
+            constructLevel(leveldata);
         }
 
         
@@ -176,13 +183,11 @@ public class LevelEditorManager : MonoBehaviour
 
                 // 5. Convert JSON back into your LevelData object
                 LevelData data = JsonUtility.FromJson<LevelData>(json);
+                leveldata = data;
 
                 Debug.Log("Level loaded successfully: " + file.Name);
-                
-                // Pass 'data' to your level loader manager here
-                // LoadMyLevel(data);
-                //gameManager.LevelToLoad = data; // Store the loaded level data in GameManager
-                constructLevel(data); // Construct the level in the editor using the loaded data
+                // Can't construct the level here because Unity doesn't allow async calls to modify the scene, so we set a flag and do it in the Update function
+                loadingLevel = true;
             }
             else
             {
@@ -199,6 +204,7 @@ public class LevelEditorManager : MonoBehaviour
         Debug.LogError("This function only works on UWP builds!");
     #endif
     }
+// Comback to this to make sure that the loaded level can be edited correctly
     public void constructLevel(LevelData data)
     {
         LevelData newLevel = data;
@@ -212,7 +218,10 @@ public class LevelEditorManager : MonoBehaviour
             GameObject prefab = registry.GetPrefab(td.tileID);
             if (prefab != null)
             {
-                Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
+                // Comback to this to make sure that the loaded level can be edited correctly
+                GameObject instance = Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
+                instance.AddComponent<collisionDetector>();
+                instance.AddComponent<EditObject>();
             }
         }
 

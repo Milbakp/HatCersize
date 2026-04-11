@@ -31,3 +31,10 @@ public class LevelData
     public Vector3 destinationPosition;
     public float destinationRotationY;
 }
+
+[System.Serializable]
+public class CampaignData
+{
+    public string campaignTitle;
+    public List<Dictionary<int, string>> levels = new List<Dictionary<int, string>>(); 
+}

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class UiButtons : MonoBehaviour
 {
-    // private int bluetoothToggle;
-    // public GameObject bluetoothCanvas;
+    public GameManager gameManager;
+    public void Awake()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
     void Start()
     {
         // bluetoothToggle = 0;
@@ -58,5 +61,38 @@ public class UiButtons : MonoBehaviour
         Debug.LogError("Bluetooth Sensors enabled");
         yield return new WaitForSeconds(2);
         BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("start");
+    }
+
+    public void nextLevelButton()
+    {
+        if(gameManager.CurrentMode == GameManager.GameMode.Campaign)
+        {
+            Time.timeScale = 1f;
+            gameManager.CurrentCampaignLevelIndex++;
+            if (nextLevelExists())
+            {
+                SceneManager.LoadScene("TestLoadLevel");
+            }
+            else
+            {
+                Debug.LogError("No more levels in campaign");
+            }
+        }
+        else
+        {
+            Debug.LogError("Loaded single level. Not campaign.");
+        }
+    }
+
+    private bool nextLevelExists()
+    {
+        foreach(LevelEntry entry in gameManager.CampaignToLoad.levels)
+        {
+            if(entry.order == gameManager.CurrentCampaignLevelIndex + 1) // Check if the next level in the campaign exists
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

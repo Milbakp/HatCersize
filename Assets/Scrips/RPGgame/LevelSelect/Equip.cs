@@ -10,7 +10,7 @@ public class Equip : MonoBehaviour
     }
     public void PlayLevel()
     {
-        if (PlayerPrefs.GetInt("SelectedLevel") == -1)
+        if (PlayerPrefs.GetInt("SelectedLevel") == -1 || PlayerPrefs.GetInt("SelectedLevel") == -2)
         {
             SceneManager.LoadScene("TestLoadLevel");
             return;

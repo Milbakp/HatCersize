@@ -5114,7 +5114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 331.7958, y: 83.3159}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1449832661
@@ -5163,7 +5163,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1633863460}
         m_TargetAssemblyTypeName: UiButtons, Assembly-CSharp
-        m_MethodName: returnToLevelSelect
+        m_MethodName: nextLevelButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5711,6 +5711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc50ac6cd792c9c4d9001bb32e3180d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
 --- !u!4 &1633863461
 Transform:
   m_ObjectHideFlags: 0

@@ -33,8 +33,23 @@ public class LevelData
 }
 
 [System.Serializable]
+public class LevelEntry
+{
+    public int order;
+    public string name;
+    public LevelData levelData;
+
+    public LevelEntry(int order, string name, LevelData levelData)
+    {
+        this.order = order;
+        this.name = name;
+        this.levelData = levelData;
+    }
+}
+
+[System.Serializable]
 public class CampaignData
 {
     public string campaignTitle;
-    public List<Dictionary<int, string>> levels = new List<Dictionary<int, string>>(); 
+    public List<LevelEntry> levels = new List<LevelEntry>(); 
 }

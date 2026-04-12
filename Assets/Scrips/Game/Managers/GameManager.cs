@@ -11,10 +11,19 @@ public class GameManager : MonoBehaviour
         //Paused // Game is paused, Bluetooth data should not affect movement
     }
 
+    public enum GameMode
+    {
+        Campaign,
+        CustomLevel
+    }
+
     public GameState CurrentState { get; private set; } = GameState.Menu;
+    public GameMode CurrentMode { get; private set; } = GameMode.CustomLevel;
     public string CurrentLevelName { get; private set; }
     public string CurrentCustomLevelPath { get; set; }
     public LevelData LevelToLoad { get; set; }
+    public CampaignData CampaignToLoad { get; set; }
+    public int CurrentCampaignLevelIndex { get; set; } = 0; // Track the current level index in the campaign
 
     private void Awake()
     {
@@ -55,5 +64,12 @@ public class GameManager : MonoBehaviour
     {
         CurrentCustomLevelPath = null;
         Debug.Log("GameManager: Cleared CurrentCustomLevelPath");
+    }
+
+    // Luqman Code
+    public void setGameMode(GameMode mode)
+    {
+        CurrentMode = mode;
+        Debug.LogError($"Game mode set to: {mode}");
     }
 }

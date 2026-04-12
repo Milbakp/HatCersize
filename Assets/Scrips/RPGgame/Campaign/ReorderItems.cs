@@ -1,12 +1,20 @@
+// Reordering levels in the campaign editor.
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class ReorderItems : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Transform parentToReturnTo = null;
     private GameObject placeholder = null;
+    public TMP_Text levelNameText;
+
+    public void Awake()
+    {
+        levelNameText = GetComponentInChildren<TMP_Text>();
+    }
 
     public void Start()
     {
@@ -15,7 +23,6 @@ public class ReorderItems : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
         // 1. Create a placeholder to keep the space in the Layout Group
         placeholder = new GameObject("Placeholder");
         placeholder.transform.SetParent(parentToReturnTo);
@@ -91,5 +98,12 @@ public class ReorderItems : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         
         Destroy(placeholder);
+    }
+
+    public void SetLevelName(string name)
+    {
+        Debug.LogError("Setting level name: " + name);
+        levelNameText.text = name;
+        this.transform.gameObject.name = name; // Set the GameObject's name so it can be easily accessed later when creating the campaign data
     }
 }

@@ -3222,7 +3222,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1167278074}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: QuitButton
+        m_MethodName: CampaignButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -12,12 +12,27 @@ public class RPGLevelLoader : MonoBehaviour
     public GameObject destination;
     public RPGLevelManager levelManager;
     public CharacterController controller;
+    private GameManager gameManager;
+
+    public void Awake()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+        Debug.LogError("Current Game Mode in RPGLevelLoader Awake: " + gameManager.CurrentMode);
+    }
 
     void Start()
     {
         //savePath = Path.Combine(Application.persistentDataPath, "level.json");
-        savePath = PlayerPrefs.GetString("PlayerMadeLevelPath", "");
-        createLevel();
+        //savePath = PlayerPrefs.GetString("PlayerMadeLevelPath", "");
+        if(gameManager.CurrentMode == GameManager.GameMode.CustomLevel)
+        {
+            LevelData loadedLevel = LoadLevel();
+            createLevel(loadedLevel);
+        }
+        else if(gameManager.CurrentMode == GameManager.GameMode.Campaign)
+        {
+            createCampaignLevel();
+        }
     }
 
     // Update is called once per frame
@@ -44,9 +59,9 @@ public class RPGLevelLoader : MonoBehaviour
         // }
         return GameManager.Instance.LevelToLoad; // Get the level data from GameManager
     }
-    public void createLevel()
+    public void createLevel(LevelData levelData)
     {
-        LevelData newLevel = LoadLevel();
+        LevelData newLevel = levelData;
         if (newLevel == null)
         {
             Debug.LogError("Could not load level");
@@ -74,5 +89,17 @@ public class RPGLevelLoader : MonoBehaviour
         int numOfEnemies = enemiesArray.Length;
         Debug.LogError("Number of Enemies at Start: " + numOfEnemies);
         levelManager.numOfEnemies = numOfEnemies;
+    }
+
+    public void createCampaignLevel()
+    {
+        foreach(LevelEntry entry in gameManager.CampaignToLoad.levels)
+        {
+            if(entry.order == gameManager.CurrentCampaignLevelIndex + 1) // Load the next level in the campaign
+            {
+                createLevel(entry.levelData);
+                break;
+            }
+        }
     }
 }

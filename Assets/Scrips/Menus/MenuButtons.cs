@@ -63,4 +63,9 @@ public class MenuButtons : MonoBehaviour
     {
         SceneManager.LoadScene("TestLoadLevel");
     }
+
+    public void CampaignButton()
+    {
+        SceneManager.LoadScene("MakeCampaign");
+    }
 }

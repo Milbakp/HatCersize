@@ -7,10 +7,12 @@ public class HatButton : InteractableObject
     private Animator right;
     public string leftdoorAnimation;
     public string rightdoorAnimation;
+    private AudioSource aud;
     public void Start()
     {
         left = door.transform.Find("Left").gameObject.GetComponent<Animator>();
         right = door.transform.Find("Right").gameObject.GetComponent<Animator>();
+        aud = gameObject.GetComponent<AudioSource>();
     }
     public void Update()
     {
@@ -26,8 +28,8 @@ public class HatButton : InteractableObject
 
     public void  OpenDoor()
     {
-        // door.SetActive(false);
         left.Play(leftdoorAnimation);
         right.Play(rightdoorAnimation);
+        aud.Play();
     }
 }

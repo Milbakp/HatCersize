@@ -31,6 +31,10 @@ public class RPGLevelSelect : MonoBehaviour
             loadCampaign();
             gameManager.setGameMode(GameManager.GameMode.Campaign); // Set the game mode to Campaign
         }
+        else
+        {
+            gameManager.setGameMode(GameManager.GameMode.CustomLevel);
+        }
         weaponEquipVisual.SetActive(true);
     }
 

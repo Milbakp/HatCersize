@@ -5,9 +5,11 @@ using UnityEngine;
 public class UiButtons : MonoBehaviour
 {
     public GameManager gameManager;
+    private RPGLevelManager levelManager;
     public void Awake()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        levelManager = FindAnyObjectByType<RPGLevelManager>();
     }
     void Start()
     {
@@ -31,24 +33,7 @@ public class UiButtons : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("LevelSelectMenu");
     }
-    // public void bluetoothButton()
-    // {
-    //     Debug.LogError("Bluetooth Button Pressed");
-    //     if(bluetoothToggle == 0)
-    //     {
-    //         bluetoothCanvas.SetActive(true);
-    //         Cursor.lockState = CursorLockMode.None;
-    //         Cursor.visible = true;
-    //         bluetoothToggle = 1;
-    //     }
-    //     else
-    //     {
-    //         bluetoothCanvas.SetActive(false);
-    //         Cursor.lockState = CursorLockMode.Locked;
-    //         Cursor.visible = false;
-    //         bluetoothToggle = 0;
-    //     }
-    // }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.S))
@@ -86,6 +71,11 @@ public class UiButtons : MonoBehaviour
 
     private bool nextLevelExists()
     {
+        if(gameManager.CampaignToLoad == null)
+        {
+            Debug.LogError("CampaignToLoad is null in GameManager");
+            return false;
+        }
         foreach(LevelEntry entry in gameManager.CampaignToLoad.levels)
         {
             if(entry.order == gameManager.CurrentCampaignLevelIndex + 1) // Check if the next level in the campaign exists
@@ -94,5 +84,10 @@ public class UiButtons : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void resumeGame()
+    {
+        levelManager.ResumeGame();
     }
 }

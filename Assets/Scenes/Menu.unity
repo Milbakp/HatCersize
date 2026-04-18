@@ -3470,7 +3470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fb49e538a1d7d469705ee405800127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: f44b7388dcf5dd14a981e85a3aa5a9f6, type: 3}
+  clickSound: {fileID: 8300000, guid: 25f62b07ad3794a4388b9d357dd1b3ba, type: 3}
   hoverSound: {fileID: 8300000, guid: 2ec14d07946c7fe429f08fc058e5b2f8, type: 3}
   pickupSound: {fileID: 8300000, guid: 2b8670b132d29984c93743808adbfcb3, type: 3}
   barkSound: {fileID: 8300000, guid: d559533d477574d44980b54b64546941, type: 3}

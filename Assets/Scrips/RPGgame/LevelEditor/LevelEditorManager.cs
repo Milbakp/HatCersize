@@ -204,7 +204,7 @@ public class LevelEditorManager : MonoBehaviour
         Debug.LogError("This function only works on UWP builds!");
     #endif
     }
-// Comback to this to make sure that the loaded level can be edited correctly
+
     public void constructLevel(LevelData data)
     {
         LevelData newLevel = data;
@@ -218,10 +218,13 @@ public class LevelEditorManager : MonoBehaviour
             GameObject prefab = registry.GetPrefab(td.tileID);
             if (prefab != null)
             {
-                // Comback to this to make sure that the loaded level can be edited correctly
                 GameObject instance = Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
                 instance.AddComponent<collisionDetector>();
                 instance.AddComponent<EditObject>();
+                if(instance.CompareTag("Tile"))
+                {
+                    Tiles.Add(instance);
+                }
             }
         }
 
@@ -511,7 +514,7 @@ public class LevelEditorManager : MonoBehaviour
         //messageRoutine = null;
     }
     
-    private System.Collections.IEnumerator errorMessageTime()
+    public System.Collections.IEnumerator errorMessageTime()
     {
         yield return new WaitForSeconds(5);
         errorMessages.SetText("");

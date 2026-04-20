@@ -39,7 +39,7 @@ public class MenuButtons : MonoBehaviour
     }
     public void Reset()
     {
-        PlayerPrefs.SetInt("playerHealth", 5);
+        PlayerPrefs.SetInt("playerHealth", 20);
         PlayerPrefs.SetInt("playerAttack", 1);
         PlayerPrefs.SetInt("coins", 0);
         PlayerPrefs.SetInt("weaponType", 1);

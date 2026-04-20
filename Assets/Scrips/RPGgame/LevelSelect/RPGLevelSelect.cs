@@ -13,13 +13,16 @@ public class RPGLevelSelect : MonoBehaviour
     public int levelIndex;
     public GameObject weaponEquipVisual;
     public GameManager gameManager;
+    public SoundManager soundManager;
     void Start(){
         gameManager = FindAnyObjectByType<GameManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
     }
     
     public void SelectLevel()
     {
         // SceneManager.LoadScene("Level" + levelIndex);
+        soundManager.PlayClickSound();
         PlayerPrefs.SetInt("SelectedLevel", levelIndex);
         if(levelIndex == -1)
         {

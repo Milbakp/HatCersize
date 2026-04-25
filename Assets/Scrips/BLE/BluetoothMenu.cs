@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class BluetoothMenu : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class BluetoothMenu : MonoBehaviour
     public GameObject BluetoothMenuCanvas;
     public GameObject BluetoothMenuPanel;
     private bool PanelIsVisible;
+    public TMP_Text toggleButtonText;
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class BluetoothMenu : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        toggleButtonText.text = "Controller \t Menu";
     }
 
     private void Start()
@@ -75,5 +78,13 @@ public class BluetoothMenu : MonoBehaviour
     {
         PanelIsVisible = !PanelIsVisible;
         BluetoothMenuPanel.SetActive(PanelIsVisible && BluetoothMenuCanvas.activeSelf);
+        if (PanelIsVisible)
+        {
+            toggleButtonText.text = "Back";
+        }
+        else
+        {
+            toggleButtonText.text = "Controller \t Menu";
+        }
     }
 }

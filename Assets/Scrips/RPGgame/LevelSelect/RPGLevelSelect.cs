@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Storage;
@@ -14,9 +18,25 @@ public class RPGLevelSelect : MonoBehaviour
     public GameObject weaponEquipVisual;
     public GameManager gameManager;
     public SoundManager soundManager;
+    public GameObject levelSelectItemPrefab;
+    public Transform levelSelectParent;
+    private string levelStoragePath;
+    private List<GameObject> levelItems = new List<GameObject>();
+    private bool importingLevel = false;
+    private string jsonData, jsonFileName;
     void Start(){
+        levelStoragePath = Path.Combine(Application.streamingAssetsPath, "Levels");
         gameManager = FindAnyObjectByType<GameManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
+        LoadAllLevels();
+    }
+    void Update()
+    {
+        if (importingLevel)
+        {
+            importingLevel = false;
+            SaveDataWithCustomName(jsonData, jsonFileName);
+        }
     }
     
     public void SelectLevel()
@@ -84,13 +104,6 @@ public class RPGLevelSelect : MonoBehaviour
     #else
         Debug.LogError("This function only works on UWP builds!");
     #endif
-        // string loadPath = EditorUtility.OpenFilePanel("Load Level", "", "json");
-        // if (string.IsNullOrEmpty(loadPath))
-        // {
-        //     Debug.LogError("No file selected!");
-        //     return;
-        // }
-        // PlayerPrefs.SetString("PlayerMadeLevelPath", loadPath);
     }
 
     public async void loadCampaign(){
@@ -140,5 +153,108 @@ public class RPGLevelSelect : MonoBehaviour
     gameManager.CurrentCampaignLevelIndex = 0; // Reset campaign level index when loading a new campaign
     }
 
+    public void LoadAllLevels()
+    {
+        //string path = Path.Combine(Application.streamingAssetsPath, "Levels");
+
+        if (!Directory.Exists(levelStoragePath))
+        {
+            Debug.LogWarning("Level folder not found at: " + levelStoragePath);
+            return;
+        }
+
+        // Get all files ending in .json
+        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.json");
+
+        //allLevels.Clear();
+        foreach (GameObject item in levelItems)
+        {
+            Destroy(item);
+        }
+        levelItems.Clear();
+
+        foreach (string filePath in fileEntries)
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            LevelData data = JsonUtility.FromJson<LevelData>(jsonContent);
+            
+            //allLevels.Add(data);
+            Debug.Log($"Loaded Level: {Path.GetFileNameWithoutExtension(filePath)}");
+            GameObject levelItem = Instantiate(levelSelectItemPrefab, levelSelectParent);
+            levelItem.GetComponentInChildren<TMP_Text>().text = Path.GetFileNameWithoutExtension(filePath);
+            levelItem.GetComponentInChildren<Button>().onClick.AddListener(() => {
+                gameManager.LevelToLoad = data; // Store the loaded level data in GameManager
+                gameManager.setGameMode(GameManager.GameMode.CustomLevel); // Set the game mode to CustomLevel
+                weaponEquipVisual.SetActive(true);
+                Debug.Log("Button Pressed");
+            });
+            levelItems.Add(levelItem);
+        }
+        
+        // Trigger your UI display logic here
+    }
+
+    public async void importLevel()
+    {
+        #if ENABLE_WINMD_SUPPORT
+        UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
+        {
+        try{
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+
+            // Filter for the file types you want to show
+            openPicker.FileTypeFilter.Add(".json");
+
+            // Open the picker and wait for the user to select a file
+            StorageFile file = await openPicker.PickSingleFileAsync();
+            //StorageFolder localFolder = await StorageFolder.GetFolderFromPathAsync(levelStoragePath);
+            string newFileName = file.Name;
+
+            // CreationCollisionOption.ReplaceExisting handles overwriting
+            //StorageFile newFile = await localFolder.CreateFileAsync(newFileName, CreationCollisionOption.ReplaceExisting);
+        
+            if (file != null)
+            {
+                string json = await FileIO.ReadTextAsync(file);
+                jsonData = json;
+                jsonFileName = newFileName;
+                importingLevel = true;
+            }
+            else
+            {
+                Debug.Log("Load operation cancelled.");
+            }
+        }
+        catch (Exception ex)
+            {
+                Debug.LogError("UWP Picker Exception: " + ex.Message);
+            }
+        }, true);
+    #else
+        Debug.LogError("This function only works on UWP builds!");
+    #endif
+    }
+
+    public void refreshLevelList()
+    {
+        LoadAllLevels();
+    }
+
+    public void SaveDataWithCustomName(string jsonContent, string chosenName)
+    {
+        // Ensure the name ends with .json
+        if (!chosenName.EndsWith(".json")) 
+        {
+            chosenName += ".json";
+        }
+
+        // Combine the folder path with your new filename
+        string destinationPath = Path.Combine(levelStoragePath, chosenName);
+
+        // This creates the file and writes the text in one go
+        File.WriteAllText(destinationPath, jsonContent);
+    }
 
 }

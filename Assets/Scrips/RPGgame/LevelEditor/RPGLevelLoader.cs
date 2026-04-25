@@ -42,21 +42,6 @@ public class RPGLevelLoader : MonoBehaviour
     }
     public LevelData LoadLevel()
     {
-        //savePath = EditorUtility.OpenFilePanel("Load Level", "", "json");
-        // if (File.Exists(savePath))
-        // {
-        //     // 1. Read the text from the file
-        //     string json = File.ReadAllText(savePath);
-
-        //     // 2. Convert the text back into a LevelData object
-        //     LevelData data = JsonUtility.FromJson<LevelData>(json);
-        //     return data;
-        // }
-        // else
-        // {
-        //     Debug.LogError("Save file not found!");
-        //     return null;
-        // }
         return GameManager.Instance.LevelToLoad; // Get the level data from GameManager
     }
     public void createLevel(LevelData levelData)

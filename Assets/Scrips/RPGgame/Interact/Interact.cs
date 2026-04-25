@@ -35,7 +35,6 @@ public class Interact : MonoBehaviour
     }
     public void interact()
     {
-        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Debug.DrawRay(cam.position, cam.forward * attackRange, rayColor, 0f);
         if (Physics.Raycast(cam.position,cam.forward, out hit, attackRange))

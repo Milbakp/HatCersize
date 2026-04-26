@@ -6,6 +6,7 @@ using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+
 //using UnityEditor;
 #if ENABLE_WINMD_SUPPORT
 using Windows.Storage;
@@ -19,7 +20,6 @@ public class LevelEditorManager : MonoBehaviour
     public List<GameObject> Tiles  = new List<GameObject>();
     public int currentTile;
     private Tile tileComponent;
-
     public int currentObject;
     private string savePath;
     public GameObject previewObject;
@@ -39,11 +39,11 @@ public class LevelEditorManager : MonoBehaviour
     public GameObject playerLocationIndicator;
     public GameObject destinationIndicator;
     public GameManager gameManager;
+    public TMP_FontAsset newFont;
     private LevelData leveldata;
     private bool loadingLevel = false;
     void Start()
     {     
-        //savePath = Path.Combine(Application.persistentDataPath, "level.json");
         setPreview();
         // Setting up the object preview buttons
         CreatePreviewButtons();
@@ -58,6 +58,9 @@ public class LevelEditorManager : MonoBehaviour
         currentEditState = editState.Setting;
         editBttonText.SetText("Edit");
         gameManager = FindAnyObjectByType<GameManager>();
+        // Set the game state to Menu when in the level editor to prevent unintended interactions with other game systems
+        GameManager.Instance.SetGameState(GameManager.GameState.Menu);
+        Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
     }
 
     // Update is called once per frame
@@ -165,23 +168,23 @@ public class LevelEditorManager : MonoBehaviour
         UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
         {
         try{
-            // 1. Initialize the Picker
+            // Initialize the Picker
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
-            // 2. Filter for the file types you want to show
+            // Filter for the file types you want to show
             openPicker.FileTypeFilter.Add(".json");
 
-            // 3. Open the picker and wait for the user to select a file
+            // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
         
             if (file != null)
             {
-                // 4. Read the file content
+                // Read the file content
                 string json = await FileIO.ReadTextAsync(file);
 
-                // 5. Convert JSON back into your LevelData object
+                // Convert JSON back into your LevelData object
                 LevelData data = JsonUtility.FromJson<LevelData>(json);
                 leveldata = data;
 
@@ -471,25 +474,32 @@ public class LevelEditorManager : MonoBehaviour
 
         foreach(TileRegistry.TileEntry te in registry.entries)
         {
-            // 1. Create the Button Root
+            // Create the Button Root
             GameObject btnObj = new GameObject(te.prefab.name + "_Button");
             btnObj.transform.SetParent(contentParent, false);
+            btnObj.transform.localScale = new Vector3(1f, 1.1f, 1f);
             
-            // 2. Add UI Visuals (Buttons need an Image to be clickable!)
+            // Add UI Visuals (Buttons need an Image to be clickable!)
             btnObj.AddComponent<CanvasRenderer>();
             btnObj.AddComponent<Image>(); 
             Button btn = btnObj.AddComponent<Button>();
 
-            // 3. Create a Child Object for the Text
+            // Create a Child Object for the Text
             GameObject textObj = new GameObject("Text");
             textObj.transform.SetParent(btnObj.transform, false);
             
             // Use TextMeshProUGUI, NOT TMP_Text
             TextMeshProUGUI btnText = textObj.AddComponent<TextMeshProUGUI>();
+            btnText.font = newFont;
             btnText.text = te.prefab.name;
             btnText.fontSize = 24;
             btnText.alignment = TextAlignmentOptions.Center;
             btnText.color = Color.black;
+
+            // Setting Highlight color
+            ColorBlock cb = btn.colors;
+            cb.highlightedColor = new Color(0.4f, 1f, 1f); // Light gray highlight
+            btn.colors = cb; // Apply the modified color block
 
             previewButtons.Add(btn);
         }

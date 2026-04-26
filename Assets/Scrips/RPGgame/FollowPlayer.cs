@@ -16,6 +16,11 @@ public class FollowPlayer : MonoBehaviour
     }
     void Start()
     {
+        if(GameManager.Instance.CurrentState == GameManager.GameState.Menu)
+        {
+            Debug.Log("Player is in Menu state, FollowPlayer script will not execute.");
+            return;
+        }
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

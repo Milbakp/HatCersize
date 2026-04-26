@@ -22,8 +22,8 @@ public class RPGLevelLoader : MonoBehaviour
 
     void Start()
     {
-        //savePath = Path.Combine(Application.persistentDataPath, "level.json");
-        //savePath = PlayerPrefs.GetString("PlayerMadeLevelPath", "");
+        GameManager.Instance.SetGameState(GameManager.GameState.InGame);
+        Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
         if(gameManager.CurrentMode == GameManager.GameMode.CustomLevel)
         {
             LevelData loadedLevel = LoadLevel();

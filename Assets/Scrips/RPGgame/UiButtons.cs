@@ -13,9 +13,9 @@ public class UiButtons : MonoBehaviour
     }
     void Start()
     {
-        // bluetoothToggle = 0;
-        GameManager.Instance.SetGameState(GameManager.GameState.InGame);
-        Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
+        // Moved this code to RPGLevelLoader's Start method to ensure the game state is set before the level loads
+        // GameManager.Instance.SetGameState(GameManager.GameState.InGame);
+        // Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
 
     }
     public void tryAgainButton()

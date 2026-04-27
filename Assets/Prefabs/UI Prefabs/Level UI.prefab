@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  objectNextLevelButton: {fileID: 4657673762601347872}
 --- !u!1 &499428273300220131
 GameObject:
   m_ObjectHideFlags: 0

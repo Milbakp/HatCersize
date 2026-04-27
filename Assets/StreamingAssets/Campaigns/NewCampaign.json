@@ -1,0 +1,207 @@
+{
+    "campaignTitle": "New Campaign",
+    "levels": [
+        {
+            "order": 1,
+            "name": "TestLevel",
+            "levelData": {
+                "tiles": [
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": 0.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": -10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": 0.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": 0.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -10.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -10.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -10.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": -10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": -10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    }
+                ],
+                "playerStartPosition": {
+                    "x": -22.673179626464845,
+                    "y": 0.0,
+                    "z": -0.06024479866027832
+                },
+                "playerRotationY": 90.0,
+                "destinationPosition": {
+                    "x": -0.4783334732055664,
+                    "y": 0.0,
+                    "z": 0.22676515579223634
+                },
+                "destinationRotationY": 0.0
+            }
+        },
+        {
+            "order": 2,
+            "name": "NewLevel",
+            "levelData": {
+                "tiles": [
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": 0.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": 10.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -10.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": -10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -30.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": -10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -30.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 0.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -20.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    },
+                    {
+                        "tileWidth": 5,
+                        "tileHeight": 5,
+                        "x": -30.0,
+                        "y": 1.1102230246251566e-16,
+                        "z": 10.0,
+                        "rotationY": 0.0,
+                        "tileID": 10
+                    }
+                ],
+                "playerStartPosition": {
+                    "x": -31.721221923828126,
+                    "y": 0.0,
+                    "z": 1.0734357833862305
+                },
+                "playerRotationY": 90.0,
+                "destinationPosition": {
+                    "x": 10.427687644958496,
+                    "y": 0.0,
+                    "z": 0.3724140226840973
+                },
+                "destinationRotationY": 0.0
+            }
+        }
+    ]
+}

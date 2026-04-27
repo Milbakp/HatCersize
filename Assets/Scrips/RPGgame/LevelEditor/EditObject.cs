@@ -41,6 +41,10 @@ public class EditObject : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X) && isEditing)
         {
             levelEditorManager.isEditingObject = false;
+            if(gameObject.CompareTag("Tile"))
+            {
+                levelEditorManager.Tiles.Remove(gameObject);
+            }
             Destroy(gameObject);
         }
         if (Input.GetKeyDown(KeyCode.R) && isEditing)

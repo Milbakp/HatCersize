@@ -6,17 +6,25 @@ public class UiButtons : MonoBehaviour
 {
     public GameManager gameManager;
     private RPGLevelManager levelManager;
+    public GameObject objectNextLevelButton;
     public void Awake()
     {
         gameManager = FindAnyObjectByType<GameManager>();
         levelManager = FindAnyObjectByType<RPGLevelManager>();
+        if(gameManager.CurrentMode != GameManager.GameMode.Campaign)
+        {
+            objectNextLevelButton.SetActive(false);
+        }
+        else
+        {
+            objectNextLevelButton.SetActive(true);
+        }
     }
     void Start()
     {
         // Moved this code to RPGLevelLoader's Start method to ensure the game state is set before the level loads
         // GameManager.Instance.SetGameState(GameManager.GameState.InGame);
         // Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
-
     }
     public void tryAgainButton()
     {
@@ -32,20 +40,6 @@ public class UiButtons : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("LevelSelectMenu");
-    }
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            StartCoroutine(BeginCountdown());
-        }
-    }
-    private IEnumerator BeginCountdown()
-    {
-        Debug.LogError("Bluetooth Sensors enabled");
-        yield return new WaitForSeconds(2);
-        BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("start");
     }
 
     public void nextLevelButton()

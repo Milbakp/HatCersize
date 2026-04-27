@@ -23,6 +23,7 @@ public class aboveObjects
 [System.Serializable]
 public class LevelData
 {
+    public string fileType;
     public List<TileData> tiles = new List<TileData>();
     // Player info
     public Vector3 playerStartPosition;
@@ -50,6 +51,7 @@ public class LevelEntry
 [System.Serializable]
 public class CampaignData
 {
+    public string fileType;
     public string campaignTitle;
     public List<LevelEntry> levels = new List<LevelEntry>(); 
 }

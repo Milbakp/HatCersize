@@ -52,7 +52,12 @@ public class CampaignManager : MonoBehaviour
 
                 // 5. Convert JSON back into your LevelData object
                 LevelData data = JsonUtility.FromJson<LevelData>(json);
-
+                if (data.fileType != "LevelData")
+                {
+                    Debug.LogError($"Wrong file type! Expected LevelData but found: {data.fileType}");
+                    // Show a UI popup to the user here
+                    return;
+                }
                 Debug.LogError("Level loaded successfully: " + file.Name);
                 
                 selectedLevelName = Path.GetFileNameWithoutExtension(file.Name);
@@ -85,6 +90,7 @@ public class CampaignManager : MonoBehaviour
     {
         CampaignData newCampaign = new CampaignData();
         newCampaign.campaignTitle = "New Campaign";
+        newCampaign.fileType = "CampaignData"; // Set the file type for identification when loading
         for (int i = 0; i < levelSelectParent.childCount; i++)
         {
             string levelName = levelSelectParent.GetChild(i).name;

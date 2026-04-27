@@ -18,8 +18,6 @@ using System.Threading.Tasks; // Added for Task support
 public class LevelEditorManager : MonoBehaviour
 {
     public List<GameObject> Tiles  = new List<GameObject>();
-    public int currentTile;
-    private Tile tileComponent;
     public int currentObject;
     private string savePath;
     public GameObject previewObject;
@@ -98,23 +96,7 @@ public class LevelEditorManager : MonoBehaviour
 
         
     }
-    public void placeObject()
-    {
-        //tileComponent.currentObject = Instantiate(Objects[currentObject], Tiles[currentTile].transform.position, Quaternion.identity);
-        tileComponent.tileIsFilled = true;
-    }
 
-    public void destroyObject()
-    {
-        Destroy(tileComponent.currentObject);
-        tileComponent.tileIsFilled = false;
-    }
-
-    public void setCurrentTile(int tile)
-    {
-        currentTile = tile;
-        tileComponent = Tiles[currentTile].GetComponent<Tile>();
-    }
     // Json file funcs
     public async void SaveLevel(LevelData data)
     {
@@ -152,14 +134,6 @@ public class LevelEditorManager : MonoBehaviour
         }, true);
     #else
         Debug.LogError("This function only works on UWP builds!");
-        // string path = EditorUtility.SaveFilePanel("Save Level", "", "NewLevel.json", "json");
-        // // 1. Convert the object to a JSON string
-        // string json = JsonUtility.ToJson(data, true); // 'true' makes it pretty-printed
-
-        // // 2. Write that string to a file
-        // File.WriteAllText(path, json);
-
-        // Debug.Log("Level saved to: " + path);
     #endif
     }
     #region Loading Level to Edit
@@ -298,7 +272,7 @@ public class LevelEditorManager : MonoBehaviour
             myLevel.tiles.Add(td);
             displayErrorMessage("Level Saved");
         }
-
+        myLevel.fileType = "LevelData"; // Set the file type for identification when loading
         SaveLevel(myLevel);
     }
     private void spawnOnMousePosition() {
@@ -325,12 +299,6 @@ public class LevelEditorManager : MonoBehaviour
         }
         
         collisionDetector cd = previewObject.GetComponent<collisionDetector>();
-        //Vector3 mousePos = Input.mousePosition;
-        //mousePos.z = camera.transform.position.y;
-        //Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-
-        //previewObject.transform.position = new Vector3(previewObject.transform.position.x, previewObject.transform.position.y, previewObject.transform.position.z);
-
         GameObject tmp;
         GameObject prefab = registry.GetPrefab(currentObject + 1);
 

@@ -253,5 +253,4 @@ public class RPGLevelSelect : MonoBehaviour
             switchTextButtonText.text = "View Campaigns";
         }
     }
-
 }

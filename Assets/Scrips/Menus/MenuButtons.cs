@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
+    private TimerManager timerManager;
     public void Start()
     {
+        timerManager = FindAnyObjectByType<TimerManager>();
         if(PlayerPrefs.GetInt("playerHealth") == 0)
         {
             Reset();
@@ -54,6 +56,12 @@ public class MenuButtons : MonoBehaviour
 
     public void QuitButton()
     {
+        if (timerManager.currentTimerState == TimerManager.TimerState.On)
+        {
+            Debug.Log("Timer is still running. You can not retrive gpx data if you quit now.");
+            timerManager.quittingMenu();
+            return;
+        }
         BLEManager.Instance?.bleConnect?.Disconnect();
         SoundManager.Instance.StopBGM();
         Application.Quit();

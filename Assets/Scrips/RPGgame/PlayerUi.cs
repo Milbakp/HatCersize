@@ -8,7 +8,7 @@ public class PlayerUi : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
     }
 
     // Update is called once per frame

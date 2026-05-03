@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Unity.AI.Navigation;
 
 public class RPGLevelLoader : MonoBehaviour
 {
@@ -13,10 +14,12 @@ public class RPGLevelLoader : MonoBehaviour
     public RPGLevelManager levelManager;
     public CharacterController controller;
     private GameManager gameManager;
+    private NavMeshSurface navMeshSurface;
 
     public void Awake()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
         Debug.LogError("Current Game Mode in RPGLevelLoader Awake: " + gameManager.CurrentMode);
     }
 
@@ -33,6 +36,7 @@ public class RPGLevelLoader : MonoBehaviour
         {
             createCampaignLevel();
         }
+        navMeshSurface.BuildNavMesh();
     }
 
     // Update is called once per frame

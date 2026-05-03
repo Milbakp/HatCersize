@@ -50,10 +50,6 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
-        // {
-        //     longRangeAttack();
-        // }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             weaponType = 1;
@@ -68,11 +64,12 @@ public class Attack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            detect();
+            callAttack();
         }
-        if (Input.GetKeyDown(KeyCode.H))
+
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            aoeAttack();
+            switchWeapons();
         }
     }
     public void detect()
@@ -137,5 +134,27 @@ public class Attack : MonoBehaviour
             aoeAttack();
         }
         Debug.LogError(damage);
+    }
+
+    public void switchWeapons()
+    {
+        Debug.Log("Switching Weapons");
+         weaponType++;
+        if(weaponType >= 4)
+        {
+            weaponType = 1;
+        }
+
+        for(int i = 0; i < weapons.Count; i++)
+        {
+            if(i+1 == weaponType)
+            {
+                weapons[i].SetActive(true);
+                anim = weapons[i].GetComponent<Animator>();
+            }
+            else
+            weapons[i].SetActive(false);
+        }
+        Debug.Log("Weapon Type: " + weaponType);
     }
 }

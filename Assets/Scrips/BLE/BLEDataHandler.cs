@@ -168,13 +168,16 @@ public class BLEDataHandler : MonoBehaviour
             return;
         }
 
-        Special special = FindAnyObjectByType<Special>();
-        if (special == null)
+        //Special special = FindAnyObjectByType<Special>();
+        // Change the buttons to switch weapons instead of special.
+        Attack attack = FindAnyObjectByType<Attack>();
+        if (attack == null)
         {
             Debug.LogError("BLEDataHandler: special not found for special request");
             return;
         }
-        special.specialCall();
+        //special.specialCall();
+        attack.switchWeapons();
     }
 
     private void OnInteractReceived()

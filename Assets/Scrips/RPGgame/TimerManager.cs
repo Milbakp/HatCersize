@@ -9,11 +9,11 @@ public class TimerManager : MonoBehaviour
         Off, // Timer is not active
         On // Timer is active and counting down
     }
-    public GameObject TimerMenuPanel, timerDisplay;
+    public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel;
     private bool PanelIsVisible;
-    public TMP_Text toggleButtonText, displayText;
+    public TMP_Text toggleButtonText, displayText, durationText;
     public static TimerManager Instance { get; private set; }
-    TimerState currentTimerState = TimerState.Off;
+    public TimerState currentTimerState = TimerState.Off;
     public float timer, timerDuration = 60f; // Default timer duration in minutes
     public bool increasingTimer = false, decreasingTimer = false;
     void Awake()
@@ -36,6 +36,7 @@ public class TimerManager : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         toggleButtonText.text = "Timer \t Menu";
         displayText.text = $"{timer:F1}";
+        durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
     }
 
     // Update is called once per frame
@@ -82,6 +83,7 @@ public class TimerManager : MonoBehaviour
     }
      private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        TimerMenuPanel.SetActive(false); // Hide the timer menu panel when a new scene is loaded
         UpdateCanvasVisibility();
     }
 
@@ -92,9 +94,9 @@ public class TimerManager : MonoBehaviour
 
     private void UpdateCanvasVisibility()
     {
-        if (TimerMenuPanel == null)
+        if (toggleButton == null)
         {
-            Debug.LogError("TimerMenuPanel is not assigned!");
+            Debug.LogError("toggleButton is not assigned!");
             return;
         }
 
@@ -110,7 +112,7 @@ public class TimerManager : MonoBehaviour
             }
         }
 
-        TimerMenuPanel.SetActive(!shouldHide);
+        toggleButton.SetActive(!shouldHide);
     }
     public void TooglePanel()
     {
@@ -125,18 +127,24 @@ public class TimerManager : MonoBehaviour
             toggleButtonText.text = "Timer \t Menu";
         }
     }
-
+    // Functions for adjusting timer duration
     public void increaseTimerDuration()
     {
         increasingTimer = true;
         timerDuration += 60;
+        durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         StartCoroutine(continuouslyAdjustTimer());
 
     }
     public void decreaseTimerDuration()
     {
+        if(timerDuration <= 0)
+        {
+            return; // Can't decrease below 0
+        }
         decreasingTimer = true;
         timerDuration -= 60;
+        durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         StartCoroutine(continuouslyAdjustTimer());
     }
     
@@ -146,19 +154,32 @@ public class TimerManager : MonoBehaviour
         while (increasingTimer)
         {
             timerDuration += 60;
+            durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);
         }
         while (decreasingTimer)
         {
             timerDuration -= 60;
+            durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);
         }
     }
-
     public void stopCoroutines()
     {
         increasingTimer = false;
         decreasingTimer = false;
         StopAllCoroutines();
+    }
+    // Functions for quitting menu
+    public void quittingMenu()
+    {
+        quittingMenuPanel.SetActive(quittingMenuPanel.activeSelf ? false : true);
+    }
+    public void confirmQuit()
+    {
+        deactivateTimer();
+        BLEManager.Instance?.bleConnect?.Disconnect();
+        SoundManager.Instance.StopBGM();
+        Application.Quit();
     }
 }

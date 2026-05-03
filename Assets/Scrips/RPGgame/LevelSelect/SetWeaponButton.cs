@@ -10,7 +10,7 @@ public class SetWeaponButton : MonoBehaviour
     public void Start()
     {
         button = GetComponent<Button>();
-        soundManager = FindObjectOfType<SoundManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
     }
     public void Update()
     {

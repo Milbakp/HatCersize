@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     // Knockback variables
     public Rigidbody rb; // Assign this in the Inspector or get it in Awake/Start
     public float knockbackForce;
-    public FollowPlayer fp;
+    // Comment out followplayer for now since we are testing the new gameplay mechanics. Might want to revert later.
+    //public FollowPlayer fp;
     public float KnockBackdelay;
     // Hit color variables
     public float hitFlashDuration = 0.2f; // Duration of white flash
@@ -17,7 +18,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        fp = gameObject.GetComponent<FollowPlayer>();
+        //fp = gameObject.GetComponent<FollowPlayer>();
 
         // Get all Renderer components in this object and its children
         renderers = GetComponentsInChildren<Renderer>();
@@ -33,10 +34,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            lowerHealth(1);
-        }
+
     }
     public void Die()
     {
@@ -67,9 +65,9 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator ResetKnockback(float delay)
     {
-        fp.isKnockbacked = true;
+        //fp.isKnockbacked = true;
         yield return new WaitForSeconds(delay);
-        fp.isKnockbacked = false;
+        //fp.isKnockbacked = false;
     }
 
     private IEnumerator FlashWhite()

@@ -85,5 +85,8 @@ public class GPXFileSaver : MonoBehaviour
 #else
         Debug.LogError("This file save method only works on UWP.");
 #endif
+        // Loading in the strava website  
+        // Debug.LogError("Opening Strava upload page..."); 
+        // Application.OpenURL("https://www.strava.com/upload/select");
     }
 }

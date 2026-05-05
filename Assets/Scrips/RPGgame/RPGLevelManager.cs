@@ -30,7 +30,8 @@ public class RPGLevelManager : MonoBehaviour
         GPXMovementTracker tracker = FindAnyObjectByType<GPXMovementTracker>();
         if (tracker != null)
         {
-            tracker.ResetTracking();
+            tracker.setPLayer();
+            //tracker.ResetTracking();
         }
         BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("start");
     }

@@ -18,6 +18,7 @@ public class GPXMovementTracker : MonoBehaviour
 
     public double GetCurrentLatitude() => currentLatitude;
     public double GetCurrentLongitude() => currentLongitude;
+    public Transform player; // Reference to the player GameObject for character tracking
 
     void Start()
     {
@@ -54,7 +55,7 @@ public class GPXMovementTracker : MonoBehaviour
         currentLatitude = initialLatitude;
         currentLongitude = initialLongitude;
 
-        lastPosition = transform.position;
+        lastPosition = player.position;
         AddTrackPoint(); // Record starting position again
     }
 
@@ -78,7 +79,7 @@ public class GPXMovementTracker : MonoBehaviour
     private void TrackCharacterMovement()
     {
         // Calculate movement in Unity space
-        Vector3 movement = transform.position - lastPosition;
+        Vector3 movement = player.position - lastPosition;
 
         // Update latitude and longitude based on movement
         double deltaLatitude = movement.z * movementScale; // Z-axis affects latitude
@@ -88,7 +89,7 @@ public class GPXMovementTracker : MonoBehaviour
         currentLongitude += deltaLongitude;
 
         // Update last position
-        lastPosition = transform.position;
+        lastPosition = player.position;
 
         // Record the track point with the current timestamp
         AddTrackPoint();
@@ -167,5 +168,10 @@ public class GPXMovementTracker : MonoBehaviour
         gpxData.AppendLine("</gpx>");
 
         return gpxData.ToString();
+    }
+
+    public void setPLayer()
+    {
+        player = GameObject.FindWithTag("Player").transform;
     }
 }

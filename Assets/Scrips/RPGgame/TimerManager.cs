@@ -9,7 +9,7 @@ public class TimerManager : MonoBehaviour
         Off, // Timer is not active
         On // Timer is active and counting down
     }
-    public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel;
+    public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel, timerEndPanel, startTimePanel;
     private bool PanelIsVisible;
     public TMP_Text toggleButtonText, displayText, durationText;
     public static TimerManager Instance { get; private set; }
@@ -37,6 +37,8 @@ public class TimerManager : MonoBehaviour
         toggleButtonText.text = "Timer \t Menu";
         displayText.text = $"{timer:F1}";
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        timerEndPanel.SetActive(false);
+        startTimePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,12 +51,16 @@ public class TimerManager : MonoBehaviour
             if (timer >= timerDuration)
             {
                 deactivateTimer();
+                timerDurationCompleted();
+                //timerDuration = 60f; // Reset to default duration
             }
         }
     }
     public void timerButton()
     {
-     activateTimer();   
+        startTimePanel.SetActive(false);
+        activateTimer();   
+        SceneManager.LoadScene("TestLoadLevel");
     }
     public void activateTimer()
     {
@@ -63,7 +69,6 @@ public class TimerManager : MonoBehaviour
     }
     public void deactivateTimer()
     {
-        timer = 0;
         currentTimerState = TimerState.Off;
         timerDisplay.SetActive(false);
     }
@@ -105,7 +110,8 @@ public class TimerManager : MonoBehaviour
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             Scene scene = SceneManager.GetSceneAt(i);
-            if (scene.isLoaded && (scene.name == "LevelEditor" || scene.name == "DefaultLevel" || scene.name=="CustomLevel"))
+            if (scene.isLoaded && (scene.name == "LevelEditor" || scene.name == "DefaultLevel" || scene.name=="CustomLevel" 
+                || scene.name == "SettingsScene" || scene.name == "LevelSelectMenu" || scene.name == "Menu" || scene.name == "MakeCampaign" ))
             {
                 shouldHide = true;
                 break;
@@ -181,5 +187,46 @@ public class TimerManager : MonoBehaviour
         BLEManager.Instance?.bleConnect?.Disconnect();
         SoundManager.Instance.StopBGM();
         Application.Quit();
+    }
+    public void continueGame()
+    {
+        Cursor.visible = false; // Hide cursor
+        Cursor.lockState = CursorLockMode.None; // Ensure consistent state
+
+        Time.timeScale = 1f; // Resume time
+        if (BLEManager.Instance != null && BLEManager.Instance.bleConnect != null)
+        {
+            BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("start"); // Resume sensors
+        }
+        timerEndPanel.SetActive(false);
+        activateTimer();
+        timerDuration = timerDuration * 2; // Keep the current duration
+    }
+    public void endSession()
+    {
+        deactivateTimer();
+        timer = 0;
+        Time.timeScale = 1f;
+        GPXMovementTracker tracker = FindAnyObjectByType<GPXMovementTracker>();
+        if (tracker != null)
+        {
+            tracker.ResetTracking();
+        }
+        timerEndPanel.SetActive(false);
+        GameManager.Instance.SetGameState(GameManager.GameState.Menu);
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void timerDurationCompleted()
+    {
+        timerEndPanel.SetActive(true);
+        Cursor.visible = true; // Show cursor
+        Cursor.lockState = CursorLockMode.None; // Unlock cursor
+
+        Time.timeScale = 0f; // Stop time when paused
+        if (BLEManager.Instance != null && BLEManager.Instance.bleConnect != null)
+        {
+            BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("stop"); // Pause sensors
+        }   
     }
 }

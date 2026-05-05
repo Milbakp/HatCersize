@@ -90,7 +90,16 @@ public class RPGLevelSelect : MonoBehaviour
                 soundManager.PlayClickSound();
                 gameManager.LevelToLoad = data; // Store the loaded level data in GameManager
                 gameManager.setGameMode(GameManager.GameMode.CustomLevel); // Set the game mode to CustomLevel
-                weaponEquipVisual.SetActive(true);
+                //weaponEquipVisual.SetActive(true);
+                TimerManager tm = FindAnyObjectByType<TimerManager>();
+                if(tm.currentTimerState == TimerManager.TimerState.Off)
+                {
+                    tm.startTimePanel.SetActive(true);
+                }
+                else
+                {
+                    SceneManager.LoadScene("TestLoadLevel");
+                }
                 Debug.Log("Button Pressed");
             });
             levelItems.Add(levelItem);
@@ -132,7 +141,17 @@ public class RPGLevelSelect : MonoBehaviour
                 soundManager.PlayClickSound();
                 gameManager.CampaignToLoad = data; // Store the loaded campaign data in GameManager
                 gameManager.setGameMode(GameManager.GameMode.Campaign); // Set the game mode to CustomLevel
-                weaponEquipVisual.SetActive(true);
+                //weaponEquipVisual.SetActive(true);
+                TimerManager tm = FindAnyObjectByType<TimerManager>();
+                if(tm.currentTimerState == TimerManager.TimerState.Off)
+                {
+                    tm.startTimePanel.SetActive(true);
+                }
+                else
+                {
+                    SceneManager.LoadScene("TestLoadLevel");
+                }
+                
                 gameManager.CurrentCampaignLevelIndex = 0; // Reset campaign level index when loading a new campaign
                 Debug.Log("Button Pressed");
             });

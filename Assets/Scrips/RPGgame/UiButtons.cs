@@ -34,11 +34,13 @@ public class UiButtons : MonoBehaviour
     public void returnToMenu()
     {
         Time.timeScale = 1f;
+        GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         SceneManager.LoadScene("Menu");
     }
     public void returnToLevelSelect()
     {
         Time.timeScale = 1f;
+        GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         SceneManager.LoadScene("LevelSelectMenu");
     }
 
@@ -79,7 +81,6 @@ public class UiButtons : MonoBehaviour
         }
         return false;
     }
-
     public void resumeGame()
     {
         levelManager.ResumeGame();

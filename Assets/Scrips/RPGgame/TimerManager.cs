@@ -1,7 +1,15 @@
+#if ENABLE_WINMD_SUPPORT
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.AccessCache;
+#endif
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
+using System;
+using System.IO;
 
 public class TimerManager : MonoBehaviour
 {
@@ -16,6 +24,7 @@ public class TimerManager : MonoBehaviour
     public TimerState currentTimerState = TimerState.Off;
     public float timer, timerDuration = 60f; // Default timer duration in minutes
     public bool increasingTimer = false, decreasingTimer = false;
+    public ScreenshotManager screenshotManager;
     void Awake()
     {
          if (Instance == null)
@@ -39,6 +48,7 @@ public class TimerManager : MonoBehaviour
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         timerEndPanel.SetActive(false);
         startTimePanel.SetActive(false);
+        screenshotManager = FindAnyObjectByType<ScreenshotManager>();
     }
 
     // Update is called once per frame
@@ -61,6 +71,7 @@ public class TimerManager : MonoBehaviour
         startTimePanel.SetActive(false);
         activateTimer();   
         SceneManager.LoadScene("TestLoadLevel");
+        sessionScreenshotFolder();
     }
     public void activateTimer()
     {
@@ -228,5 +239,19 @@ public class TimerManager : MonoBehaviour
         {
             BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("stop"); // Pause sensors
         }   
+    }
+    // Screenshot related functions
+    public async void sessionScreenshotFolder()
+    {
+#if ENABLE_WINMD_SUPPORT
+        string savedDirectory = PlayerPrefs.GetString(ScreenshotManager.DIRECTORY_KEY, ScreenshotManager.Instance.defaultDirectory);
+        string newSessionDirectory = Path.Combine(savedDirectory, $"Session_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
+        if (!Directory.Exists(newSessionDirectory))
+        {
+            Directory.CreateDirectory(newSessionDirectory);
+        }
+        screenshotManager.SetScreenshotFolder(newSessionDirectory, null);
+        Debug.Log($"Initialized screenshot folder from PlayerPrefs (no token): {newSessionDirectory}");
+#endif
     }
 }

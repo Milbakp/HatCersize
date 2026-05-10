@@ -13,12 +13,12 @@ public class ScreenshotManager : MonoBehaviour
 {
     public static ScreenshotManager Instance { get; private set; }
 
-    private const string DIRECTORY_KEY = "ScreenshotDirectory"; // Match SettingsManager
-    private const string FOLDER_TOKEN_KEY = "ScreenshotFolderToken"; // Match SettingsManager
-    private string defaultDirectory; // Default folder path
-    private string screenshotFolder = "Screenshots";
+    public const string DIRECTORY_KEY = "ScreenshotDirectory"; // Match SettingsManager
+    public const string FOLDER_TOKEN_KEY = "ScreenshotFolderToken"; // Match SettingsManager
+    public string defaultDirectory; // Default folder path
+    public string screenshotFolder = "Screenshots";
 #if ENABLE_WINMD_SUPPORT
-    private StorageFolder screenshotStorageFolder; // Store the StorageFolder for UWP
+    public StorageFolder screenshotStorageFolder; // Store the StorageFolder for UWP
 #endif
 
     private void Awake()
@@ -119,6 +119,8 @@ public class ScreenshotManager : MonoBehaviour
     public System.Collections.IEnumerator TakeScreenshotWithExif()
     {
         Debug.LogError("ScreenShot Triggered");
+        Debug.LogError(screenshotFolder);
+
         if (!CanTakeScreenshot())
         {
             Debug.Log("Cannot take screenshot: Game must be in active gameplay.");
@@ -128,8 +130,8 @@ public class ScreenshotManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         Texture2D screenshot = ScreenCapture.CaptureScreenshotAsTexture();
-        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHHmmssZ");
-        string filename = $"FitMaze_{timestamp}.jpg";
+        string timestamp = DateTime.Now.ToString("yyyy-MM-ddTHHmmssZ");
+        string filename = $"Hatcersize_{timestamp}.jpg";
 
         GPXMovementTracker tracker = FindAnyObjectByType<GPXMovementTracker>();
         double latitude = tracker != null ? tracker.GetCurrentLatitude() : 0.0;
@@ -137,6 +139,7 @@ public class ScreenshotManager : MonoBehaviour
         byte[] jpgBytes = screenshot.EncodeToJPG();
 
 #if ENABLE_WINMD_SUPPORT
+    Debug.LogError(screenshotStorageFolder?.Path);
     string tempPath = Path.Combine(Application.persistentDataPath, "temp.jpg"); // Compute on main thread
 
     if (screenshotStorageFolder == null)

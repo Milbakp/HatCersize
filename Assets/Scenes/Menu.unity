@@ -1723,6 +1723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 269d4fc49226faa4094540261a9d7bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultDirectory: 
+  screenshotFolder: Screenshots
 --- !u!4 &452364098
 Transform:
   m_ObjectHideFlags: 0
@@ -4548,6 +4550,7 @@ MonoBehaviour:
   timerDuration: 60
   increasingTimer: 0
   decreasingTimer: 0
+  screenshotManager: {fileID: 0}
 --- !u!114 &1092933123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9044,7 +9047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickSound: {fileID: 8300000, guid: 25f62b07ad3794a4388b9d357dd1b3ba, type: 3}
   hoverSound: {fileID: 8300000, guid: 1681f1164b5c34840a10e9bd760fec79, type: 3}
-  pickupSound: {fileID: 8300000, guid: 2b8670b132d29984c93743808adbfcb3, type: 3}
+  pickupSound: {fileID: 8300000, guid: be868ca9301a64c4f8c2434fc4e80027, type: 3}
   barkSound: {fileID: 8300000, guid: d559533d477574d44980b54b64546941, type: 3}
   footstepSound: {fileID: 8300000, guid: 97a5d3872d504524dac095e1a627e1b7, type: 3}
   bgmClip: {fileID: 8300000, guid: 9bf42dc2528928748bc7efc307900585, type: 3}

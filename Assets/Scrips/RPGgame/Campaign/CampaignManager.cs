@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Storage;
@@ -11,14 +14,18 @@ using System.Threading.Tasks; // Added for Task support
 
 public class CampaignManager : MonoBehaviour
 {
-    public Transform levelSelectParent;
-    public GameObject levelItemPrefab;
+    public Transform campaignSelectParent, levelSelectParent;
+    private string levelStoragePath;
+    public GameObject levelItemPrefab, levelSelectItemPrefab;
     public bool isLoadingLevelForCampaign = false; // Flag to determine if we're loading a level for campaign creation
     private string selectedLevelName; // Store the name of the level selected for campaign
+    private SoundManager soundManager;
     private Dictionary<string, LevelData> loadedLevels = new Dictionary<string, LevelData>(); // Cache for loaded levels
     void Start()
     {
-        
+        levelStoragePath = Path.Combine(Application.streamingAssetsPath, "Levels");
+        soundManager = FindAnyObjectByType<SoundManager>();
+        LoadAllLevels();
     }
 
     void Update()
@@ -34,23 +41,21 @@ public class CampaignManager : MonoBehaviour
         UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
         {
         try{
-            // 1. Initialize the Picker
+            // Initialize the Picker
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
-            // 2. Filter for the file types you want to show
             openPicker.FileTypeFilter.Add(".json");
 
-            // 3. Open the picker and wait for the user to select a file
+            // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
         
             if (file != null)
             {
-                // 4. Read the file content
                 string json = await FileIO.ReadTextAsync(file);
 
-                // 5. Convert JSON back into your LevelData object
+                // Convert JSON back into your LevelData object
                 LevelData data = JsonUtility.FromJson<LevelData>(json);
                 if (data.fileType != "LevelData")
                 {
@@ -81,7 +86,7 @@ public class CampaignManager : MonoBehaviour
     }
     public void createLevelItem(string levelName)
     {
-        GameObject levelItem = Instantiate(levelItemPrefab, levelSelectParent);
+        GameObject levelItem = Instantiate(levelItemPrefab, campaignSelectParent);
         levelItem.GetComponent<ReorderItems>().SetLevelName(levelName);
         levelItem.transform.SetAsLastSibling(); // Ensure the new item is at the end of the list
     }
@@ -91,9 +96,9 @@ public class CampaignManager : MonoBehaviour
         CampaignData newCampaign = new CampaignData();
         newCampaign.campaignTitle = "New Campaign";
         newCampaign.fileType = "CampaignData"; // Set the file type for identification when loading
-        for (int i = 0; i < levelSelectParent.childCount; i++)
+        for (int i = 0; i < campaignSelectParent.childCount; i++)
         {
-            string levelName = levelSelectParent.GetChild(i).name;
+            string levelName = campaignSelectParent.GetChild(i).name;
             newCampaign.levels.Add(new LevelEntry(i + 1, levelName, loadedLevels[levelName]));
             Debug.LogError("Added level to campaign: " + levelName);
         }
@@ -134,5 +139,51 @@ public class CampaignManager : MonoBehaviour
         Debug.LogError("This function only works on UWP builds!");
     #endif
 
+    }
+
+    private List<GameObject> levelItems = new List<GameObject>();
+    public void LoadAllLevels()
+    {
+        //string path = Path.Combine(Application.streamingAssetsPath, "Levels");
+
+        if (!Directory.Exists(levelStoragePath))
+        {
+            Debug.LogWarning("Level folder not found at: " + levelStoragePath);
+            return;
+        }
+
+        // Get all files ending in .json
+        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.json");
+
+        //allLevels.Clear();
+        foreach (GameObject item in levelItems)
+        {
+            Destroy(item);
+        }
+        levelItems.Clear();
+
+        foreach (string filePath in fileEntries)
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            LevelData data = JsonUtility.FromJson<LevelData>(jsonContent);
+            // Ignoring files that aren't LevelData (e.g., CampaignData)
+            if (data.fileType != "LevelData")
+            {
+                continue;
+            }
+            selectedLevelName = Path.GetFileNameWithoutExtension(filePath);
+            loadedLevels[selectedLevelName] = data;
+            
+            Debug.Log($"Loaded Level: {Path.GetFileNameWithoutExtension(filePath)}");
+            GameObject levelItem = Instantiate(levelSelectItemPrefab, levelSelectParent);
+            levelItem.GetComponentInChildren<TMP_Text>().text = Path.GetFileNameWithoutExtension(filePath);
+            levelItem.GetComponentInChildren<Button>().onClick.AddListener(() => {
+                soundManager.PlayClickSound();
+                createLevelItem(Path.GetFileNameWithoutExtension(filePath));
+               
+                Debug.Log("Button Pressed");
+            });
+            levelItems.Add(levelItem);
+        }
     }
 }

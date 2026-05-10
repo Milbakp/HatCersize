@@ -5,22 +5,20 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public int coins;
+    private RPGLevelManager levelManager;
+    private SoundManager soundManager;
     void Start()
     {
         health = PlayerPrefs.GetInt("playerHealth");
+        levelManager = FindAnyObjectByType<RPGLevelManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
+        coins = levelManager.numOfEnemies;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-    void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            //health -= 1;
-            //Debug.Log("Player Health: " + health);
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         {
             coins += 1;
             Debug.Log("Player Coins: " + coins);
+            soundManager.PlayPickupSound();
             Destroy(other.gameObject);
         }
     }

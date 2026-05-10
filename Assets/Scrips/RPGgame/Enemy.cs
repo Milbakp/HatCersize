@@ -3,7 +3,19 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
+    public enum EnemyState
+    {
+        Chase, // Chasing player to steal coins
+        Flee // Running away from player after stealing coins
+    }
+    public EnemyState currentEnemyState = EnemyState.Chase;
+    public EnemyAttack enemyAttack;
+    public FollowPlayer followPlayer;
+    public RunFromPlayer runFromPlayer;
+
+
     public int health;
+    public int coins, maxCoins;
     public GameObject coinPrefab;
     // Knockback variables
     public Rigidbody rb; // Assign this in the Inspector or get it in Awake/Start
@@ -29,16 +41,26 @@ public class Enemy : MonoBehaviour
         {
             originalColors[i] = renderers[i].material.color;
         }
+        enemyAttack = GetComponent<EnemyAttack>();
+        followPlayer = GetComponent<FollowPlayer>();
+        runFromPlayer = GetComponent<RunFromPlayer>();
+        SwitchState(EnemyState.Chase);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(coins >= maxCoins && currentEnemyState != EnemyState.Flee)
+        {
+            SwitchState(EnemyState.Flee);
+        }
     }
     public void Die()
     {
-        Instantiate(coinPrefab, transform.position, Quaternion.Euler(90f, 0f, 0f));
+        for(int i = 0; i < coins; i++)
+        {
+            Instantiate(coinPrefab, transform.position, Quaternion.Euler(90f, 0f, 0f));
+        }
         RPGLevelManager levelManager = FindAnyObjectByType<RPGLevelManager>();
         if (levelManager != null)
         {
@@ -87,4 +109,23 @@ public class Enemy : MonoBehaviour
             renderers[i].material.color = originalColors[i];
         }
     }
+
+    public void SwitchState(EnemyState newState)
+    {
+        currentEnemyState = newState;
+        switch (currentEnemyState)
+        {
+            case EnemyState.Chase:
+                enemyAttack.enabled = true;
+                followPlayer.enabled = true;
+                runFromPlayer.enabled = false;
+                break;
+            case EnemyState.Flee:
+                enemyAttack.enabled = false;
+                followPlayer.enabled = false;
+                runFromPlayer.enabled = true;
+                break;
+        }
+    }
+
 }

@@ -34,18 +34,29 @@ public class FollowPlayer : MonoBehaviour
             {
                 Vector3 direction = player.position - transform.position;
                 direction.y = 0f;
-                if(!rangedEnemey)
+
+                if (direction != Vector3.zero)
                 {
-                    rb.linearVelocity = direction * moveSpeed;
+                    // Handle Movement
+                    if (!rangedEnemey)
+                    {
+                        rb.linearVelocity = direction.normalized * moveSpeed;
+                    }
+
+                    // Handle Rotation (Snappier than Slerp)
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    Quaternion newRotation = Quaternion.RotateTowards(
+                        rb.rotation, 
+                        targetRotation, 
+                        rotationSpeed * Time.fixedDeltaTime * 100f // Multiplied for better inspector feel
+                    );
+                    
+                    rb.MoveRotation(newRotation);
                 }
-
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-                rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.deltaTime));
             }
             else
             {
-                rb.linearVelocity = Vector2.zero; // Stop if player is out of range
+                rb.linearVelocity = Vector3.zero; // Stop if player is out of range
             }
         }
     }

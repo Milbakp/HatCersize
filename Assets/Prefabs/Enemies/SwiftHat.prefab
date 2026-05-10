@@ -225,6 +225,9 @@ PrefabInstance:
       addedObject: {fileID: 5557143622433248710}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
       insertIndex: -1
+      addedObject: {fileID: -8699516674976598883}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7690134846851616075}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
       insertIndex: -1
@@ -232,9 +235,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
       insertIndex: -1
       addedObject: {fileID: -8266665646994371685}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -8699516674976598883}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c97d3f25cf800ea4c98501c18ecd0c04, type: 3}
       insertIndex: -1
       addedObject: {fileID: -421904906618218410}
@@ -280,59 +280,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &7690134846851616075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2565763985331521597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a43a9cd946e5241bb9ae6a5d35acfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  coinPrefab: {fileID: 616437300902567319, guid: 15c485ced62380b4ab72f0db7fada670, type: 3}
-  rb: {fileID: 0}
-  knockbackForce: 6
-  KnockBackdelay: 0.4
-  hitFlashDuration: 0.2
---- !u!114 &-1027791196582316194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2565763985331521597}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 920d92c9e5cbbc1488c7b502acc60fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 1
-  chaseRange: 15
-  rotationSpeed: 5
-  isKnockbacked: 0
-  rangedEnemey: 0
---- !u!114 &-8266665646994371685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2565763985331521597}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c7e148d0990e534c8e86bf97bde2be6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 2
-  isCoolDown: 0
-  animator: {fileID: 0}
-  playerHealth: {fileID: 0}
-  special: {fileID: 0}
-  attackSound: {fileID: 0}
 --- !u!136 &-8699516674976598883
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -356,6 +303,66 @@ CapsuleCollider:
   m_Height: 0.06
   m_Direction: 1
   m_Center: {x: 0, y: -0.01, z: 0}
+--- !u!114 &7690134846851616075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565763985331521597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a43a9cd946e5241bb9ae6a5d35acfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEnemyState: 0
+  enemyAttack: {fileID: 0}
+  followPlayer: {fileID: 0}
+  runFromPlayer: {fileID: 0}
+  health: 1
+  coins: 0
+  maxCoins: 1
+  coinPrefab: {fileID: 616437300902567319, guid: 15c485ced62380b4ab72f0db7fada670, type: 3}
+  rb: {fileID: 0}
+  knockbackForce: 6
+  KnockBackdelay: 0.4
+  hitFlashDuration: 0.2
+--- !u!114 &-1027791196582316194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565763985331521597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920d92c9e5cbbc1488c7b502acc60fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  chaseRange: 15
+  rotationSpeed: 5
+  isKnockbacked: 0
+  rangedEnemey: 0
+--- !u!114 &-8266665646994371685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565763985331521597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7e148d0990e534c8e86bf97bde2be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 2
+  isCoolDown: 0
+  animator: {fileID: 0}
+  playerHealth: {fileID: 0}
+  special: {fileID: 0}
+  attackSound: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!82 &-421904906618218410
 AudioSource:
   m_ObjectHideFlags: 0

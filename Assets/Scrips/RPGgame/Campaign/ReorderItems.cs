@@ -106,4 +106,8 @@ public class ReorderItems : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         levelNameText.text = name;
         this.transform.gameObject.name = name; // Set the GameObject's name so it can be easily accessed later when creating the campaign data
     }
+    public void deleteItem()
+    {
+        Destroy(this.gameObject);
+    }
 }

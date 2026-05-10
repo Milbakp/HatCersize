@@ -46,12 +46,12 @@ public class RPGLevelManager : MonoBehaviour
             Time.timeScale = 0f;
             gameOverScreen.SetActive(true);
         }
-        if (numOfEnemies == 0)
-        {
-            numOfEnemies--;
-            aud.PlayOneShot(doorOpenSound);
-            Door.SetActive(false);
-        }
+        // if (numOfEnemies == 0)
+        // {
+        //     numOfEnemies--;
+        //     aud.PlayOneShot(doorOpenSound);
+        //     Door.SetActive(false);
+        // }
         // Pause/Resume game on Escape key press
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -112,5 +112,11 @@ public class RPGLevelManager : MonoBehaviour
         Time.timeScale = 0f;
         levelCompletedScreen.SetActive(true);
         PlayerPrefs.SetInt("coins", playerHealth.coins + PlayerPrefs.GetInt("coins"));
+    }
+
+    public void openDoor()
+    {
+        aud.PlayOneShot(doorOpenSound);
+        Door.SetActive(false);
     }
 }

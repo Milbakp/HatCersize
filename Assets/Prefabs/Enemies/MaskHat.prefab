@@ -391,11 +391,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920d92c9e5cbbc1488c7b502acc60fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
-  chaseRange: 15
-  rotationSpeed: 5
-  isKnockbacked: 0
-  rangedEnemey: 0
+  player: {fileID: 0}
+  chaseDistance: 20
+  speedLimitMin: 3
+  speedLimitMax: 4
 --- !u!114 &-8266665646994371685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,8 +538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   fleeDistance: 10
-  speedLimitMin: 1
-  speedLimitMax: 2
+  speedLimitMin: 2
+  speedLimitMax: 3
 --- !u!195 &2530962072332449273
 NavMeshAgent:
   m_ObjectHideFlags: 0

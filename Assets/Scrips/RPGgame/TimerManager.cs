@@ -25,6 +25,7 @@ public class TimerManager : MonoBehaviour
     public float timer, timerDuration = 60f; // Default timer duration in minutes
     public bool increasingTimer = false, decreasingTimer = false;
     public ScreenshotManager screenshotManager;
+    private SoundManager soundManager; 
     void Awake()
     {
          if (Instance == null)
@@ -49,6 +50,7 @@ public class TimerManager : MonoBehaviour
         timerEndPanel.SetActive(false);
         startTimePanel.SetActive(false);
         screenshotManager = FindAnyObjectByType<ScreenshotManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -131,7 +133,7 @@ public class TimerManager : MonoBehaviour
 
         toggleButton.SetActive(!shouldHide);
     }
-    
+
     public void TooglePanel()
     {
         PanelIsVisible = !PanelIsVisible;
@@ -149,6 +151,7 @@ public class TimerManager : MonoBehaviour
     // Functions for adjusting timer duration
     public void increaseTimerDuration()
     {
+        soundManager.PlayClickSound(); 
         increasingTimer = true;
         timerDuration += 60;
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
@@ -157,6 +160,7 @@ public class TimerManager : MonoBehaviour
     }
     public void decreaseTimerDuration()
     {
+        soundManager.PlayClickSound(); 
         if(timerDuration <= 0)
         {
             return; // Can't decrease below 0
@@ -172,12 +176,19 @@ public class TimerManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (increasingTimer)
         {
+            soundManager.PlayClickSound(); 
             timerDuration += 60;
             durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);
         }
         while (decreasingTimer)
         {
+            soundManager.PlayClickSound(); 
+            if(timerDuration <= 0)
+            {
+                stopCoroutines();
+                break; // Can't decrease below 0
+            }
             timerDuration -= 60;
             durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);

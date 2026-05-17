@@ -138,8 +138,9 @@ public class Attack : MonoBehaviour
 
     public void switchWeapons()
     {
+        aud.PlayOneShot(audioClips[4]);
         Debug.Log("Switching Weapons");
-         weaponType++;
+        weaponType++;
         if(weaponType >= 4)
         {
             weaponType = 1;

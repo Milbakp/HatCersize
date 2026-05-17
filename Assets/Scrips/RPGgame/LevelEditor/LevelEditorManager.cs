@@ -34,14 +34,23 @@ public class LevelEditorManager : MonoBehaviour
     editState currentEditState;
     public bool isEditingObject = false;
     public NavMeshManager navMeshManager;
-    public GameObject playerLocationIndicator;
-    public GameObject destinationIndicator;
+    public GameObject playerLocationIndicator, destinationIndicator, buttonPrefab;
     public GameManager gameManager;
     public TMP_FontAsset newFont;
     private LevelData leveldata;
     private bool loadingLevel = false;
+    public List<string> hintMessages = new List<string>();
     void Start()
-    {     
+    {   
+        int numOfHints = registry.entries.Count - hintMessages.Count;
+        Debug.LogError("Number of hints to add: " + numOfHints);
+        if(numOfHints > 0)
+        {
+            for (int i = 0; i < numOfHints; i++)
+            {
+                hintMessages.Add("");
+            }
+        }  
         setPreview();
         // Setting up the object preview buttons
         CreatePreviewButtons();
@@ -59,6 +68,11 @@ public class LevelEditorManager : MonoBehaviour
         // Set the game state to Menu when in the level editor to prevent unintended interactions with other game systems
         GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
+
+        //hintMessages = new List<string>(new string[registry.entries.Count]);
+        // foreach(TileRegistry.TileEntry te in registry.entries){
+        //     hintMessages.Add("");
+        // }
     }
 
     // Update is called once per frame
@@ -437,13 +451,17 @@ public class LevelEditorManager : MonoBehaviour
     {
         // Find the content parent once to save performance
         Transform contentParent = GameObject.Find("Content").transform;
+        FloatingHint hintsManager = FindAnyObjectByType<FloatingHint>();
 
         foreach(TileRegistry.TileEntry te in registry.entries)
         {
+            Debug.Log("Creating button for: " + te.prefab.name);
             // Create the Button Root
-            GameObject btnObj = new GameObject(te.prefab.name + "_Button");
-            btnObj.transform.SetParent(contentParent, false);
-            btnObj.transform.localScale = new Vector3(1f, 1.1f, 1f);
+            GameObject btnObj = Instantiate(buttonPrefab, contentParent);
+            btnObj.name = te.prefab.name + "_Button";
+            //GameObject btnObj = new GameObject(te.prefab.name + "_Button");
+            // btnObj.transform.SetParent(contentParent, false);
+            // btnObj.transform.localScale = new Vector3(1f, 1f, 1f);
             
             // Add UI Visuals (Buttons need an Image to be clickable!)
             btnObj.AddComponent<CanvasRenderer>();
@@ -458,9 +476,13 @@ public class LevelEditorManager : MonoBehaviour
             TextMeshProUGUI btnText = textObj.AddComponent<TextMeshProUGUI>();
             btnText.font = newFont;
             btnText.text = te.prefab.name;
-            btnText.fontSize = 24;
+            btnText.fontSize = 10;
             btnText.alignment = TextAlignmentOptions.Center;
             btnText.color = Color.black;
+
+            // Floating hint text
+            HintText hint = textObj.AddComponent<HintText>();
+            hint.hintMessage = hintMessages[registry.entries.IndexOf(te)];
 
             // Setting Highlight color
             ColorBlock cb = btn.colors;
@@ -468,6 +490,25 @@ public class LevelEditorManager : MonoBehaviour
             btn.colors = cb; // Apply the modified color block
 
             previewButtons.Add(btn);
+
+            // Setting event trigger functions
+            EventTrigger trigger = btnObj.GetComponent<EventTrigger>();
+            if (trigger == null) trigger = btnObj.AddComponent<EventTrigger>();
+
+            // Create a new Entry for a specific event type
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+
+            entry.callback.AddListener((data) => { hintsManager.StartFloatingHint((BaseEventData)data); });
+
+            trigger.triggers.Add(entry);
+
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerExit;
+
+            entry2.callback.AddListener((data) => { hintsManager.StopFloatingHint(); });
+
+            trigger.triggers.Add(entry2);
         }
     }
 

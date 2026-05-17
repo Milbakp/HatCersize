@@ -21,9 +21,13 @@ public class CampaignManager : MonoBehaviour
     private string selectedLevelName; // Store the name of the level selected for campaign
     private SoundManager soundManager;
     private Dictionary<string, LevelData> loadedLevels = new Dictionary<string, LevelData>(); // Cache for loaded levels
+
+
+    private bool importingLevel = false;
+    private string jsonData, jsonFileName;
     void Start()
     {
-        levelStoragePath = Path.Combine(Application.streamingAssetsPath, "Levels");
+        levelStoragePath = Path.Combine(Application.persistentDataPath, "Levels");
         soundManager = FindAnyObjectByType<SoundManager>();
         LoadAllLevels();
     }
@@ -34,6 +38,12 @@ public class CampaignManager : MonoBehaviour
         {
             isLoadingLevelForCampaign = false;// Reset the flag after loading
             createLevelItem(selectedLevelName);
+        }
+        if(importingLevel)
+        {
+            importingLevel = false;
+            SaveDataWithCustomName(jsonData, jsonFileName, levelStoragePath);
+            LoadAllLevels();
         }
     }
     public async void loadLevelForCampaign(){
@@ -84,6 +94,7 @@ public class CampaignManager : MonoBehaviour
         Debug.LogError("This function only works on UWP builds!");
     #endif
     }
+
     public void createLevelItem(string levelName)
     {
         GameObject levelItem = Instantiate(levelItemPrefab, campaignSelectParent);
@@ -185,5 +196,80 @@ public class CampaignManager : MonoBehaviour
             });
             levelItems.Add(levelItem);
         }
+    }
+
+    public async void importLevel()
+    {
+        #if ENABLE_WINMD_SUPPORT
+        UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
+        {
+        try{
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+
+            // Filter for the file types you want to show
+            openPicker.FileTypeFilter.Add(".json");
+
+            // Open the picker and wait for the user to select a file
+            StorageFile file = await openPicker.PickSingleFileAsync();
+            if (file != null )
+            {
+                string newFileName = file.Name;
+                string jsonContent = await FileIO.ReadTextAsync(file);
+                jsonData = jsonContent;
+                jsonFileName = newFileName;
+                LevelData levelData = JsonUtility.FromJson<LevelData>(jsonContent);
+                if(isLevelFile(levelData))
+                {
+                    importingLevel = true;
+                    Debug.LogError($"Loading Level: {newFileName}");
+                }
+                else
+                {
+                    Debug.LogError($"Wrong file type! Expected LevelData or CampaignData but found: {jsonContent}");
+                    // Show a UI popup to the user here
+                    return;
+                }
+            }
+            else
+            {
+                Debug.Log("Load operation cancelled.");
+            }
+        }
+        catch (Exception ex)
+            {
+                Debug.LogError("UWP Picker Exception: " + ex.Message);
+            }
+        }, true);
+    #else
+        Debug.LogError("This function only works on UWP builds!");
+    #endif
+    }
+
+    private bool isLevelFile(LevelData data)
+    {
+        if (data.fileType != "LevelData")
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void SaveDataWithCustomName(string jsonContent, string chosenName, string storagePath)
+    {
+        // Ensure the name ends with .json
+        if (!chosenName.EndsWith(".json")) 
+        {
+            chosenName += ".json";
+        }
+
+        // Combine the folder path with your new filename
+        string destinationPath = Path.Combine(storagePath, chosenName);
+
+        // This creates the file and writes the text in one go
+        File.WriteAllText(destinationPath, jsonContent);
+        LoadAllLevels(); // Refresh the level list after saving
+        Debug.LogError($"File saved successfully at: {destinationPath}");
     }
 }

@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
     public enum EnemyState
     {
         Chase, // Chasing player to steal coins
-        Flee // Running away from player after stealing coins
+        Flee, // Running away from player after stealing coins
     }
     public EnemyState currentEnemyState = EnemyState.Chase;
     public EnemyAttack enemyAttack;
@@ -29,6 +29,12 @@ public class Enemy : MonoBehaviour
     private Color[] originalColors;
     void Start()
     {
+        if(GameManager.Instance.CurrentState == GameManager.GameState.Menu)
+        {
+            Debug.Log("Player is in Menu state, Script will not execute.");
+            this.enabled = false; // Disable this script to prevent it from running in the Menu state
+            return;
+        }
         rb = gameObject.GetComponent<Rigidbody>();
         //fp = gameObject.GetComponent<FollowPlayer>();
 

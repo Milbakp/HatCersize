@@ -33,6 +33,11 @@ public class UiButtons : MonoBehaviour
     }
     public void returnToMenu()
     {
+        TimerManager tm = FindAnyObjectByType<TimerManager>();
+        if(tm.currentTimerState == TimerManager.TimerState.Off)
+        {
+            tm.startTimePanel.SetActive(false);
+        }
         Time.timeScale = 1f;
         GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         SceneManager.LoadScene("Menu");

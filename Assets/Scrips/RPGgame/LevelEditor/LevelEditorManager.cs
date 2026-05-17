@@ -83,7 +83,7 @@ public class LevelEditorManager : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.E))
         // {
         //     currentEditState = editState.Editting;
-        // }
+        // } 
         if (Input.GetKeyDown(KeyCode.R))
         {
             previewObject.transform.Rotate(0, 90, 0);
@@ -93,8 +93,6 @@ public class LevelEditorManager : MonoBehaviour
             loadingLevel = false;
             constructLevel(leveldata);
         }
-
-        
     }
 
     // Json file funcs

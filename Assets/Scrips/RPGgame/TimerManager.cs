@@ -131,6 +131,7 @@ public class TimerManager : MonoBehaviour
 
         toggleButton.SetActive(!shouldHide);
     }
+    
     public void TooglePanel()
     {
         PanelIsVisible = !PanelIsVisible;
@@ -144,6 +145,7 @@ public class TimerManager : MonoBehaviour
             toggleButtonText.text = "Timer \t Menu";
         }
     }
+
     // Functions for adjusting timer duration
     public void increaseTimerDuration()
     {
@@ -187,6 +189,7 @@ public class TimerManager : MonoBehaviour
         decreasingTimer = false;
         StopAllCoroutines();
     }
+
     // Functions for quitting menu
     public void quittingMenu()
     {
@@ -213,6 +216,7 @@ public class TimerManager : MonoBehaviour
         activateTimer();
         timerDuration = timerDuration * 2; // Keep the current duration
     }
+
     public void endSession()
     {
         deactivateTimer();
@@ -230,6 +234,11 @@ public class TimerManager : MonoBehaviour
 
     public void timerDurationCompleted()
     {
+        if(PanelIsVisible)
+        {
+            PanelIsVisible = false;
+            TimerMenuPanel.SetActive(PanelIsVisible);
+        }
         timerEndPanel.SetActive(true);
         Cursor.visible = true; // Show cursor
         Cursor.lockState = CursorLockMode.None; // Unlock cursor

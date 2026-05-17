@@ -32,6 +32,8 @@ public class GPXMovementTracker : MonoBehaviour
         GPXCoordinate.SetInitialFromSaved(lastIndex);
         initialLatitude = GPXCoordinate.InitialLatitude;
         initialLongitude = GPXCoordinate.InitialLongitude;
+        currentLatitude = initialLatitude;
+        currentLongitude = initialLongitude;
 
         //ResetTracking(); // Always reset when the level starts
     }

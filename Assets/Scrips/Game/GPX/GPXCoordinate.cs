@@ -85,9 +85,8 @@ public static class GPXCoordinate
             var coord = savedCoordinates[index];
             InitialLatitude = coord.latitude;
             InitialLongitude = coord.longitude;
-            Debug.Log($"GPXCoordinate: Set initial coordinates from saved -> Name: {coord.name}, Lat: {InitialLatitude}, Lon: {InitialLongitude}");
+            Debug.LogError($"GPXCoordinate: Set initial coordinates from saved -> Name: {coord.name}, Lat: {InitialLatitude}, Lon: {InitialLongitude}");
         }
-
         else
         {
             Debug.LogError($"GPXCoordinate: Invalid index {index} for SetInitialFromSaved. Falling back to default coordinate (index 0).");

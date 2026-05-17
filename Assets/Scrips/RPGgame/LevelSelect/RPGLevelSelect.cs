@@ -29,8 +29,18 @@ public class RPGLevelSelect : MonoBehaviour
     private string jsonData, jsonFileName;
     public TMP_Text viewText, switchTextButtonText;
     void Start(){
-        levelStoragePath = Path.Combine(Application.streamingAssetsPath, "Levels");
-        campaignStoragePath = Path.Combine(Application.streamingAssetsPath, "Campaigns");
+        levelStoragePath = Path.Combine(Application.persistentDataPath, "Levels");
+        if (!Directory.Exists(levelStoragePath))
+        {
+            Directory.CreateDirectory(levelStoragePath);
+            insertingDefaultLevels();
+        }
+        campaignStoragePath = Path.Combine(Application.persistentDataPath, "Campaigns");
+        if (!Directory.Exists(campaignStoragePath))
+        {
+            Directory.CreateDirectory(campaignStoragePath);
+            insertingDefaultCampaigns();
+        }
         gameManager = FindAnyObjectByType<GameManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
         LoadAllLevels();
@@ -270,6 +280,62 @@ public class RPGLevelSelect : MonoBehaviour
             campaignScrollView.SetActive(false);
             viewText.text = "Levels";
             switchTextButtonText.text = "View Campaigns";
+        }
+    }
+
+    public void insertingDefaultLevels()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "Levels");
+
+        if (!Directory.Exists(path))
+        {
+            Debug.LogWarning("Level folder not found at: " + path);
+            return;
+        }
+
+        // Get all files ending in .json
+        string[] fileEntries = Directory.GetFiles(path, "*.json");
+
+        foreach (string filePath in fileEntries)
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            LevelData data = JsonUtility.FromJson<LevelData>(jsonContent);
+            // Ignoring files that aren't LevelData (e.g., CampaignData)
+            if (data.fileType != "LevelData")
+            {
+                continue;
+            }
+            
+            Debug.Log($"Loaded Level: {Path.GetFileNameWithoutExtension(filePath)}");
+            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath), levelStoragePath);
+        }
+    }
+
+    public void insertingDefaultCampaigns()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "Campaigns");
+
+        if (!Directory.Exists(path))
+        {
+            Debug.LogWarning("Campaign folder not found at: " + path);
+            return;
+        }
+
+        // Get all files ending in .json
+        string[] fileEntries = Directory.GetFiles(path, "*.json");
+
+        foreach (string filePath in fileEntries)
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            CampaignData data = JsonUtility.FromJson<CampaignData>(jsonContent);
+            // Ignoring files that aren't CampaignData (e.g., LevelData)
+            if (data.fileType != "CampaignData")
+            {
+                continue;
+            }
+
+            Debug.Log($"Loaded Campaign: {Path.GetFileNameWithoutExtension(filePath)}");
+            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath), campaignStoragePath);
         }
     }
 }

@@ -56,7 +56,7 @@ public class FloatingHint : MonoBehaviour
             return;
         }
         GameObject hoveredObject = pointerData.pointerCurrentRaycast.gameObject;
-        Debug.Log("Hovered Object: " + hoveredObject.name);
+
         string hintMessage = hoveredObject.GetComponent<HintText>().hintMessage;
         hintText.text = hintMessage;
         floatingHintTimer = 0f;

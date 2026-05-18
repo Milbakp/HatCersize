@@ -89,7 +89,6 @@ public class EditObject : MonoBehaviour
                 Debug.Log("Can not place Tile");
                 return false;
             } 
-            levelEditorManager.displayErrorMessage("Tile placed.");
             Debug.Log("Placing Tile");
             return true;
         }

@@ -40,8 +40,11 @@ public class LevelEditorManager : MonoBehaviour
     private LevelData leveldata;
     private bool loadingLevel = false;
     public List<string> hintMessages = new List<string>();
+    private Vector3 lastTileSpawnPosition = Vector3.zero;
+    public float tileLockWidth = 10.0f;
     void Start()
     {   
+        // Seeting up the hint messages for each button.
         int numOfHints = registry.entries.Count - hintMessages.Count;
         Debug.LogError("Number of hints to add: " + numOfHints);
         if(numOfHints > 0)
@@ -59,20 +62,16 @@ public class LevelEditorManager : MonoBehaviour
             int index = previewButtons.IndexOf(btn);
             btn.onClick.AddListener(() => {
                 currentObject = index;
+                SetMode(editState.Setting);
                 setPreview();
             });
         }
-        currentEditState = editState.Setting;
+        SetMode(editState.Editting);
         editBttonText.SetText("Edit");
         gameManager = FindAnyObjectByType<GameManager>();
         // Set the game state to Menu when in the level editor to prevent unintended interactions with other game systems
         GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
-
-        //hintMessages = new List<string>(new string[registry.entries.Count]);
-        // foreach(TileRegistry.TileEntry te in registry.entries){
-        //     hintMessages.Add("");
-        // }
     }
 
     // Update is called once per frame
@@ -82,22 +81,37 @@ public class LevelEditorManager : MonoBehaviour
         {
             ExportCurrentScene();
         }
-        if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting)
+
+        if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting && !previewObject.CompareTag("Tile"))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 spawnOnMousePosition();
             }
         }
+        // Special case for tiles
+        if (Input.GetMouseButton(0) && currentEditState == editState.Setting && previewObject.CompareTag("Tile"))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                float distance = Vector3.Distance(previewObject.transform.position, lastTileSpawnPosition);
+                if (distance > tileLockWidth) // Only spawn if the position has changed significantly
+                {
+                    spawnOnMousePosition();
+                    //lastTileSpawnPosition = previewObject.transform.position; // Update the history
+                }
+            }
+        }
+
         if(currentEditState == editState.Setting)
         {
             preview();
         }
+        if(Input.GetMouseButtonDown(1) && currentEditState == editState.Setting)
+        {
+            SetMode(editState.Editting);
+        }
 
-        // if (Input.GetKeyDown(KeyCode.E))
-        // {
-        //     currentEditState = editState.Editting;
-        // } 
         if (Input.GetKeyDown(KeyCode.R))
         {
             previewObject.transform.Rotate(0, 90, 0);
@@ -287,6 +301,7 @@ public class LevelEditorManager : MonoBehaviour
         myLevel.fileType = "LevelData"; // Set the file type for identification when loading
         SaveLevel(myLevel);
     }
+
     private void spawnOnMousePosition() {
         // makes sure you don't place more than one start and end point.
         if(previewObject.CompareTag("StartPosition"))
@@ -325,8 +340,9 @@ public class LevelEditorManager : MonoBehaviour
             tmp = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
             tmp.AddComponent<collisionDetector>();
             tmp.AddComponent<EditObject>();
-            Debug.Log("Placing Tile");
+            //Debug.Log("Placing Tile");
             Tiles.Add(tmp);
+            lastTileSpawnPosition = tmp.transform.position;
             return;
         }
         if (cd.isColliding || !cd.isOnMap ) {
@@ -337,6 +353,7 @@ public class LevelEditorManager : MonoBehaviour
         tmp = Instantiate(prefab, previewObject.transform.position, previewObject.transform.rotation);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
+        SetMode(editState.Editting);
     }
 
     public void setPreview()
@@ -436,6 +453,22 @@ public class LevelEditorManager : MonoBehaviour
             previewObject.SetActive(false);
         }
         else
+        {
+            currentEditState = editState.Setting;
+            editBttonText.SetText("Edit");
+            previewObject.SetActive(true);
+        }
+    }
+    // Overloaded funciton for internal use.
+    public void SetMode(editState state)
+    {
+        if(state == editState.Editting)
+        {
+            currentEditState = editState.Editting;
+            editBttonText.SetText("Set");
+            previewObject.SetActive(false);
+        }
+        else if (state == editState.Setting)
         {
             currentEditState = editState.Setting;
             editBttonText.SetText("Edit");

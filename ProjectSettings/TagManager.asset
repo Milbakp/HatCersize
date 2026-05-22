@@ -18,6 +18,7 @@ TagManager:
   - StartPosition
   - EndPosition
   - CameraPosition
+  - Fence
   layers:
   - Default
   - TransparentFX

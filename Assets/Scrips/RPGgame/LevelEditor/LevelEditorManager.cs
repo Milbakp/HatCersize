@@ -6,6 +6,7 @@ using TMPro;
 using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System;
 
 //using UnityEditor;
 #if ENABLE_WINMD_SUPPORT
@@ -42,6 +43,7 @@ public class LevelEditorManager : MonoBehaviour
     public List<string> hintMessages = new List<string>();
     private Vector3 lastTileSpawnPosition = Vector3.zero;
     public float tileLockWidth = 10.0f;
+    public event Action Preview;
     void Start()
     {   
         // Seeting up the hint messages for each button.
@@ -72,6 +74,8 @@ public class LevelEditorManager : MonoBehaviour
         // Set the game state to Menu when in the level editor to prevent unintended interactions with other game systems
         GameManager.Instance.SetGameState(GameManager.GameState.Menu);
         Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
+
+        errorMessages.raycastTarget = false; // UI element doesn't block objects so that it can be placed at the bottom of the screen
     }
 
     // Update is called once per frame
@@ -84,7 +88,7 @@ public class LevelEditorManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && currentEditState == editState.Setting && !previewObject.CompareTag("Tile"))
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (!EventSystem.current.IsPointerOverGameObject())// Makes sure that objects are not placed while hover over UI elements.
             {
                 spawnOnMousePosition();
             }
@@ -254,7 +258,7 @@ public class LevelEditorManager : MonoBehaviour
         }
         if (!AllTilesConnected())
         {
-            displayErrorMessage("Cannot export level, start point or end point not yet set.");
+            displayErrorMessage("Cannot export level, not all tiles are connected.");
             Debug.Log("Cannot export level, not all tiles are connected");
             return;
         }
@@ -353,11 +357,19 @@ public class LevelEditorManager : MonoBehaviour
         tmp = Instantiate(prefab, previewObject.transform.position, previewObject.transform.rotation);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
-        SetMode(editState.Editting);
+        if (previewObject.CompareTag("Fence"))
+        {
+            FenceGenerator fenceGenerator = tmp.GetComponent<FenceGenerator>();
+            fenceGenerator.setIsPreview(true);
+            fenceGenerator.setFenceController();
+
+        }
+        // SetMode(editState.Editting); // Commenting this out so that user can continue to place objects.
     }
 
     public void setPreview()
     {
+        Preview?.Invoke();
         GameObject tmp = previewObject;
         GameObject prefab = registry.GetPrefab(currentObject + 1);
         previewObject = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
@@ -492,13 +504,11 @@ public class LevelEditorManager : MonoBehaviour
             // Create the Button Root
             GameObject btnObj = Instantiate(buttonPrefab, contentParent);
             btnObj.name = te.prefab.name + "_Button";
-            //GameObject btnObj = new GameObject(te.prefab.name + "_Button");
-            // btnObj.transform.SetParent(contentParent, false);
-            // btnObj.transform.localScale = new Vector3(1f, 1f, 1f);
             
             // Add UI Visuals (Buttons need an Image to be clickable!)
             btnObj.AddComponent<CanvasRenderer>();
             btnObj.AddComponent<Image>(); 
+            btnObj.AddComponent<PassScrollToParent>();
             Button btn = btnObj.AddComponent<Button>();
 
             // Create a Child Object for the Text

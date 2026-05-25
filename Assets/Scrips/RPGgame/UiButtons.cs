@@ -25,6 +25,10 @@ public class UiButtons : MonoBehaviour
         // Moved this code to RPGLevelLoader's Start method to ensure the game state is set before the level loads
         // GameManager.Instance.SetGameState(GameManager.GameState.InGame);
         // Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
+        if (!nextLevelExists())
+        {
+            objectNextLevelButton.SetActive(false);
+        }
     }
     public void tryAgainButton()
     {

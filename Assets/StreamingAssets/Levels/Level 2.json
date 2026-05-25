@@ -4,110 +4,542 @@
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -8.141487121582032,
-            "y": 1.5129542350769044,
-            "z": -24.998586654663087,
-            "rotationY": 0.00022966526739764959,
-            "tileID": 4
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -43.974029541015628,
-            "y": 1.5129436254501343,
-            "z": -23.848594665527345,
-            "rotationY": 90.00056457519531,
-            "tileID": 4
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -45.7846794128418,
-            "y": 1.513053059577942,
-            "z": -21.484947204589845,
-            "rotationY": 90.00068664550781,
-            "tileID": 2
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -45.533302307128909,
-            "y": 1.5130535364151,
-            "z": -26.463878631591798,
-            "rotationY": 89.99980926513672,
-            "tileID": 2
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -5.418298244476318,
-            "y": 1.5130863189697266,
-            "z": 22.373077392578126,
-            "rotationY": 180.0001220703125,
-            "tileID": 2
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -0.6697540283203125,
-            "y": 0.3463606834411621,
-            "z": -14.429880142211914,
+            "x": -48.57977294921875,
+            "y": 0.0,
+            "z": -32.651771545410159,
             "rotationY": 180.0,
-            "tileID": 8
+            "tileID": 5,
+            "fenceLength": 7.571428298950195
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -11.255523681640625,
-            "y": 0.3463606834411621,
-            "z": 10.995840072631836,
-            "rotationY": 90.00005340576172,
-            "tileID": 8
+            "x": 0.7846755981445313,
+            "y": 0.0,
+            "z": -32.4572639465332,
+            "rotationY": 180.0,
+            "tileID": 5,
+            "fenceLength": 50.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -37.17586898803711,
-            "y": 0.3463606834411621,
-            "z": -27.19217872619629,
-            "rotationY": 90.00005340576172,
-            "tileID": 8
+            "x": 2.095621109008789,
+            "y": 0.0,
+            "z": 4.455343246459961,
+            "rotationY": 90.0,
+            "tileID": 5,
+            "fenceLength": 35.85714340209961
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -40.143856048583987,
-            "y": 0.04155445098876953,
-            "z": -18.28822898864746,
+            "x": 22.14572525024414,
+            "y": 0.0,
+            "z": 6.047791481018066,
+            "rotationY": 180.0,
+            "tileID": 5,
+            "fenceLength": 18.771421432495118
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 23.411094665527345,
+            "y": 0.0,
+            "z": 24.031421661376954,
+            "rotationY": 90.0,
+            "tileID": 5,
+            "fenceLength": 18.57143783569336
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 3.356058120727539,
+            "y": 0.0,
+            "z": 24.785968780517579,
             "rotationY": 0.0,
-            "tileID": 7
+            "tileID": 5,
+            "fenceLength": 21.371417999267579
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -0.6697540283203125,
-            "y": 0.04155445098876953,
-            "z": -29.36866569519043,
-            "rotationY": 0.0,
-            "tileID": 7
+            "x": 2.174063205718994,
+            "y": 0.0,
+            "z": 41.17403793334961,
+            "rotationY": 90.0,
+            "tileID": 5,
+            "fenceLength": 15.857139587402344
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -5.715257167816162,
-            "y": 0.04155445098876953,
-            "z": 24.15387535095215,
+            "x": -22.40546989440918,
+            "y": 0.0,
+            "z": 42.43979263305664,
             "rotationY": 0.0,
-            "tileID": 7
+            "tileID": 5,
+            "fenceLength": 25.77141571044922
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -14.81712532043457,
-            "y": 0.2581787109375,
-            "z": -3.5472612380981447,
+            "x": -23.763607025146486,
+            "y": 0.0,
+            "z": 38.38595199584961,
+            "rotationY": 270.0,
+            "tileID": 5,
+            "fenceLength": 5.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -23.957584381103517,
+            "y": 0.0,
+            "z": -10.810738563537598,
+            "rotationY": 270.0,
+            "tileID": 5,
+            "fenceLength": 50.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -53.469581604003909,
+            "y": 0.0,
+            "z": -12.093877792358399,
             "rotationY": 0.0,
-            "tileID": 6
+            "tileID": 5,
+            "fenceLength": 31.28571128845215
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": 30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 40.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 40.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": 40.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": 20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": 10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": 0.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": 0.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": 0.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -30.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -20.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": 0.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -10.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -30.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -30.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -40.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -60.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -70.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -70.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -70.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -50.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -50.0,
+            "y": 1.1102230246251566e-16,
+            "z": -10.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -50.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -60.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -60.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -40.0,
+            "y": 1.1102230246251566e-16,
+            "z": -30.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -40.0,
+            "y": 1.1102230246251566e-16,
+            "z": -20.0,
+            "rotationY": 0.0,
+            "tileID": 11,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
@@ -116,610 +548,128 @@
             "y": 0.2581787109375,
             "z": 33.6513786315918,
             "rotationY": 0.0,
-            "tileID": 6
+            "tileID": 6,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -70.91183471679688,
-            "y": 4.94631814956665,
-            "z": -1.9643266201019288,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -56.467769622802737,
-            "y": 4.94631814956665,
-            "z": -6.119528770446777,
+            "x": -14.81712532043457,
+            "y": 0.2581787109375,
+            "z": -3.5472612380981447,
             "rotationY": 0.0,
-            "tileID": 5
+            "tileID": 6,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -33.51542663574219,
-            "y": 4.94631814956665,
-            "z": 42.1595458984375,
+            "x": -5.715257167816162,
+            "y": 0.04155445098876953,
+            "z": 24.15387535095215,
+            "rotationY": 0.0,
+            "tileID": 7,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -0.6697540283203125,
+            "y": 0.04155445098876953,
+            "z": -29.36866569519043,
+            "rotationY": 0.0,
+            "tileID": 7,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -40.143856048583987,
+            "y": 0.04155445098876953,
+            "z": -18.28822898864746,
+            "rotationY": 0.0,
+            "tileID": 7,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -37.17586898803711,
+            "y": 0.3463606834411621,
+            "z": -27.19217872619629,
+            "rotationY": 90.00005340576172,
+            "tileID": 8,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -11.255523681640625,
+            "y": 0.3463606834411621,
+            "z": 10.995840072631836,
+            "rotationY": 90.00005340576172,
+            "tileID": 8,
+            "fenceLength": 0.0
+        },
+        {
+            "tileWidth": 5,
+            "tileHeight": 5,
+            "x": -0.6697540283203125,
+            "y": 0.3463606834411621,
+            "z": -14.429880142211914,
             "rotationY": 180.0,
-            "tileID": 5
+            "tileID": 8,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -33.51542663574219,
-            "y": 4.94631814956665,
-            "z": 40.08204650878906,
-            "rotationY": 180.0,
-            "tileID": 5
+            "x": -5.4171600341796879,
+            "y": 1.5142831802368165,
+            "z": 22.37305450439453,
+            "rotationY": 180.00001525878907,
+            "tileID": 2,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -33.51542663574219,
-            "y": 4.94631814956665,
-            "z": 38.301246643066409,
-            "rotationY": 180.0,
-            "tileID": 5
+            "x": -45.5336799621582,
+            "y": 1.5141608715057374,
+            "z": -26.462770462036134,
+            "rotationY": 89.99991607666016,
+            "tileID": 2,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -40.0,
-            "y": 1.1102230246251566e-16,
-            "z": 40.0,
-            "rotationY": 0.0,
-            "tileID": 11
+            "x": -45.78500747680664,
+            "y": 1.5142080783843995,
+            "z": -21.48404884338379,
+            "rotationY": 90.0037612915039,
+            "tileID": 2,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -30.0,
-            "y": 1.1102230246251566e-16,
-            "z": 40.0,
-            "rotationY": 0.0,
-            "tileID": 11
+            "x": -43.974483489990237,
+            "y": 1.5140917301177979,
+            "z": -23.847421646118165,
+            "rotationY": 89.99964141845703,
+            "tileID": 4,
+            "fenceLength": 0.0
         },
         {
             "tileWidth": 5,
             "tileHeight": 5,
-            "x": -33.614261627197269,
-            "y": 4.94631814956665,
-            "z": 36.81724548339844,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -24.116859436035158,
-            "y": 4.94631814956665,
-            "z": 25.63787269592285,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -24.413558959960939,
-            "y": 4.94631814956665,
-            "z": 5.059838771820068,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -34.20786666870117,
-            "y": 4.94631814956665,
-            "z": -6.119528770446777,
-            "rotationY": 0.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -46.079864501953128,
-            "y": 4.94631814956665,
-            "z": -34.315330505371097,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -25.897659301757814,
-            "y": 4.94631814956665,
-            "z": -34.315330505371097,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -6.012155055999756,
-            "y": 4.94631814956665,
-            "z": -34.117462158203128,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 4.375741004943848,
-            "y": 4.94631814956665,
-            "z": -24.32311248779297,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 4.4747724533081059,
-            "y": 4.94631814956665,
-            "z": -4.338728427886963,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -25.897659301757814,
-            "y": 4.94631814956665,
-            "z": 43.34674835205078,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -6.0121541023254398,
-            "y": 4.94631814956665,
-            "z": 43.049949645996097,
-            "rotationY": 180.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 25.745346069335939,
-            "y": 4.94631814956665,
-            "z": 15.249971389770508,
-            "rotationY": 90.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 14.565779685974121,
-            "y": 4.94631814956665,
-            "z": 24.450674057006837,
-            "rotationY": 0.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 30.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 14.763646125793457,
-            "y": 4.94631814956665,
-            "z": 5.356639385223389,
-            "rotationY": 0.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 4.3757429122924809,
-            "y": 4.94631814956665,
-            "z": 33.948177337646487,
-            "rotationY": 270.0,
-            "tileID": 5
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -40.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -40.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -60.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -60.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -50.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -50.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -50.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -70.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -70.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -70.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -60.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -40.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -30.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -30.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -30.0,
-            "y": 1.1102230246251566e-16,
-            "z": -30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": -20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": -10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": 0.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 0.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 0.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": 40.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 40.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 40.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": -10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 0.0,
-            "y": 1.1102230246251566e-16,
-            "z": 30.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 30.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 10.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 10.0,
-            "rotationY": 0.0,
-            "tileID": 11
-        },
-        {
-            "tileWidth": 5,
-            "tileHeight": 5,
-            "x": 20.0,
-            "y": 1.1102230246251566e-16,
-            "z": 20.0,
-            "rotationY": 0.0,
-            "tileID": 11
+            "x": -8.142240524291993,
+            "y": 1.5141398906707764,
+            "z": -24.9986629486084,
+            "rotationY": 0.0002898558450397104,
+            "tileID": 4,
+            "fenceLength": 0.0
         }
     ],
     "playerStartPosition": {

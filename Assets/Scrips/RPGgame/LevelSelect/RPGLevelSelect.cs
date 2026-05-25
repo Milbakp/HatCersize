@@ -33,14 +33,17 @@ public class RPGLevelSelect : MonoBehaviour
         if (!Directory.Exists(levelStoragePath))
         {
             Directory.CreateDirectory(levelStoragePath);
-            insertingDefaultLevels();
+            //insertingDefaultLevels(); // Temporarly forcing it to always insert the levels to update the base levels
         }
+        insertingDefaultLevels();
         campaignStoragePath = Path.Combine(Application.persistentDataPath, "Campaigns");
         if (!Directory.Exists(campaignStoragePath))
         {
             Directory.CreateDirectory(campaignStoragePath);
-            insertingDefaultCampaigns();
+            //insertingDefaultCampaigns(); Temporarly forcing it to always insert the campaign to update the base campaigns
         }
+        insertingDefaultCampaigns();
+
         gameManager = FindAnyObjectByType<GameManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
         LoadAllLevels();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EditObject : MonoBehaviour
 {
@@ -65,6 +66,10 @@ public class EditObject : MonoBehaviour
         }
         if (isEditing && isCollision())
         {
+            if (EventSystem.current.IsPointerOverGameObject())// Makes sure that objects are not placed while hover over UI elements.
+            {
+                return;
+            }
             isEditing = false;
             originalPosition = transform.position;
             originalRotation = transform.rotation;
@@ -72,6 +77,10 @@ public class EditObject : MonoBehaviour
         }
         else if (!levelEditorManager.isEditingObject)
         {
+            if (EventSystem.current.IsPointerOverGameObject())// Makes sure that objects are not placed while hover over UI elements.
+            {
+                return;
+            }
             levelEditorManager.SaveAction(this.gameObject);
             isEditing = true;
             levelEditorManager.isEditingObject = true;

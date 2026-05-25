@@ -17,12 +17,12 @@ public class TimerManager : MonoBehaviour
         Off, // Timer is not active
         On // Timer is active and counting down
     }
-    public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel, timerEndPanel, startTimePanel;
+    public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel, timerEndPanel, startTimePanel, continuePanel;
     private bool PanelIsVisible;
-    public TMP_Text toggleButtonText, displayText, durationText;
+    public TMP_Text toggleButtonText, displayText, durationText, durationText2;
     public static TimerManager Instance { get; private set; }
     public TimerState currentTimerState = TimerState.Off;
-    public float timer, timerDuration = 60f; // Default timer duration in minutes
+    public float timer, timerDuration = 60f, oldTimeDuration; // Default timer duration in minutes
     public bool increasingTimer = false, decreasingTimer = false;
     public ScreenshotManager screenshotManager;
     private SoundManager soundManager; 
@@ -46,9 +46,13 @@ public class TimerManager : MonoBehaviour
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         toggleButtonText.text = "Timer \t Menu";
         displayText.text = $"{timer:F1}";
+
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+
         timerEndPanel.SetActive(false);
         startTimePanel.SetActive(false);
+        continuePanel.SetActive(false);
         screenshotManager = FindAnyObjectByType<ScreenshotManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
     }
@@ -64,6 +68,7 @@ public class TimerManager : MonoBehaviour
             {
                 deactivateTimer();
                 timerDurationCompleted();
+                oldTimeDuration = timerDuration;
                 //timerDuration = 60f; // Reset to default duration
             }
         }
@@ -148,6 +153,14 @@ public class TimerManager : MonoBehaviour
         }
     }
 
+    public void activateContinuePanel()
+    {
+        continuePanel.SetActive(true);
+        timerEndPanel.SetActive(false);
+        durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+    }
+
     // Functions for adjusting timer duration
     public void increaseTimerDuration()
     {
@@ -155,6 +168,7 @@ public class TimerManager : MonoBehaviour
         increasingTimer = true;
         timerDuration += 60;
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         StartCoroutine(continuouslyAdjustTimer());
 
     }
@@ -168,9 +182,10 @@ public class TimerManager : MonoBehaviour
         decreasingTimer = true;
         timerDuration -= 60;
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         StartCoroutine(continuouslyAdjustTimer());
     }
-    
+    // For ajustting the time before starting a session.
     IEnumerator continuouslyAdjustTimer()
     {
         yield return new WaitForSeconds(1f);
@@ -179,6 +194,7 @@ public class TimerManager : MonoBehaviour
             soundManager.PlayClickSound(); 
             timerDuration += 60;
             durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+            durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);
         }
         while (decreasingTimer)
@@ -191,6 +207,7 @@ public class TimerManager : MonoBehaviour
             }
             timerDuration -= 60;
             durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+            durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
             yield return new WaitForSeconds(0.2f);
         }
     }
@@ -224,14 +241,18 @@ public class TimerManager : MonoBehaviour
             BLEManager.Instance.bleConnect.UpdateSensorStateOnBLE("start"); // Resume sensors
         }
         timerEndPanel.SetActive(false);
+        continuePanel.SetActive(false);
         activateTimer();
-        timerDuration = timerDuration * 2; // Keep the current duration
+        timerDuration += oldTimeDuration; // Keep the current duration
     }
 
     public void endSession()
     {
         deactivateTimer();
         timer = 0;
+        timerDuration = 60;
+        durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
+        durationText2.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
         Time.timeScale = 1f;
         GPXMovementTracker tracker = FindAnyObjectByType<GPXMovementTracker>();
         if (tracker != null)

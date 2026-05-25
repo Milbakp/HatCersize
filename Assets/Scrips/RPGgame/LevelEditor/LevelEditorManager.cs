@@ -121,6 +121,7 @@ public class LevelEditorManager : MonoBehaviour
         {
             preview();
         }
+        // cancel selection and go back into edit mode.
         if(Input.GetMouseButtonDown(1) && currentEditState == editState.Setting)
         {
             SetMode(editState.Editting);

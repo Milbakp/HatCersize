@@ -168,8 +168,12 @@ public class FenceGenerator : MonoBehaviour
 
     public void setFenceController()
     {
+        // Setting Slider UI to the selected fence.
         fenceUIController.fenceGenerator = this;
         fenceUIController.sliderUI.SetActive(true);
+        // Setting the slider values to the current fence.
+        fenceUIController.lengthSlider.value = fenceUIController.fenceGenerator.fenceLength;
+        fenceUIController.UpdateTextDisplay(fenceUIController.fenceGenerator.fenceLength);
     }
 
 }

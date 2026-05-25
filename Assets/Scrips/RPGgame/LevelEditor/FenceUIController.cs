@@ -23,13 +23,13 @@ public class FenceUIController : MonoBehaviour
         }
         sliderUI.SetActive(false);
         levelEditorManager = FindAnyObjectByType<LevelEditorManager>();
-        levelEditorManager.Preview += deactivateSlider;
-        // 1. Initialize the slider values based on your generator settings
+        levelEditorManager.Preview += deactivateSlider; // When previewing a new object, turn off slider UI
+        // Initialize the slider values based on your generator settings
         lengthSlider.minValue = 2f;    // Minimum fence length (e.g., at least 1 panel)
         lengthSlider.maxValue = 50f;   // Maximum fence length allowed for the player
         lengthSlider.value = fenceGenerator.fenceLength; // Match the current starting setup
 
-        // 2. Add a listener via code so it updates every frame the slider moves
+        // Add a listener via code so it updates every frame the slider moves
         lengthSlider.onValueChanged.AddListener(OnSliderValueChanged);
 
         // Run an initial update to sync text labels
@@ -45,15 +45,14 @@ public class FenceUIController : MonoBehaviour
         // Force the fence to recreate itself at runtime
         fenceGenerator.GenerateFence();
 
-        // Optional: Update the screen text
         UpdateTextDisplay(newValue);
     }
 
-    void UpdateTextDisplay(float value)
+    public void UpdateTextDisplay(float value)
     {
         if (lengthTextDisplay != null)
         {
-            // Displays the length rounded to one decimal place (e.g., "Length: 12.4m")
+            // Displays the length rounded to one decimal place
             lengthTextDisplay.text = $"{value:F1}m";
         }
     }

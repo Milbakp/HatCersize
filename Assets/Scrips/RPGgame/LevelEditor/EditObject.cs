@@ -37,7 +37,9 @@ public class EditObject : MonoBehaviour
             transform.position = originalPosition;
             transform.rotation = originalRotation;
             levelEditorManager.isEditingObject = false;
+            levelEditorManager.undoAction();
         }
+        // Deleting Objects
         if (Input.GetKeyDown(KeyCode.X) && isEditing)
         {
             levelEditorManager.isEditingObject = false;
@@ -45,7 +47,11 @@ public class EditObject : MonoBehaviour
             {
                 levelEditorManager.Tiles.Remove(gameObject);
             }
-            Destroy(gameObject);
+            isEditing = false;
+            transform.position = originalPosition;
+            transform.rotation = originalRotation;
+            gameObject.SetActive(false);
+            levelEditorManager.SaveAction(this.gameObject);
         }
         if (Input.GetKeyDown(KeyCode.R) && isEditing)
         {
@@ -66,6 +72,7 @@ public class EditObject : MonoBehaviour
         }
         else if (!levelEditorManager.isEditingObject)
         {
+            levelEditorManager.SaveAction(this.gameObject);
             isEditing = true;
             levelEditorManager.isEditingObject = true;
         }

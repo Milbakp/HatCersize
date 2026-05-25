@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
 
+
 //using UnityEditor;
 #if ENABLE_WINMD_SUPPORT
 using Windows.Storage;
@@ -44,6 +45,15 @@ public class LevelEditorManager : MonoBehaviour
     private Vector3 lastTileSpawnPosition = Vector3.zero;
     public float tileLockWidth = 10.0f;
     public event Action Preview;
+    public class undoClass
+    {
+        public Vector3 savedPosition;
+        public Quaternion savedRotation;
+        public GameObject activeGameObject;
+        public bool placeAction = false;
+    }
+    private FixedSizeStack<undoClass> undoClassList = new FixedSizeStack<undoClass>();
+    private undoClass mostRecentAction;
     void Start()
     {   
         // Seeting up the hint messages for each button.
@@ -124,6 +134,11 @@ public class LevelEditorManager : MonoBehaviour
         {
             loadingLevel = false;
             constructLevel(leveldata);
+        }
+        // Undo action
+        if (Input.GetKeyDown(KeyCode.Z) && Input.GetKey(KeyCode.LeftControl))
+        {
+            undoAction();
         }
     }
 
@@ -232,17 +247,27 @@ public class LevelEditorManager : MonoBehaviour
                 {
                     Tiles.Add(instance);
                 }
+                if (instance.CompareTag("Fence"))
+                {
+                    FenceGenerator fenceGenerator = instance.GetComponent<FenceGenerator>();
+                    fenceGenerator.fenceLength = td.fenceLength;
+                    fenceGenerator.GenerateFence();
+                    fenceGenerator.setIsPreview(true);
+                }
             }
         }
 
         GameObject player = Instantiate(playerLocationIndicator);
         player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
         player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
+        player.AddComponent<collisionDetector>();
+        player.AddComponent<EditObject>();
         
         GameObject destination = Instantiate(destinationIndicator);
         destination.transform.position = newLevel.destinationPosition;
         destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
-
+        destination.AddComponent<collisionDetector>();
+        destination.AddComponent<EditObject>();
     }
     #endregion
 
@@ -292,18 +317,27 @@ public class LevelEditorManager : MonoBehaviour
                 myLevel.destinationRotationY = destination.transform.rotation.eulerAngles.y; 
                 continue;
             }
+            if (!info.gameObject.activeSelf)
+            {
+                return; // Object is deleted
+            }
+
             TileData td = new TileData();
+            if (info.CompareTag("Fence"))
+            {
+                FenceGenerator fenceGenerator = info.GetComponent<FenceGenerator>();
+                td.fenceLength = fenceGenerator.fenceLength;
+            }
             td.x = info.transform.position.x;
             td.y = info.transform.position.y;
             td.z = info.transform.position.z;
             td.rotationY = info.transform.rotation.eulerAngles.y;
             td.tileID = info.tileID;
-            
             myLevel.tiles.Add(td);
-            displayErrorMessage("Level Saved");
         }
         myLevel.fileType = "LevelData"; // Set the file type for identification when loading
         SaveLevel(myLevel);
+        displayErrorMessage("Level Saved");
     }
 
     private void spawnOnMousePosition() {
@@ -347,6 +381,7 @@ public class LevelEditorManager : MonoBehaviour
             //Debug.Log("Placing Tile");
             Tiles.Add(tmp);
             lastTileSpawnPosition = tmp.transform.position;
+            SaveAction(tmp, true);
             return;
         }
         if (cd.isColliding || !cd.isOnMap ) {
@@ -357,13 +392,14 @@ public class LevelEditorManager : MonoBehaviour
         tmp = Instantiate(prefab, previewObject.transform.position, previewObject.transform.rotation);
         tmp.AddComponent<collisionDetector>();
         tmp.AddComponent<EditObject>();
+
         if (previewObject.CompareTag("Fence"))
         {
             FenceGenerator fenceGenerator = tmp.GetComponent<FenceGenerator>();
             fenceGenerator.setIsPreview(true);
             fenceGenerator.setFenceController();
-
         }
+        SaveAction(tmp, true);
         // SetMode(editState.Editting); // Commenting this out so that user can continue to place objects.
     }
 
@@ -418,15 +454,15 @@ public class LevelEditorManager : MonoBehaviour
     // Returns distance needed to lift object above y = 0
     public float LiftAboveZero(GameObject liftGameObject)
     {
-        // 1. Get the Bounds of the object (includes all children)
+        // Get the Bounds of the object (includes all children)
         Bounds combinedBounds = GetTargetBounds(liftGameObject);
 
-        // 2. Calculate how far the bottom of the bounds is from y = 0
+        // Calculate how far the bottom of the bounds is from y = 0
         float bottomY = combinedBounds.min.y;
 
         if (bottomY < 0)
         {
-            // 3. Lift the object by the difference
+            // Lift the object by the difference
             float distanceToLift = Mathf.Abs(bottomY);
             //transform.position += new Vector3(0, distanceToLift, 0);
             Debug.Log($"{gameObject.name} lifted by {distanceToLift} units.");
@@ -570,13 +606,67 @@ public class LevelEditorManager : MonoBehaviour
         
         errorMessages.SetText(message);
         messageRoutine = StartCoroutine(errorMessageTime());
-        // errorMessages.SetText("");
-        //messageRoutine = null;
     }
     
     public System.Collections.IEnumerator errorMessageTime()
     {
         yield return new WaitForSeconds(5);
         errorMessages.SetText("");
+    }
+    // Undo Related functions
+    public void SaveAction(GameObject saveObject, bool placeAction = false)
+    {
+        Debug.Log("Saving Action " + saveObject.transform.position);
+        undoClass action = new undoClass();
+        action.savedPosition = saveObject.transform.position;
+        action.savedRotation = saveObject.transform.rotation;
+        action.activeGameObject = saveObject;
+
+        if(mostRecentAction == null)
+        {
+            mostRecentAction = action;
+            return;
+        }
+        if (undoClassList.atCapacity())
+        {
+            Debug.Log("At capacity");
+            GameObject tmp = undoClassList.lastItem().activeGameObject;
+            if (!tmp.activeSelf)
+            {
+                Destroy(tmp);
+            }
+        }
+        if (placeAction)
+        {
+            action.placeAction = true;
+        }
+        undoClassList.Push(action);
+        //mostRecentAction = action;
+    }
+
+    public void undoAction()
+    {
+        if (undoClassList.isEmpty())
+        {
+            displayErrorMessage("No more actions to undo");
+            return;
+        }
+        if (isEditingObject)
+        {
+            displayErrorMessage("Can't undo while editting object.");
+            return;
+        }
+        undoClass action = undoClassList.Pop();
+        action.activeGameObject.transform.position = action.savedPosition;
+        action.activeGameObject.transform.rotation = action.savedRotation;
+        if (!action.activeGameObject.activeSelf)
+        {
+            action.activeGameObject.SetActive(true);
+        }
+
+        if (action.placeAction)
+        {
+            Destroy(action.activeGameObject);
+        }
     }
 }

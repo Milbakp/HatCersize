@@ -11,7 +11,9 @@ public class TileData
     public float z;
     public float rotationY;
     public int tileID;
+    public float fenceLength;
 }
+
 [System.Serializable]
 public class aboveObjects
 {
@@ -54,4 +56,10 @@ public class CampaignData
     public string fileType;
     public string campaignTitle;
     public List<LevelEntry> levels = new List<LevelEntry>(); 
+}
+
+[System.Serializable]
+public class FenceData : TileData 
+{
+    public float fenceLength;
 }

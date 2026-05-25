@@ -61,7 +61,14 @@ public class RPGLevelLoader : MonoBehaviour
             GameObject prefab = registry.GetPrefab(td.tileID);
             if (prefab != null)
             {
-                Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
+                GameObject tileGameObject = Instantiate(prefab, new Vector3(td.x, td.y, td.z), Quaternion.Euler(0, td.rotationY, 0));
+                // Handling Fence case
+                if (tileGameObject.CompareTag("Fence"))
+                {
+                    FenceGenerator fenceGenerator = tileGameObject.GetComponent<FenceGenerator>();
+                    fenceGenerator.fenceLength = td.fenceLength;
+                    fenceGenerator.GenerateFence();
+                }
             }
         }
 

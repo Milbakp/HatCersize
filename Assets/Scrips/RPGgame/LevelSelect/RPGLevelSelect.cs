@@ -100,7 +100,7 @@ public class RPGLevelSelect : MonoBehaviour
                 soundManager.PlayClickSound();
                 gameManager.LevelToLoad = data; // Store the loaded level data in GameManager
                 gameManager.setGameMode(GameManager.GameMode.CustomLevel); // Set the game mode to CustomLevel
-                //weaponEquipVisual.SetActive(true);
+                
                 TimerManager tm = FindAnyObjectByType<TimerManager>();
                 if(tm.currentTimerState == TimerManager.TimerState.Off)
                 {

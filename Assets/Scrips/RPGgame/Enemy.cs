@@ -133,5 +133,13 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+    // Free Y position once on ground
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.CompareTag("Tile"))
+        {
+            rb.constraints |= RigidbodyConstraints.FreezePositionY;
+        }
+    }
 
 }

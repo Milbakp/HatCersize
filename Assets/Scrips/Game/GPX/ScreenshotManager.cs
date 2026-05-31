@@ -54,6 +54,7 @@ public class ScreenshotManager : MonoBehaviour
             Directory.CreateDirectory(defaultDirectory);
         }
         string savedDirectory = PlayerPrefs.GetString(DIRECTORY_KEY, defaultDirectory);
+        Debug.LogError($"The Saved directory set to: {savedDirectory}");
         string token = PlayerPrefs.GetString(FOLDER_TOKEN_KEY, "");
         if (!string.IsNullOrEmpty(token))
         {

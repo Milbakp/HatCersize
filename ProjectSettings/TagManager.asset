@@ -19,6 +19,7 @@ TagManager:
   - EndPosition
   - CameraPosition
   - Fence
+  - TileBorder
   layers:
   - Default
   - TransparentFX
@@ -33,8 +34,8 @@ TagManager:
   - whatIsGround
   - EndChildren
   - Weapons
-  - 
-  - 
+  - TileBorder
+  - Enemy
   - 
   - 
   - 

@@ -83,23 +83,6 @@ public class SettingsManager : MonoBehaviour
 
         GetDefaultDirectory();
 
-        // Initialize screenshot folder
-        string savedDirectory = PlayerPrefs.GetString(DIRECTORY_KEY, defaultDirectory);
-        if (screenshotManager.GetScreenshotFolder() != savedDirectory)
-        {
-            screenshotManager.InitializeScreenshotFolder();
-            PlayerPrefs.SetString(DIRECTORY_KEY, defaultDirectory);
-            PlayerPrefs.Save();
-#if ENABLE_WINMD_SUPPORT
-            screenshotManager.SetScreenshotFolder(defaultDirectory, null);
-#endif
-        }
-        else
-        {
-            Debug.Log("SettingsManager: Screenshot folder already initialized.");
-        }
-
-        UpdateDirectoryText();
         SetupCoordinatesDropdown();
 
         // Set up the input field character limit
@@ -129,6 +112,12 @@ public class SettingsManager : MonoBehaviour
     }
 
     #region Screenshot directory methods
+    private async void checkDirectory()
+    {
+        #if ENABLE_WINMD_SUPPORT
+
+        #endif
+    }
     private async void GetDefaultDirectory()
     {
         #if ENABLE_WINMD_SUPPORT
@@ -141,6 +130,22 @@ public class SettingsManager : MonoBehaviour
             }
             Debug.Log($"Default directory set to: {resultPath}");
             defaultDirectory = resultPath;
+
+            // Initialize screenshot folder
+            string savedDirectory = PlayerPrefs.GetString(DIRECTORY_KEY, defaultDirectory);
+            if (screenshotManager.GetScreenshotFolder() != savedDirectory)
+            {
+                screenshotManager.InitializeScreenshotFolder();
+                PlayerPrefs.SetString(DIRECTORY_KEY, defaultDirectory);
+                PlayerPrefs.Save();
+                screenshotManager.SetScreenshotFolder(defaultDirectory, null);
+            }
+            else
+            {
+                Debug.Log("SettingsManager: Screenshot folder already initialized.");
+            }
+
+            UpdateDirectoryText();
         #endif
     }
 

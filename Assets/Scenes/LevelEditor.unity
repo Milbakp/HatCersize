@@ -2456,12 +2456,16 @@ MonoBehaviour:
   - Basic enemy. Medium health and speed.
   - Tanky enemy. High health and medium speed.
   - Speedy enemy. Low health and Highspeed.
+  - Fence to define playable area.
   - A large generic building.
-  - A lampost. It gives of light.
+  - A lampost. It gives off light.
   - A low poly tree.
   - Set player's starting location.
   - The ground. Other assets must be placed on.
-  - Fence to define playable area.
+  - The ground. Other assets must be placed on.
+  - Small hat with a cut in front of it.
+  - A tail thing. Maybe it was a mermaid's tail?
+  - A cool water ring that emits light.
   tileLockWidth: 6
 --- !u!4 &900088664
 Transform:

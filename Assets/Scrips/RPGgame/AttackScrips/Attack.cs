@@ -14,7 +14,7 @@ public class Attack : MonoBehaviour
     // Long Range Attack Variables
     public Transform rangeAttackPoint;
     public GameObject objectToThrow;
-    public int totalThrows;
+    public int totalThrows; // This was when the game had a limit on bullets, I've made it obsolutem but I'll keep it here just in case.
     public float throwCoolDown;
     public KeyCode throwKey = KeyCode.Mouse0;
     public float throwFroce;
@@ -32,8 +32,7 @@ public class Attack : MonoBehaviour
         weaponType = PlayerPrefs.GetInt("weaponType");
         aoehitBox = FindAnyObjectByType<aoeAttack>();
         aud = gameObject.GetComponent<AudioSource>();
-        // GameObject animGameObject = gameObject.transform.Find("Sword").gameObject;
-        // anim = animGameObject.GetComponent<Animator>();
+
         damage = PlayerPrefs.GetInt("playerAttack");
         for(int i = 0; i < weapons.Count; i++)
         {
@@ -74,7 +73,6 @@ public class Attack : MonoBehaviour
     }
     public void detect()
     {
-        //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Debug.DrawRay(cam.position, cam.forward * attackRange, rayColor, 0f);
         anim.Play("SwordSwing");
@@ -99,7 +97,7 @@ public class Attack : MonoBehaviour
         Vector3 forceToAdd = cam.transform.forward * throwFroce + transform.up * throwUpwardForce;
         projectileRB.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows--;
+        //totalThrows--;
         anim.Play("WandSwing");
         aud.PlayOneShot(audioClips[2]);
         Invoke(nameof(ReserThrow), throwCoolDown);
@@ -127,7 +125,7 @@ public class Attack : MonoBehaviour
         if(weaponType == 1)
         {
             detect();
-        }else if(weaponType == 2 && readyToThrow && totalThrows > 0){
+        }else if(weaponType == 2 && readyToThrow){ // Removed checking the total throw count.
             longRangeAttack();
         }else if(weaponType == 3)
         {

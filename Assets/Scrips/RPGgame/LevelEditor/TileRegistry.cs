@@ -8,6 +8,7 @@ public class TileRegistry : ScriptableObject
     public struct TileEntry
     {
         public int id;
+        public string description; // Hint message for the tile.
         public GameObject prefab;
     }
 

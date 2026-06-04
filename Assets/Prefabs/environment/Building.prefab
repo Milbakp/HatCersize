@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 45573bc9b0bb56d4f8d2efa842c8c16b, type: 2}
     - target: {fileID: 919132149155446097, guid: cbba7883ca9f78540ad44f3612f35295, type: 3}
       propertyPath: m_Name
-      value: GenericBuilding
+      value: Building
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cbba7883ca9f78540ad44f3612f35295, type: 3}
       propertyPath: m_TagString

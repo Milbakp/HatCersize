@@ -14,30 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - id: 1
+    description: The location the player must go to, to complete the level.
     prefab: {fileID: 2195286003035930880, guid: 4286a3212f8e7a242a96a414edfdd95d, type: 3}
+  - id: 9
+    description: Set player's starting location.
+    prefab: {fileID: 2410023261058353128, guid: fa09277de66fe6e4d968b2fb521a0e6d, type: 3}
   - id: 2
+    description: Basic enemy. Medium health and speed.
     prefab: {fileID: 2565763985331521597, guid: 9469b8ec99ff3b84081816721a298ac3, type: 3}
   - id: 3
+    description: Tanky enemy. High health and medium speed.
     prefab: {fileID: 2565763985331521597, guid: 4f3235abb4f8ee744bb3886fe999aa15, type: 3}
   - id: 4
+    description: Speedy enemy. Low health and Highspeed.
     prefab: {fileID: 2565763985331521597, guid: 850a1b25094de2c468680302b28e5e82, type: 3}
   - id: 5
+    description: Fence to define playable area.
     prefab: {fileID: 6279586292084010678, guid: daaad44bae16f2b43be38b6a953671d9, type: 3}
   - id: 6
+    description: A large generic building.
     prefab: {fileID: 8643655880960374591, guid: 04c14c127376e914297edf6bdb47b049, type: 3}
   - id: 7
+    description: A lampost. It gives off light.
     prefab: {fileID: 5394290478090918793, guid: 0c51fa28220821c41bbabaa0368e8ad8, type: 3}
   - id: 8
+    description: A low poly tree.
     prefab: {fileID: 5205106947107287268, guid: ecc5a49629835ec44b56ee3299b35441, type: 3}
-  - id: 9
-    prefab: {fileID: 2410023261058353128, guid: fa09277de66fe6e4d968b2fb521a0e6d, type: 3}
+  - id: 13
+    description: A tail thing. Maybe it was a mermaid's tail?
+    prefab: {fileID: 157065836026342456, guid: 592cb1caac3015a4589a5f5cd8820c5d, type: 3}
+  - id: 12
+    description: Small hat with a cut in front of it.
+    prefab: {fileID: 8096926503515589916, guid: 4bb6358ab2362924c97bbe205d6fd575, type: 3}
+  - id: 14
+    description: A cool water ring that emits light.
+    prefab: {fileID: 3255303498530100808, guid: 8a7d4feada3e30943b44b2ae733f76c4, type: 3}
   - id: 10
+    description: The ground. Other assets must be placed on.
     prefab: {fileID: 9112222537811027325, guid: 7138b036579af9043b077fe9168833a1, type: 3}
   - id: 11
+    description: The ground. Other assets must be placed on.
     prefab: {fileID: 9112222537811027325, guid: 82c760bfd5685a44da21afb6ffc32ced, type: 3}
-  - id: 12
-    prefab: {fileID: 8096926503515589916, guid: 4bb6358ab2362924c97bbe205d6fd575, type: 3}
-  - id: 13
-    prefab: {fileID: 157065836026342456, guid: 592cb1caac3015a4589a5f5cd8820c5d, type: 3}
-  - id: 14
-    prefab: {fileID: 3255303498530100808, guid: 8a7d4feada3e30943b44b2ae733f76c4, type: 3}

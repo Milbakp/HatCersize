@@ -42,7 +42,6 @@ public class LevelEditorManager : MonoBehaviour
     public TMP_FontAsset newFont;
     private LevelData leveldata;
     private bool loadingLevel = false;
-    public List<string> hintMessages = new List<string>();
     private Vector3 lastTileSpawnPosition = Vector3.zero;
     public float tileLockWidth = 10.0f;
     public event Action Preview; // To turn off slider UI of fence generator when previewing a new object.
@@ -57,23 +56,13 @@ public class LevelEditorManager : MonoBehaviour
     private undoClass mostRecentAction;
     public GameObject LevelLoadContainerPrefab;
     void Start()
-    {   
-        // Seeting up the hint messages for each button.
-        int numOfHints = registry.entries.Count - hintMessages.Count;
-        Debug.LogError("Number of hints to add: " + numOfHints);
-        if(numOfHints > 0)
-        {
-            for (int i = 0; i < numOfHints; i++)
-            {
-                hintMessages.Add("");
-            }
-        }  
+    {    
         setPreview();
         // Setting up the object preview buttons
         CreatePreviewButtons();
         foreach (Button btn in previewButtons)
         {
-            int index = previewButtons.IndexOf(btn);
+            int index = btn.GetComponent<ButtonRegistry>().id;
             btn.onClick.AddListener(() => {
                 currentObject = index;
                 SetMode(editState.Setting);
@@ -376,7 +365,7 @@ public class LevelEditorManager : MonoBehaviour
         
         collisionDetector cd = previewObject.GetComponent<collisionDetector>();
         GameObject tmp;
-        GameObject prefab = registry.GetPrefab(currentObject + 1);
+        GameObject prefab = registry.GetPrefab(currentObject);
 
         if(previewObject.CompareTag("Tile"))
         {
@@ -418,7 +407,7 @@ public class LevelEditorManager : MonoBehaviour
     {
         Preview?.Invoke();
         GameObject tmp = previewObject;
-        GameObject prefab = registry.GetPrefab(currentObject + 1);
+        GameObject prefab = registry.GetPrefab(currentObject);
         previewObject = Instantiate(prefab, previewObject.transform.position, Quaternion.identity);
         Destroy(tmp);
         previewObject.AddComponent<collisionDetector>();
@@ -556,11 +545,19 @@ public class LevelEditorManager : MonoBehaviour
             btnObj.AddComponent<CanvasRenderer>();
             btnObj.AddComponent<Image>(); 
             btnObj.AddComponent<PassScrollToParent>();
+            ButtonRegistry registryComponent = btnObj.AddComponent<ButtonRegistry>();
             Button btn = btnObj.AddComponent<Button>();
+
+            // Set the ID of the button to match its registry object
+            registryComponent.id = te.id;
 
             // Create a Child Object for the Text
             GameObject textObj = new GameObject("Text");
             textObj.transform.SetParent(btnObj.transform, false);
+
+            // Resize the text Object
+            RectTransform rectTransform = textObj.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(50, 25);
             
             // Use TextMeshProUGUI, NOT TMP_Text
             TextMeshProUGUI btnText = textObj.AddComponent<TextMeshProUGUI>();
@@ -572,7 +569,7 @@ public class LevelEditorManager : MonoBehaviour
 
             // Floating hint text
             HintText hint = textObj.AddComponent<HintText>();
-            hint.hintMessage = hintMessages[registry.entries.IndexOf(te)];
+            hint.hintMessage = te.description;//hintMessages[registry.entries.IndexOf(te)];
 
             // Setting Highlight color
             ColorBlock cb = btn.colors;
@@ -585,19 +582,16 @@ public class LevelEditorManager : MonoBehaviour
             EventTrigger trigger = btnObj.GetComponent<EventTrigger>();
             if (trigger == null) trigger = btnObj.AddComponent<EventTrigger>();
 
-            // Create a new Entry for a specific event type
+            // Create a new Entry for a PointerEnter event type
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;
-
             entry.callback.AddListener((data) => { hintsManager.StartFloatingHint((BaseEventData)data); });
-
             trigger.triggers.Add(entry);
 
+            // Create a new Entry for a PointerExist event type
             EventTrigger.Entry entry2 = new EventTrigger.Entry();
             entry2.eventID = EventTriggerType.PointerExit;
-
             entry2.callback.AddListener((data) => { hintsManager.StopFloatingHint(); });
-
             trigger.triggers.Add(entry2);
         }
     }

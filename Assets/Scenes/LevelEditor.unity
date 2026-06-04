@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297ac9ed3773b294ca1f441d2507b45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hintMessage: Load levels and edit them.
+  hintMessage: Load a level. Set its location with left click and then edit the scene.
 --- !u!1 &900088662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,21 +2451,6 @@ MonoBehaviour:
   buttonPrefab: {fileID: 3694766729878038907, guid: f125bfd16f5918146b7c57cf46c3f4ae, type: 3}
   gameManager: {fileID: 0}
   newFont: {fileID: 11400000, guid: c001154c760ca0141b4740f313201a09, type: 2}
-  hintMessages:
-  - The location the player must go to, to complete the level.
-  - Basic enemy. Medium health and speed.
-  - Tanky enemy. High health and medium speed.
-  - Speedy enemy. Low health and Highspeed.
-  - Fence to define playable area.
-  - A large generic building.
-  - A lampost. It gives off light.
-  - A low poly tree.
-  - Set player's starting location.
-  - The ground. Other assets must be placed on.
-  - The ground. Other assets must be placed on.
-  - Small hat with a cut in front of it.
-  - A tail thing. Maybe it was a mermaid's tail?
-  - A cool water ring that emits light.
   tileLockWidth: 6
   LevelLoadContainerPrefab: {fileID: 9075897230331825219, guid: 8b1654c6e33589c4c96697f617e25a45, type: 3}
 --- !u!4 &900088664
@@ -3775,7 +3760,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 180, y: 25}
+  m_CellSize: {x: 50, y: 25}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -4499,7 +4484,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 1}
+  m_SizeDelta: {x: -17, y: 10}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1525768956
 MonoBehaviour:
@@ -4684,7 +4669,8 @@ MonoBehaviour:
   m_text: "Tips:\nTo edit objects, Right click to clear the current selection and
     then click on the object you want to edit. From there you can adjust position,
     rotation and delete the object.\n\nR to rotate \nobjects.\n\nX to delete \nobjects.\n\nHold
-    and drag to place multiple tiles.\n\nWASD to move and scroll to zoom in/out.\n\n"
+    and drag to place multiple tiles.\n\nWASD to move and scroll to zoom in/out.\n\nHover
+    over buttons for a moment to get descriptions and hints.\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c001154c760ca0141b4740f313201a09, type: 2}
   m_sharedMaterial: {fileID: 3196587919636135341, guid: c001154c760ca0141b4740f313201a09, type: 2}

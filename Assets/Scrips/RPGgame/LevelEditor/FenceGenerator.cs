@@ -45,12 +45,12 @@ public class FenceGenerator : MonoBehaviour
         {
             float currentX = i * panelWidth;
 
-            // 1. Spawn Post
+            // Spawn Post
             GameObject post = Instantiate(postPrefab, transform);
             post.transform.localPosition = new Vector3(currentX, 0, 0);
             spawnedPieces.Add(post);
 
-            // 2. Spawn Panel
+            // Spawn Panel
             GameObject panel = Instantiate(panelPrefab, transform);
             panel.transform.localPosition = new Vector3(currentX, 2, 0);
 
@@ -72,7 +72,7 @@ public class FenceGenerator : MonoBehaviour
             spawnedPieces.Add(panel4);
         }
 
-        // 3. Spawn the final closing Post
+        // Spawn the final closing Post
         GameObject finalPost = Instantiate(postPrefab, transform);
         finalPost.transform.localPosition = new Vector3(numberOfPanels * panelWidth, 0, 0);
         spawnedPieces.Add(finalPost);

@@ -1,5 +1,5 @@
 using System;
-using System.Runtime.Serialization;
+// using System.Runtime.Serialization;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -7,8 +7,8 @@ public class Tile : MonoBehaviour
     private float tileLockWidth = 10.0f;
     public void Update()
     {
-        transform.position = new Vector3(RoundToNearestMultiple(transform.position.x, tileLockWidth
-        ), transform.position.y, RoundToNearestMultiple(transform.position.z, tileLockWidth) );
+        transform.localPosition = new Vector3(RoundToNearestMultiple(transform.localPosition.x, tileLockWidth
+        ), transform.localPosition.y, RoundToNearestMultiple(transform.localPosition.z, tileLockWidth) );
     }
 
     public static float RoundToNearestMultiple(float value, float multiple)

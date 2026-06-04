@@ -1164,7 +1164,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0.000061035}
+  m_SizeDelta: {x: 10, y: -1}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &452056014
 MonoBehaviour:
@@ -2467,6 +2467,7 @@ MonoBehaviour:
   - A tail thing. Maybe it was a mermaid's tail?
   - A cool water ring that emits light.
   tileLockWidth: 6
+  LevelLoadContainerPrefab: {fileID: 9075897230331825219, guid: 8b1654c6e33589c4c96697f617e25a45, type: 3}
 --- !u!4 &900088664
 Transform:
   m_ObjectHideFlags: 0
@@ -3774,7 +3775,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 180, y: 50}
+  m_CellSize: {x: 180, y: 25}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -4254,8 +4255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: 50}
-  m_SizeDelta: {x: 100, y: 350}
+  m_AnchoredPosition: {x: 375, y: 50}
+  m_SizeDelta: {x: 50, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1483105367
 MonoBehaviour:
@@ -4498,7 +4499,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 20}
+  m_SizeDelta: {x: -17, y: 1}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1525768956
 MonoBehaviour:
@@ -4680,9 +4681,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Tips:\nRight click to cancel action.\n\nR to rotate \nobjects.\n\nX to
-    delete \nobjects.\n\nHold and drag to place multiple tiles.\n\nWASD to move and
-    scroll to zoom in/out.\n\n"
+  m_text: "Tips:\nTo edit objects, Right click to clear the current selection and
+    then click on the object you want to edit. From there you can adjust position,
+    rotation and delete the object.\n\nR to rotate \nobjects.\n\nX to delete \nobjects.\n\nHold
+    and drag to place multiple tiles.\n\nWASD to move and scroll to zoom in/out.\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c001154c760ca0141b4740f313201a09, type: 2}
   m_sharedMaterial: {fileID: 3196587919636135341, guid: c001154c760ca0141b4740f313201a09, type: 2}
@@ -4709,8 +4711,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

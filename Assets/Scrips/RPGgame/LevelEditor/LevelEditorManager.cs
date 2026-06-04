@@ -31,7 +31,8 @@ public class LevelEditorManager : MonoBehaviour
     public enum editState
     {
         Setting,
-        Editting
+        Editting,
+        LoadingLevel
     }
     editState currentEditState;
     public bool isEditingObject = false;
@@ -44,7 +45,7 @@ public class LevelEditorManager : MonoBehaviour
     public List<string> hintMessages = new List<string>();
     private Vector3 lastTileSpawnPosition = Vector3.zero;
     public float tileLockWidth = 10.0f;
-    public event Action Preview;
+    public event Action Preview; // To turn off slider UI of fence generator when previewing a new object.
     public class undoClass
     {
         public Vector3 savedPosition;
@@ -54,6 +55,7 @@ public class LevelEditorManager : MonoBehaviour
     }
     private FixedSizeStack<undoClass> undoClassList = new FixedSizeStack<undoClass>();
     private undoClass mostRecentAction;
+    public GameObject LevelLoadContainerPrefab;
     void Start()
     {   
         // Seeting up the hint messages for each button.
@@ -112,7 +114,6 @@ public class LevelEditorManager : MonoBehaviour
                 if (distance > tileLockWidth) // Only spawn if the position has changed significantly
                 {
                     spawnOnMousePosition();
-                    //lastTileSpawnPosition = previewObject.transform.position; // Update the history
                 }
             }
         }
@@ -206,6 +207,12 @@ public class LevelEditorManager : MonoBehaviour
 
                 // Convert JSON back into your LevelData object
                 LevelData data = JsonUtility.FromJson<LevelData>(json);
+                // Ignoring files that aren't LevelData (e.g., CampaignData)
+                if (data.fileType != "LevelData")
+                {
+                    displayErrorMessage("Selected file is not a level");
+                    throw new Exception("Selected file is not a level");
+                }
                 leveldata = data;
 
                 Debug.Log("Level loaded successfully: " + file.Name);
@@ -236,6 +243,7 @@ public class LevelEditorManager : MonoBehaviour
             Debug.LogError("Could not load level");
             return;
         }
+        GameObject levelContainer = Instantiate(LevelLoadContainerPrefab, Vector3.zero, Quaternion.identity);
         foreach(TileData td in newLevel.tiles)
         {
             GameObject prefab = registry.GetPrefab(td.tileID);
@@ -255,20 +263,22 @@ public class LevelEditorManager : MonoBehaviour
                     fenceGenerator.GenerateFence();
                     fenceGenerator.setIsPreview(true);
                 }
+                instance.transform.SetParent(levelContainer.transform);
             }
         }
-
-        GameObject player = Instantiate(playerLocationIndicator);
-        player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
-        player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
-        player.AddComponent<collisionDetector>();
-        player.AddComponent<EditObject>();
+        levelContainer.GetComponent<LevelLoadContainer>().ResizeColliderToFitChildren();
+        // Removing the end and start points to prevent duplicates since it is possible to have placed an end point already.
+        // GameObject player = Instantiate(playerLocationIndicator);
+        // player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
+        // player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
+        // player.AddComponent<collisionDetector>();
+        // player.AddComponent<EditObject>();
         
-        GameObject destination = Instantiate(destinationIndicator);
-        destination.transform.position = newLevel.destinationPosition;
-        destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
-        destination.AddComponent<collisionDetector>();
-        destination.AddComponent<EditObject>();
+        // GameObject destination = Instantiate(destinationIndicator);
+        // destination.transform.position = newLevel.destinationPosition;
+        // destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
+        // destination.AddComponent<collisionDetector>();
+        // destination.AddComponent<EditObject>();
     }
     #endregion
 

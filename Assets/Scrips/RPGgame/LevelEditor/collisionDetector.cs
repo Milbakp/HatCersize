@@ -27,8 +27,6 @@ public class collisionDetector : MonoBehaviour
             return;
         }
         isColliding = true;
-
-        
     }
 
     void OnTriggerExit(Collider other) {

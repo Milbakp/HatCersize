@@ -145,7 +145,7 @@ public class LevelEditorManager : MonoBehaviour
                 savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
                 
                 // Ensure the extension matches exactly
-                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
+                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".hatlevel" });
                 savePicker.SuggestedFileName = "NewLevel";
 
                 // This line requires the 'async' keyword in the method signature
@@ -184,7 +184,7 @@ public class LevelEditorManager : MonoBehaviour
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
             // Filter for the file types you want to show
-            openPicker.FileTypeFilter.Add(".json");
+            openPicker.FileTypeFilter.Add(".hatlevel");
 
             // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
@@ -432,7 +432,6 @@ public class LevelEditorManager : MonoBehaviour
         // Sets distance of the object relative to the camera so the object appears under the mouse cursor
         mousePos.z = camera.transform.position.y;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-        //worldPosition.y = 0; 
         previewObject.transform.position =  new Vector3 (worldPosition.x, previewObject.transform.position.y, worldPosition.z);
     }
 

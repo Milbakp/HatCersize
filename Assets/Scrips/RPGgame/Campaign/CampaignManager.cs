@@ -56,7 +56,7 @@ public class CampaignManager : MonoBehaviour
             openPicker.ViewMode = PickerViewMode.List;
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
-            openPicker.FileTypeFilter.Add(".json");
+            openPicker.FileTypeFilter.Add(".hatlevel");
 
             // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
@@ -123,7 +123,7 @@ public class CampaignManager : MonoBehaviour
                 savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
                 
                 // Ensure the extension matches exactly
-                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
+                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".hatcampaign" });
                 savePicker.SuggestedFileName = "NewCampaign";
 
                 // This line requires the 'async' keyword in the method signature
@@ -163,8 +163,8 @@ public class CampaignManager : MonoBehaviour
             return;
         }
 
-        // Get all files ending in .json
-        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.json");
+        // Get all files ending in .hatlevel
+        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.hatlevel");
 
         //allLevels.Clear();
         foreach (GameObject item in levelItems)
@@ -209,7 +209,7 @@ public class CampaignManager : MonoBehaviour
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
             // Filter for the file types you want to show
-            openPicker.FileTypeFilter.Add(".json");
+            openPicker.FileTypeFilter.Add(".hatlevel");
 
             // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
@@ -259,10 +259,10 @@ public class CampaignManager : MonoBehaviour
     public void SaveDataWithCustomName(string jsonContent, string chosenName, string storagePath)
     {
         // Ensure the name ends with .json
-        if (!chosenName.EndsWith(".json")) 
-        {
-            chosenName += ".json";
-        }
+        // if (!chosenName.EndsWith(".json")) 
+        // {
+        //     chosenName += ".json";
+        // }
 
         // Combine the folder path with your new filename
         string destinationPath = Path.Combine(storagePath, chosenName);

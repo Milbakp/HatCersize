@@ -93,6 +93,10 @@ public class EditObject : MonoBehaviour
         mousePos.z = camera.transform.position.y;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         transform.position =  new Vector3 (worldPosition.x, transform.position.y, worldPosition.z);
+        if(gameObject.CompareTag("Tile"))
+        {
+            GetComponent<Tile>().tileLock();
+        }
     }
 
     private bool isCollision()

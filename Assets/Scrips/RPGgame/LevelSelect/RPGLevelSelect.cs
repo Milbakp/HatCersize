@@ -76,8 +76,8 @@ public class RPGLevelSelect : MonoBehaviour
             return;
         }
 
-        // Get all files ending in .json
-        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.json");
+        // Get all files ending in .hatlevel
+        string[] fileEntries = Directory.GetFiles(levelStoragePath, "*.hatlevel");
 
         //allLevels.Clear();
         foreach (GameObject item in levelItems)
@@ -128,8 +128,8 @@ public class RPGLevelSelect : MonoBehaviour
             return;
         }
 
-        // Get all files ending in .json
-        string[] fileEntries = Directory.GetFiles(campaignStoragePath, "*.json");
+        // Get all files ending in .hatcampaign
+        string[] fileEntries = Directory.GetFiles(campaignStoragePath, "*.hatcampaign");
 
         foreach (GameObject item in CampaignItems)
         {
@@ -185,7 +185,8 @@ public class RPGLevelSelect : MonoBehaviour
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 
             // Filter for the file types you want to show
-            openPicker.FileTypeFilter.Add(".json");
+            openPicker.FileTypeFilter.Add(".hatlevel");
+            openPicker.FileTypeFilter.Add(".hatcampaign");
 
             // Open the picker and wait for the user to select a file
             StorageFile file = await openPicker.PickSingleFileAsync();
@@ -253,10 +254,10 @@ public class RPGLevelSelect : MonoBehaviour
     public void SaveDataWithCustomName(string jsonContent, string chosenName, string storagePath)
     {
         // Ensure the name ends with .json
-        if (!chosenName.EndsWith(".json")) 
-        {
-            chosenName += ".json";
-        }
+        // if (!chosenName.EndsWith(".json")) 
+        // {
+        //     chosenName += ".json";
+        // }
 
         // Combine the folder path with your new filename
         string destinationPath = Path.Combine(storagePath, chosenName);
@@ -296,8 +297,8 @@ public class RPGLevelSelect : MonoBehaviour
             return;
         }
 
-        // Get all files ending in .json
-        string[] fileEntries = Directory.GetFiles(path, "*.json");
+        // Get all files ending in .hatlevel
+        string[] fileEntries = Directory.GetFiles(path, "*.hatlevel");
 
         foreach (string filePath in fileEntries)
         {
@@ -310,7 +311,7 @@ public class RPGLevelSelect : MonoBehaviour
             }
             
             Debug.Log($"Loaded Level: {Path.GetFileNameWithoutExtension(filePath)}");
-            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath), levelStoragePath);
+            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath) + ".hatlevel", levelStoragePath);
         }
     }
 
@@ -324,8 +325,8 @@ public class RPGLevelSelect : MonoBehaviour
             return;
         }
 
-        // Get all files ending in .json
-        string[] fileEntries = Directory.GetFiles(path, "*.json");
+        // Get all files ending in .hatcampaign
+        string[] fileEntries = Directory.GetFiles(path, "*.hatcampaign");
 
         foreach (string filePath in fileEntries)
         {
@@ -338,7 +339,7 @@ public class RPGLevelSelect : MonoBehaviour
             }
 
             Debug.Log($"Loaded Campaign: {Path.GetFileNameWithoutExtension(filePath)}");
-            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath), campaignStoragePath);
+            SaveDataWithCustomName(jsonContent, Path.GetFileNameWithoutExtension(filePath) + ".hatcampaign", campaignStoragePath);
         }
     }
 }

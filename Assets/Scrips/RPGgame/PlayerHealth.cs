@@ -5,6 +5,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health;
     public int coins;
+    public int maxCoins;
     private RPGLevelManager levelManager;
     private SoundManager soundManager;
     void Start()
@@ -13,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
         levelManager = FindAnyObjectByType<RPGLevelManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
         coins = levelManager.numOfEnemies;
+        maxCoins = coins;
     }
 
     // Update is called once per frame

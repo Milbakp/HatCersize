@@ -91,7 +91,7 @@ public class RPGLevelLoader : MonoBehaviour
     {
         foreach(LevelEntry entry in gameManager.CampaignToLoad.levels)
         {
-            if(entry.order == gameManager.CurrentCampaignLevelIndex + 1) // Load the next level in the campaign
+            if(entry.order == gameManager.CurrentCampaignLevelIndex) // Load the next level in the campaign
             {
                 createLevel(entry.levelData);
                 break;

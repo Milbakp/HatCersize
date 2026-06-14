@@ -7,6 +7,7 @@ using static TileRegistry;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 
 //using UnityEditor;
@@ -51,9 +52,12 @@ public class LevelEditorManager : MonoBehaviour
         public Quaternion savedRotation;
         public GameObject activeGameObject;
         public bool placeAction = false;
+        public bool deleteAction = false;
     }
     private FixedSizeStack<undoClass> undoClassList = new FixedSizeStack<undoClass>();
     private undoClass mostRecentAction;
+    public event Action savingAction;
+    public event Action undoingAction;
     public GameObject LevelLoadContainerPrefab;
     void Start()
     {    
@@ -252,8 +256,31 @@ public class LevelEditorManager : MonoBehaviour
                     fenceGenerator.GenerateFence();
                     fenceGenerator.setIsPreview(true);
                 }
-                instance.transform.SetParent(levelContainer.transform);
+                instance.transform.SetParent(levelContainer.transform, false);
             }
+        }
+
+        // If there are no start or end points in the level, spawn default ones.
+        GameObject[] startPoints = GameObject.FindGameObjectsWithTag("StartPosition");
+        if(startPoints.Length == 0)
+        {
+            GameObject player = Instantiate(playerLocationIndicator);
+            player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);
+            player.transform.rotation = Quaternion.Euler(0, newLevel.playerRotationY, 0);
+            player.AddComponent<collisionDetector>();
+            player.AddComponent<EditObject>();
+            player.transform.SetParent(levelContainer.transform, false);
+        }
+
+        GameObject[] endPoints = GameObject.FindGameObjectsWithTag("EndPosition");
+        if(endPoints.Length == 0)
+        {
+            GameObject destination = Instantiate(destinationIndicator);
+            destination.transform.position = newLevel.destinationPosition;
+            destination.transform.rotation = Quaternion.Euler(0, newLevel.destinationRotationY, 0);
+            destination.AddComponent<collisionDetector>();
+            destination.AddComponent<EditObject>();
+            destination.transform.SetParent(levelContainer.transform, false);
         }
         levelContainer.GetComponent<LevelLoadContainer>().ResizeColliderToFitChildren();
         // Removing the end and start points to prevent duplicates since it is possible to have placed an end point already.
@@ -520,6 +547,10 @@ public class LevelEditorManager : MonoBehaviour
             currentEditState = editState.Setting;
             editBttonText.SetText("Edit");
             previewObject.SetActive(true);
+        }else if (state == editState.LoadingLevel)
+        {
+            currentEditState = editState.LoadingLevel;
+            previewObject.SetActive(false);
         }
     }
     public editState getMode()
@@ -618,8 +649,9 @@ public class LevelEditorManager : MonoBehaviour
         errorMessages.SetText("");
     }
     // Undo Related functions
-    public void SaveAction(GameObject saveObject, bool placeAction = false)
+    public void SaveAction(GameObject saveObject, bool placeAction = false, bool deleteAction = false)
     {
+        savingAction?.Invoke();
         Debug.Log("Saving Action " + saveObject.transform.position);
         undoClass action = new undoClass();
         action.savedPosition = saveObject.transform.position;
@@ -635,21 +667,30 @@ public class LevelEditorManager : MonoBehaviour
         {
             Debug.Log("At capacity");
             GameObject tmp = undoClassList.lastItem().activeGameObject;
-            if (!tmp.activeSelf)
-            {
-                Destroy(tmp);
-            }
+            // if (!tmp.activeSelf && deleteAction)
+            // {
+            //     Destroy(tmp);
+            // }
         }
         if (placeAction)
         {
             action.placeAction = true;
         }
+        if (deleteAction)
+        {
+            action.deleteAction = true;
+            GameObject deleteObject = new GameObject("DeleteObject");
+            deleteObject.AddComponent<deleteAfter>();
+            deleteObject.GetComponent<deleteAfter>().activeGameObject = action.activeGameObject;
+        }
         undoClassList.Push(action);
+        Tiles.RemoveAll(tile => tile == null);
         //mostRecentAction = action;
     }
 
     public void undoAction()
     {
+        undoingAction?.Invoke();
         if (undoClassList.isEmpty())
         {
             displayErrorMessage("No more actions to undo");
@@ -671,6 +712,10 @@ public class LevelEditorManager : MonoBehaviour
         if (action.placeAction)
         {
             Destroy(action.activeGameObject);
+        }
+        if(action.activeGameObject.CompareTag("Tile"))
+        {
+            Tiles.Add(action.activeGameObject);
         }
     }
 }

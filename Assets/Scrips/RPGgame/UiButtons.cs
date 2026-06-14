@@ -58,9 +58,9 @@ public class UiButtons : MonoBehaviour
         if(gameManager.CurrentMode == GameManager.GameMode.Campaign)
         {
             Time.timeScale = 1f;
-            gameManager.CurrentCampaignLevelIndex++;
             if (nextLevelExists())
             {
+                gameManager.CurrentCampaignLevelIndex++;
                 SceneManager.LoadScene("TestLoadLevel");
             }
             else

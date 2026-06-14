@@ -15,6 +15,6 @@ public class PlayerUi : MonoBehaviour
     void Update()
     {
         healthText.text = "Health: " + playerHealth.health;
-        coinText.text = "Coins: " + playerHealth.coins;
+        coinText.text = "Coins: " + playerHealth.coins + "/" + playerHealth.maxCoins;
     }
 }

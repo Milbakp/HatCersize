@@ -56,7 +56,8 @@ public class MenuButtons : MonoBehaviour
 
     public void QuitButton()
     {
-        if (timerManager.currentTimerState == TimerManager.TimerState.On)
+        if (timerManager.currentTimerState == TimerManager.TimerState.On ||
+            timerManager.currentTimerState == TimerManager.TimerState.Paused)
         {
             Debug.Log("Timer is still running. You can not retrive gpx data if you quit now.");
             timerManager.quittingMenu();

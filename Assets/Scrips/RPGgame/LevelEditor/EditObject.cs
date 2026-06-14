@@ -46,13 +46,13 @@ public class EditObject : MonoBehaviour
             levelEditorManager.isEditingObject = false;
             if(gameObject.CompareTag("Tile"))
             {
-                levelEditorManager.Tiles.Remove(gameObject);
+                levelEditorManager.Tiles.Remove(this.gameObject);
             }
             isEditing = false;
             transform.position = originalPosition;
             transform.rotation = originalRotation;
             gameObject.SetActive(false);
-            levelEditorManager.SaveAction(this.gameObject);
+            levelEditorManager.SaveAction(this.gameObject, false, true);
         }
         if (Input.GetKeyDown(KeyCode.R) && isEditing)
         {

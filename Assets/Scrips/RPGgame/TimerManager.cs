@@ -15,7 +15,8 @@ public class TimerManager : MonoBehaviour
 {
     public enum TimerState{
         Off, // Timer is not active
-        On // Timer is active and counting down
+        On, // Timer is active and counting down
+        Paused // Timer is paused (not counting down but can be resumed)
     }
     public GameObject toggleButton, TimerMenuPanel, timerDisplay, quittingMenuPanel, timerEndPanel, startTimePanel, continuePanel;
     private bool PanelIsVisible;
@@ -55,6 +56,8 @@ public class TimerManager : MonoBehaviour
         continuePanel.SetActive(false);
         screenshotManager = FindAnyObjectByType<ScreenshotManager>();
         soundManager = FindAnyObjectByType<SoundManager>();
+
+        currentTimerState = TimerState.Off;
     }
 
     // Update is called once per frame
@@ -135,6 +138,15 @@ public class TimerManager : MonoBehaviour
                 break;
             }
         }
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "TestLoadLevel" && currentTimerState == TimerState.Paused)
+        {
+            resumeTimer();
+        }
+        else if (currentScene.name != "TestLoadLevel" && currentTimerState == TimerState.On)
+        {
+            pauseTimer();
+        }
 
         toggleButton.SetActive(!shouldHide);
     }
@@ -155,6 +167,7 @@ public class TimerManager : MonoBehaviour
 
     public void activateContinuePanel()
     {
+        Time.timeScale = 1.0f;
         continuePanel.SetActive(true);
         timerEndPanel.SetActive(false);
         durationText.text = $"{ Mathf.FloorToInt(timerDuration/ 60):F1} Minutes";
@@ -294,5 +307,14 @@ public class TimerManager : MonoBehaviour
         screenshotManager.SetScreenshotFolder(newSessionDirectory, null);
         Debug.Log($"Initialized screenshot folder from PlayerPrefs (no token): {newSessionDirectory}");
 #endif
+    }
+
+    public void pauseTimer()
+    {
+        currentTimerState = TimerState.Paused;
+    }
+    public void resumeTimer()
+    {
+        currentTimerState = TimerState.On;
     }
 }

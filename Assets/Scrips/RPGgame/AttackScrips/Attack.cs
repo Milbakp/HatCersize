@@ -49,22 +49,22 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            weaponType = 1;
-        }else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            weaponType = 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            weaponType = 3;
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     weaponType = 1;
+        // }else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     weaponType = 2;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha3))
+        // {
+        //     weaponType = 3;
+        // }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            callAttack();
-        }
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     callAttack();
+        // }
 
         if (Input.GetKeyDown(KeyCode.W))
         {

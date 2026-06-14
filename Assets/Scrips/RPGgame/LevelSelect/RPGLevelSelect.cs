@@ -165,7 +165,7 @@ public class RPGLevelSelect : MonoBehaviour
                     SceneManager.LoadScene("TestLoadLevel");
                 }
                 
-                gameManager.CurrentCampaignLevelIndex = 0; // Reset campaign level index when loading a new campaign
+                gameManager.CurrentCampaignLevelIndex = 1; // Reset campaign level index when loading a new campaign
                 Debug.Log("Button Pressed");
             });
             CampaignItems.Add(campaignItem);

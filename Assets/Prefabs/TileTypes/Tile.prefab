@@ -46,7 +46,7 @@ BoxCollider:
     m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1463
+    m_Bits: 17847
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329574ccc6864a94bad004e5eb2384d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isbordering: 0
 --- !u!54 &7665950647492986356
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -230,7 +229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329574ccc6864a94bad004e5eb2384d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isbordering: 0
 --- !u!54 &8656429007527431134
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -325,7 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329574ccc6864a94bad004e5eb2384d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isbordering: 0
 --- !u!54 &8035580632582603501
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -529,7 +526,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 1271
+    m_Bits: 17655
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 2304
@@ -620,7 +617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329574ccc6864a94bad004e5eb2384d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isbordering: 0
 --- !u!54 &4681549872646165464
 Rigidbody:
   m_ObjectHideFlags: 0

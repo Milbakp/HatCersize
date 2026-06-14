@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     public float hitFlashDuration = 0.2f; // Duration of white flash
     private Renderer[] renderers;
     private Color[] originalColors;
+    public GameObject coinIcon;
     void Start()
     {
         if(GameManager.Instance.CurrentState == GameManager.GameState.Menu)
@@ -51,6 +52,8 @@ public class Enemy : MonoBehaviour
         followPlayer = GetComponent<FollowPlayer>();
         runFromPlayer = GetComponent<RunFromPlayer>();
         SwitchState(EnemyState.Chase);
+
+        coinIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -130,6 +133,7 @@ public class Enemy : MonoBehaviour
                 enemyAttack.enabled = false;
                 followPlayer.enabled = false;
                 runFromPlayer.enabled = true;
+                coinIcon.SetActive(true);
                 break;
         }
     }

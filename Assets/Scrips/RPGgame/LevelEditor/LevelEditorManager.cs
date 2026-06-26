@@ -59,6 +59,7 @@ public class LevelEditorManager : MonoBehaviour
     public event Action savingAction;
     public event Action undoingAction;
     public GameObject LevelLoadContainerPrefab;
+    private LDCameraMovement cameraMovement;
     void Start()
     {    
         setPreview();
@@ -81,6 +82,8 @@ public class LevelEditorManager : MonoBehaviour
         Debug.LogError("CurrentState: " + GameManager.Instance.CurrentState);
 
         errorMessages.raycastTarget = false; // UI element doesn't block objects so that it can be placed at the bottom of the screen
+
+        cameraMovement = Camera.main.GetComponent<LDCameraMovement>();
     }
 
     // Update is called once per frame
@@ -283,6 +286,7 @@ public class LevelEditorManager : MonoBehaviour
             destination.transform.SetParent(levelContainer.transform, false);
         }
         levelContainer.GetComponent<LevelLoadContainer>().ResizeColliderToFitChildren();
+        cameraMovement.AdjustZoomForObject(levelContainer);
         // Removing the end and start points to prevent duplicates since it is possible to have placed an end point already.
         // GameObject player = Instantiate(playerLocationIndicator);
         // player.transform.position =  new Vector3(newLevel.playerStartPosition.x, player.transform.position.y, newLevel.playerStartPosition.z);

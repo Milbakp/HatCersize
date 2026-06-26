@@ -15,21 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelectMenu.unity
     guid: ef48c971b200c0c48a536a4e34c104f3
   - enabled: 1
-    path: Assets/Level1.unity
-    guid: 2431825317b973840aec00175de907cf
-  - enabled: 1
-    path: Assets/Scenes/Level2.unity
-    guid: 2f9286e50fe10b2449655ee6b48c1d2d
-  - enabled: 1
-    path: Assets/Scenes/Level3.unity
-    guid: b4ec76d7328269d4a86e9eb6b89b3df5
-  - enabled: 1
-    path: Assets/Scenes/PortLevel.unity
-    guid: 0fc2fcaec6f5f8248a16a8e1cb432d3d
-  - enabled: 1
-    path: Assets/Scenes/Shop.unity
-    guid: 6441fd5ce4ff46d47b6c3100c6ca6075
-  - enabled: 1
     path: Assets/Scenes/LevelEditor.unity
     guid: 9131380ed5ceb464480ce23654374c59
   - enabled: 1
@@ -38,6 +23,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MakeCampaign.unity
     guid: d1cd7a0da1182c1418da67eefb6a8b5e
+  - enabled: 0
+    path: Assets/Level1.unity
+    guid: 2431825317b973840aec00175de907cf
+  - enabled: 0
+    path: Assets/Scenes/Level2.unity
+    guid: 2f9286e50fe10b2449655ee6b48c1d2d
+  - enabled: 0
+    path: Assets/Scenes/Level3.unity
+    guid: b4ec76d7328269d4a86e9eb6b89b3df5
+  - enabled: 0
+    path: Assets/Scenes/PortLevel.unity
+    guid: 0fc2fcaec6f5f8248a16a8e1cb432d3d
+  - enabled: 0
+    path: Assets/Scenes/Shop.unity
+    guid: 6441fd5ce4ff46d47b6c3100c6ca6075
+  - enabled: 0
+    path: Assets/Scenes/HowToPlay.unity
+    guid: 5fdeb2eb381199249a815d941eabdce1
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05

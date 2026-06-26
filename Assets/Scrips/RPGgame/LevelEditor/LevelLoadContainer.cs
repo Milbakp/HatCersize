@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class LevelLoadContainer : MonoBehaviour
 {
@@ -6,8 +8,10 @@ public class LevelLoadContainer : MonoBehaviour
     private LevelEditorManager levelEditorManager;
     public Camera camera;
     private Tile tile;
-    public GameObject collisionDetectorChild;
-    private collisionDetector cd;
+    //public GameObject collisionDetectorChild;
+    //private collisionDetector cd;
+    List<collisionDetector> CDchild = new List<collisionDetector>();
+    List<collisionDetector> CDTiles = new List<collisionDetector>();
     void Start()
     {
         levelEditorManager = FindObjectOfType<LevelEditorManager>();
@@ -15,7 +19,7 @@ public class LevelLoadContainer : MonoBehaviour
         tile = GetComponent<Tile>();
         tile.enabled = false;
         tile.enabled = true;
-        cd = collisionDetectorChild.GetComponent<collisionDetector>();
+        //cd = collisionDetectorChild.GetComponent<collisionDetector>();
         levelEditorManager.SetMode(LevelEditorManager.editState.LoadingLevel);
         levelEditorManager.previewObject.SetActive(false);
         //setPreview();
@@ -27,9 +31,15 @@ public class LevelLoadContainer : MonoBehaviour
         preview();
         if (Input.GetMouseButtonDown(0) && isCollision())
         {
+            levelEditorManager.SaveAction(gameObject, true);
             levelEditorManager.SetMode(LevelEditorManager.editState.Editting);
-            collisionDetectorChild.SetActive(false);
+            //collisionDetectorChild.SetActive(false);
             this.enabled = false; // Disables this script so the object is no longer following the mouse.
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            levelEditorManager.SetMode(LevelEditorManager.editState.Editting);
+            Destroy(gameObject);
         }
         if(Input.GetKeyDown(KeyCode.L))
         {
@@ -48,75 +58,119 @@ public class LevelLoadContainer : MonoBehaviour
 
     private bool isCollision()
     {
-        if (cd.isColliding || cd.isOnMap ) {
-            levelEditorManager.displayErrorMessage("Level is overlapping with other objects.");
-            Debug.Log("Cannot place object here!");
-            return false;
+        //collisionDetector[] CDchild = GetComponentsInChildren<collisionDetector>();
+        
+        // foreach (collisionDetector cd in CDchild)
+        // {
+        //     if (cd.isColliding || !cd.isOnMap ) {
+        //         levelEditorManager.displayErrorMessage("Level Object is overlapping with other objects.");
+        //         Debug.Log("Cannot place object here!");
+        //         Debug.LogError("Colliding with: " + cd.gameObject.name);
+        //         return false;
+        //     }
+        //     // Skip the parent containers
+        //     // if (renderer.gameObject == gameObject || (collisionDetectorChild != null && renderer.gameObject == collisionDetectorChild)) 
+        //     //     continue;
+
+        //     // // If the child tile doesn't have a collider, add one that fits it perfectly
+        //     // if (!renderer.gameObject.TryGetComponent<Collider>(out var childCollider))
+        //     // {
+        //     //     // BoxCollider automatically sizes itself to a MeshFilter/MeshRenderer when added
+        //     //     renderer.gameObject.AddComponent<BoxCollider>();
+        //     // }
+        // }
+        foreach (collisionDetector cd in CDTiles)
+        {
+            if (cd.isOnMap) {
+                levelEditorManager.displayErrorMessage("Level tile is overlapping with other objects.");
+                Debug.Log("Cannot place object here!");
+                Debug.LogError("Colliding with: " + cd.gameObject.name);
+                return false;
+            }
         }
+        // if (cd.isColliding || cd.isOnMap ) {
+        //     levelEditorManager.displayErrorMessage("Level is overlapping with other objects.");
+        //     Debug.Log("Cannot place object here!");
+        //     return false;
+        // }
         return true;
     }
     public void ResizeColliderToFitChildren()
     {
-        BoxCollider parentCollider = collisionDetectorChild.GetComponent<BoxCollider>();
-        // Get all SpriteRenderers or MeshRenderers from children
-        // (Change to MeshRenderer if you are making a 3D game)
-        Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
-
-        if (childRenderers.Length == 0)
+        //GameObject[] childObjects = GetComponentsInChildren<GameObject>();
+        foreach (Transform childObject in transform)
         {
-            // If no children, reset collider to zero or a default size
-            parentCollider.size = Vector3.zero;
-            parentCollider.center = Vector3.zero;
-            return;
+            collisionDetector cd = childObject.gameObject.GetComponent<collisionDetector>();
+            if(childObject.gameObject.CompareTag("Tile") && cd != null)
+            {
+                CDTiles.Add(cd);
+                continue;
+            }
+            if (cd != null)
+            {
+                CDchild.Add(cd);
+            }
         }
+        // BoxCollider parentCollider = collisionDetectorChild.GetComponent<BoxCollider>();
+        // // Get all SpriteRenderers or MeshRenderers from children
+        // // (Change to MeshRenderer if you are making a 3D game)
+        // Renderer[] childRenderers = GetComponentsInChildren<Renderer>();
 
-        // 2. Initialize the bounds using the first child's bounds
-        Bounds combinedBounds = childRenderers[0].bounds;
+        // if (childRenderers.Length == 0)
+        // {
+        //     // If no children, reset collider to zero or a default size
+        //     parentCollider.size = Vector3.zero;
+        //     parentCollider.center = Vector3.zero;
+        //     return;
+        // }
 
-        // 3. Loop through the rest of the children and expand the bounds to fit them
-        for (int i = 1; i < childRenderers.Length; i++)
-        {
-            // Skip the parent's own renderer if it has one, so it doesn't skew the math
-            if (childRenderers[i].gameObject == gameObject) continue;
+        // // Initialize the bounds using the first child's bounds
+        // Bounds combinedBounds = childRenderers[0].bounds;
 
-            combinedBounds.Encapsulate(childRenderers[i].bounds);
-        }
+        // // Loop through the rest of the children and expand the bounds to fit them
+        // for (int i = 1; i < childRenderers.Length; i++)
+        // {
+        //     // Skip the parent's own renderer if it has one, so it doesn't skew the math
+        //     if (childRenderers[i].gameObject == gameObject) continue;
 
-        // 4. Convert global World Bounds back into the Parent's Local Space
-        // Crucial: BoxCollider center/size are relative to the GameObject it is attached to!
-        Vector3 localCenter = transform.InverseTransformPoint(combinedBounds.center);
+        //     combinedBounds.Encapsulate(childRenderers[i].bounds);
+        // }
+
+        // // Convert global World Bounds back into the Parent's Local Space
+        // // Crucial: BoxCollider center/size are relative to the GameObject it is attached to!
+        // Vector3 localCenter = transform.InverseTransformPoint(combinedBounds.center);
         
-        // LossyScale prevents distortion if the parent object has been scaled
-        Vector3 localSize = new Vector3(
-            combinedBounds.size.x / transform.lossyScale.x,
-            combinedBounds.size.y / transform.lossyScale.y,
-            combinedBounds.size.z / transform.lossyScale.z
-        );
+        // // LossyScale prevents distortion if the parent object has been scaled
+        // Vector3 localSize = new Vector3(
+        //     combinedBounds.size.x / transform.lossyScale.x,
+        //     combinedBounds.size.y / transform.lossyScale.y,
+        //     combinedBounds.size.z / transform.lossyScale.z
+        // );
 
-        // 5. Apply the calculated math to the BoxCollider
-        parentCollider.center = localCenter;
-        parentCollider.size = localSize;
-        IgnoreChildren();
+        // // Apply the calculated math to the BoxCollider
+        // parentCollider.center = localCenter;
+        // parentCollider.size = localSize;
+        // IgnoreChildren();
     }
 
-    public void IgnoreChildren()
-    {
-        // 1. Get the collider on the parent object
-        Collider parentCollider = collisionDetectorChild.GetComponent<Collider>();
+    // public void IgnoreChildren()
+    // {
+    //     // Get the collider on the parent object
+    //     Collider parentCollider = collisionDetectorChild.GetComponent<Collider>();
         
-        if (parentCollider == null) return;
+    //     if (parentCollider == null) return;
 
-        // 2. Get all colliders on the children
-        Collider[] childColliders = GetComponentsInChildren<Collider>();
+    //     // Get all colliders on the children
+    //     Collider[] childColliders = GetComponentsInChildren<Collider>();
 
-        // 3. Loop through and tell Physics to ignore the pairing
-        foreach (Collider childCollider in childColliders)
-        {
-            // Skip if it accidentally grabs the parent's own collider
-            if (childCollider == parentCollider) continue;
+    //     // Loop through and tell Physics to ignore the pairing
+    //     foreach (Collider childCollider in childColliders)
+    //     {
+    //         // Skip if it accidentally grabs the parent's own collider
+    //         if (childCollider == parentCollider) continue;
 
-            // Fuses the two colliders into a mutual ignore state
-            Physics.IgnoreCollision(parentCollider, childCollider, true);
-        }
-    }
+    //         // Fuses the two colliders into a mutual ignore state
+    //         Physics.IgnoreCollision(parentCollider, childCollider, true);
+    //     }
+    // }
 }

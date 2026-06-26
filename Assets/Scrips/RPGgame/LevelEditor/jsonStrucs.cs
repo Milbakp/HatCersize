@@ -4,8 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public class TileData
 {
-    public int tileWidth = 5;
-    public int tileHeight = 5;
     public float x;
     public float y;
     public float z;

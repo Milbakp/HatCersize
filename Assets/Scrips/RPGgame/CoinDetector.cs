@@ -13,11 +13,6 @@ public class CoinDetector : MonoBehaviour
         coinsNeeded = levelManager.numOfEnemies;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Collided with: " + collision.gameObject.name);

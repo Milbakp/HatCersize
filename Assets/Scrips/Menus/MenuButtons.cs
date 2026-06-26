@@ -77,4 +77,19 @@ public class MenuButtons : MonoBehaviour
     {
         SceneManager.LoadScene("MakeCampaign");
     }
+
+    public void ToggleFullscreen()
+    {
+        // Screen.fullScreen checks if the game is currently fullscreen
+        if (Screen.fullScreen)
+        {
+            // Switch to a normal windowed window
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+        }
+        else
+        {
+            // Switch to full screen mode
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        }
+    }
 }

@@ -671,10 +671,6 @@ public class LevelEditorManager : MonoBehaviour
         {
             Debug.Log("At capacity");
             GameObject tmp = undoClassList.lastItem().activeGameObject;
-            // if (!tmp.activeSelf && deleteAction)
-            // {
-            //     Destroy(tmp);
-            // }
         }
         if (placeAction)
         {

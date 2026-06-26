@@ -25,7 +25,7 @@ public class deleteAfter : MonoBehaviour
     void delete()
     {
         actionCounter++;
-        if(actionCounter > 15)
+        if(actionCounter > 21)
         {
             Destroy(activeGameObject);
             Destroy(this.gameObject);
@@ -35,6 +35,15 @@ public class deleteAfter : MonoBehaviour
     void minusCounterOnUndo()
     {
         actionCounter--;
+    }
+    void OnDestroy()
+    {
+        // Always unsubscribe to prevent MissingReferenceException
+        if (levelEditorManager != null)
+        {
+            levelEditorManager.savingAction -= delete;
+            levelEditorManager.undoingAction -= minusCounterOnUndo;
+        }
     }
 
 }
